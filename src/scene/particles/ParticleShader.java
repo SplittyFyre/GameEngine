@@ -1,7 +1,6 @@
 package scene.particles;
 
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
 
 import renderEngine.ShaderProgram;
 
@@ -10,11 +9,8 @@ public class ParticleShader extends ShaderProgram {
 	private static final String VERTEX_FILE = "src/scene/particles/particleVShader.txt";
 	private static final String FRAGMENT_FILE = "src/scene/particles/particleFShader.txt";
 
-	private int location_modelViewMatrix;
+	private int location_numRows;
 	private int location_projectionMatrix;
-	private int location_texOffset1;
-	private int location_texOffset2;
-	private int location_texCoordInfo;
 
 	public ParticleShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -22,27 +18,20 @@ public class ParticleShader extends ShaderProgram {
 
 	@Override
 	public void getAllUniformLocations() {
-		location_modelViewMatrix = super.getUniformLocation("modelViewMatrix");
+		location_numRows = super.getUniformLocation("numRows");
 		location_projectionMatrix = super.getUniformLocation("projectionMatrix");
-		location_texOffset1 = super.getUniformLocation("texOffset1");
-		location_texOffset2 = super.getUniformLocation("texOffset2");
-		location_texCoordInfo = super.getUniformLocation("texCoordInfo");
-		
 	}
 
 	@Override
 	protected void bindAttributes() {
 		super.bindAttribute(0, "position");
-	}
-	
-	protected void loadTextureCoordInfo(Vector2f offset1, Vector2f offset2, float numRows, float blend) {
-		super.load2dVector(location_texOffset1, offset1);
-		super.load2dVector(location_texOffset2, offset2);
-		super.load2dVector(location_texCoordInfo, new Vector2f(numRows, blend));
+		super.bindAttribute(1, "modelViewMatrix");
+		super.bindAttribute(5, "texOffsets");
+		super.bindAttribute(6, "blendFactor");
 	}
 
-	protected void loadModelViewMatrix(Matrix4f modelView) {
-		super.loadMatrix(location_modelViewMatrix, modelView);
+	protected void loadNumRows(float numRows) {
+		super.loadFloat(location_numRows, numRows);
 	}
 
 	protected void loadProjectionMatrix(Matrix4f projectionMatrix) {
