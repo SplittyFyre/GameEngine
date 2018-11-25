@@ -1899,7 +1899,8 @@ public class PlayerVoyager extends Player {
 	}
 
 	@Override
-	public void respondToCollisioni(float damage) {
+	public void respondToCollisioni(float damage, Vector3f hit) {
+		TM.blueShieldSystem.setPPS(Math.min(1500, 5 * damage));
 		if (shieldsOn && this.SHIELD > 0) {
 			if (this.SHIELD - damage > 0) {
 				this.SHIELD -= damage;
@@ -1983,14 +1984,14 @@ public class PlayerVoyager extends Player {
 				
 				if (bb1.intersects(bb2)) {
 					projectile.respondToCollision();
-					enemy.respondToCollisioni(((Projectile) projectile).getDamage());
+					enemy.respondToCollisioni(((Projectile) projectile).getDamage(), projectile.getPosition());
 				}
 				
 			}
 			
 			if (bb1.intersects(this.getBoundingBox())) {
-				enemy.respondToCollisioni(500);
-				this.respondToCollisioni(0);
+				enemy.respondToCollisioni(500, this.getPlayerPos());
+				this.respondToCollisioni(0, null);
 			}
 			
 		}

@@ -22,6 +22,10 @@ public class ParticleSystem {
  
     private Random random = new Random();
  
+    public void setPPS(float pps) {
+    	this.pps = pps;
+    }
+    
     public ParticleSystem(ParticleTexture texture, float pps, float speed, float gravityComplient, float lifeLength, float scale) {
         this.pps = pps;
         this.averageSpeed = speed;

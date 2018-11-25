@@ -66,10 +66,13 @@ public class TM {
 	public static ParticleSystem borgExplosionSystem = new ParticleSystem(tex3, 250, 21, 0, 9, 5000);
 	
 	private static ParticleTexture tex4 = new ParticleTexture(Loader.loadTexture("shieldBlue"), 1);
-	public static ParticleSystem blueShieldSystem = new ParticleSystem(tex4, 1000, 150, 0, 0.5f, 20);
+	public static ParticleSystem blueShieldSystem = new ParticleSystem(tex4, 1000, 125, 0, 0.5f, 20);
 	
 	private static ParticleTexture tex5 = new ParticleTexture(Loader.loadTexture("shieldRed"), 1);
 	public static ParticleSystem redShieldSystem = new ParticleSystem(tex5, 2500, 150, 0, 0.5f, 20);
+	
+	private static ParticleTexture tex6 = new ParticleTexture(Loader.loadTexture("shieldGreen"), 1);
+	public static ParticleSystem greenShieldSystem = new ParticleSystem(tex6, 2000, 300, 0, 0.5f, 35);
 	
 	
 	public static ParticleSystem blueShieldSystemBig = new ParticleSystem(tex4, 10000, 300, 0, 0.5f, 25);
@@ -120,6 +123,11 @@ public class TM {
 		redShieldSystem.setScaleError(1);
 		redShieldSystem.setSpeedError(0.5f);
 		redShieldSystem.setLifeError(0.25f);
+		
+		greenShieldSystem.randomizeRotation();
+		greenShieldSystem.setScaleError(1);
+		greenShieldSystem.setSpeedError(0.5f);
+		greenShieldSystem.setLifeError(0.25f);
 		
 		blueShieldSystemBig.randomizeRotation();
 		blueShieldSystemBig.setScaleError(1);

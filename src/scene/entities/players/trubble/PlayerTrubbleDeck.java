@@ -38,7 +38,7 @@ public class PlayerTrubbleDeck extends Player {
 	}
 	
 	@Override
-	public void respondToCollisioni(float damage) {
+	public void respondToCollisioni(float damage, Vector3f hit) {
 		
 	}
 

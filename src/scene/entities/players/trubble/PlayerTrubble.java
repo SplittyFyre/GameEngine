@@ -1114,7 +1114,7 @@ public class PlayerTrubble extends Player {
 				
 				if (bb1.intersects(bb2)) {
 					projectile.respondToCollision();
-					((BorgVessel) enemy).respondToCollisioni(((Projectile) projectile).getDamage());
+					((BorgVessel) enemy).respondToCollisioni(((Projectile) projectile).getDamage(), projectile.getPosition());
 				}
 				
 			}
@@ -1156,7 +1156,7 @@ public class PlayerTrubble extends Player {
 	}
 	
 	@Override
-	public void respondToCollisioni(float damage) {
+	public void respondToCollisioni(float damage, Vector3f hit) {
 		if (shieldsOn && this.SHIELD > 0) {
 			if (this.SHIELD - damage > 0) {
 				this.SHIELD -= damage;

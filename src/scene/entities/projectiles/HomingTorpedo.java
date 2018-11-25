@@ -110,9 +110,12 @@ public class HomingTorpedo extends Projectile {
 		
 		//float arch = (float) Math.toRadians(tracing.x + arcY));
 		
-		float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y + arcX)) * Math.cos(Math.toRadians(tracing.x + arcY)));
-		float homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x + arcY)));
-		float homingZ = (float) (dtmove * Math.cos(Math.toRadians(tracing.y + arcZ)) * Math.cos(Math.toRadians(tracing.x + arcY)));
+		float rad = (float) Math.toRadians(tracing.x + arcY);
+		float compensate = (float) Math.cos(rad);
+		
+		float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y + arcX)) * compensate);
+		float homingY = (float) (dtmove * Math.sin(rad));
+		float homingZ = (float) (dtmove * Math.cos(Math.toRadians(tracing.y + arcZ)) * compensate);
 		
 		super.move(homingX, homingY, homingZ);
 		

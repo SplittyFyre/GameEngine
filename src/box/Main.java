@@ -263,7 +263,7 @@ public class Main {
 		
 		//ADDING RANDOM STUFF (PLACE HOLDER?)*************************************************
 		
-		BorgVessel borj = new BorgVessel(playerText, new Vector3f(1000, 750, 6000), 0, 0, 0, 20, player);
+		BorgVessel borj = new BorgVessel(borgShip, new Vector3f(1000, 750, 6000), 0, 0, 0, 300, player);
 		enemies.add(borj);
 		
 		for (int i = 0; i < 0; i++) {

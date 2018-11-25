@@ -156,8 +156,10 @@ public class BorgVessel extends Enemy {
 	}
 
 	@Override
-	public void respondToCollisioni(float damage) {
+	public void respondToCollisioni(float damage, Vector3f hit) {
 		HEALTH -= damage;
+		TM.greenShieldSystem.setPPS(Math.min(2000, 15 * damage));
+		TM.greenShieldSystem.generateParticles(hit, hit);
 		if (HEALTH <= 0) {
 			this.setDead();
 			TM.borgExplosionSystem.generateParticles(this.getPosition());
