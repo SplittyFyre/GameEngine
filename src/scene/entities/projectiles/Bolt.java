@@ -16,6 +16,9 @@ public class Bolt extends Projectile {
 	private boolean split = false;
 	private int SPEED = 3200;
 	
+	public static final float WSCALE = 1.5f;
+	public static final float ZSCALE = 32;
+	
 	private ParticleSystem sys = null;
 	
 	@Override
@@ -92,7 +95,7 @@ public class Bolt extends Projectile {
 	}
 	
 	public static Bolt phaser(Vector3f position, float damage, float rotX, float rotY, float rotZ, float movCoff) {
-		return new Bolt(TM.phaserBolt, new Vector3f(position), rotX, rotY, rotZ, 1.5f, 1.5f, 10, damage, movCoff);
+		return new Bolt(TM.phaserBolt, new Vector3f(position), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
 	
 	public static Bolt phaser(Vector3f position, float magSide, float magHeight, float magFront, float damage, float rotX, float rotY, float rotZ, float movCoff) {
@@ -109,7 +112,7 @@ public class Bolt extends Projectile {
 						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
-						), rotX, rotY, rotZ, 1.5f, 1.5f, 10, damage, movCoff);
+						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
 	
 	public static Bolt phaser(Vector3f position, float magSide, float magHeight, float magFront, float damage, float rotX, float rotY, float rotZ, float movCoff, 
@@ -127,7 +130,7 @@ public class Bolt extends Projectile {
 						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
-						), rotX, rotY, rotZ, 1.5f * scaleMul, 1.5f * scaleMul, 10, damage, movCoff);
+						), rotX, rotY, rotZ, WSCALE * scaleMul, WSCALE * scaleMul, ZSCALE, damage, movCoff);
 	}
 	
 	public static Bolt greenphaser(Vector3f position, float magSide, float magHeight, float magFront, float damage, float rotX, float rotY, float rotZ, float movCoff) {
@@ -144,7 +147,7 @@ public class Bolt extends Projectile {
 						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
-						), rotX, rotY, rotZ, 1.5f, 1.5f, 10, damage, movCoff);
+						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
 	
 	public static Bolt bluephaser(Vector3f position, float magSide, float magHeight, float magFront, float damage, float rotX, float rotY, float rotZ, float movCoff) {
@@ -161,7 +164,7 @@ public class Bolt extends Projectile {
 						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
-						), rotX, rotY, rotZ, 1.5f, 1.5f, 10, damage, movCoff);
+						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
 	
 }

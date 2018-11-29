@@ -78,7 +78,7 @@ public class DisplayManager {
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime) / 1000f;
 		lastFrameTime = currentFrameTime;
-		//System.out.println("FPS: " + (delta));
+		//System.out.println("SPF: " + (delta));
 		
 		/*if (delta > 0.02f && getCurrentTime() > 5) {
 			System.err.println("Warning: Low Framerate");

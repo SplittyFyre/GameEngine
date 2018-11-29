@@ -31,7 +31,6 @@ import renderEngine.textures.GUITexture;
 import renderEngine.textures.ModelTexture;
 import scene.entities.Entity;
 import scene.entities.entityUtils.ModelSys;
-import scene.entities.entityUtils.SFKeyboard;
 import scene.entities.entityUtils.StatusText;
 import scene.entities.hostiles.Enemy;
 import scene.entities.players.Player;
@@ -1226,7 +1225,7 @@ public class PlayerVoyager extends Player {
 	}
 	
 	private void checkInputs() {
-		System.out.println(SFKeyboard.getNumKeys());
+		//System.out.println(SFKeyboard.getNumKeys());
 		if (Keyboard.isKeyDown(Keyboard.KEY_W) && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			this.currentSpeed = IMPULSE_MOVE_SPEED_VAR;
 			this.getModel().getTexture().setBrightDamper(4);
@@ -1391,7 +1390,7 @@ public class PlayerVoyager extends Player {
 		
 			leftPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (leftPhaserTimer > 0.005f) {		
+			if (leftPhaserTimer > 0.05f) {		
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(4, 22.375f, 40 + distMoved)),
 						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
 				ENERGY--;
@@ -1408,7 +1407,7 @@ public class PlayerVoyager extends Player {
 			
 			centerPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (centerPhaserTimer > 0.005f) {
+			if (centerPhaserTimer > 0.05f) {
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-0.75f, 20.9f, 54 + distMoved)),
 						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
 				ENERGY--;
@@ -1425,7 +1424,7 @@ public class PlayerVoyager extends Player {
 			
 			rightPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (rightPhaserTimer > 0.005f) {
+			if (rightPhaserTimer > 0.05f) {
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-5, 22.375f, 40 + distMoved)),
 						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
 				ENERGY--;
@@ -1442,7 +1441,7 @@ public class PlayerVoyager extends Player {
 			
 			mainPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (mainPhaserTimer > 0.005f) {
+			if (mainPhaserTimer > 0.03f) {
 				
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-5, 22.375f, 23.7f + distMoved)),
 						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
