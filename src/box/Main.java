@@ -186,7 +186,9 @@ public class Main {
 		TexturedModel borgShip = new TexturedModel(borgRaw, new ModelTexture(Loader.loadTexture("borge")));
 		borgShip.getTexture().setSpecularMap(Loader.loadTexture("borge_glowMap"));
 		borgShip.getTexture().setBrightDamper(2);
-		//borgShip.getTexture().setReflectivity(-0.5f);
+		
+		//borgShip.getTexture().setShineDamper(50);
+		//borgShip.getTexture().setReflectivity(0);
 		
 		//END TEXTURE SECTION****************************************************************
 		
@@ -257,6 +259,7 @@ public class Main {
 		
 		Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, 0, 10000, 1750093151);
 		//Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, 0, 50000, "tryme2", 5000);
+		//Island copy = new Island(texturePack, blendMap, terrains, waters, entities, 30000 , 0, 0, 10000, 1750093151);
 		WaterTile water = home.getWater();
 		
 		entities.add(new StaticEntity(playerText, new Vector3f(-2500, 750, 2900), 0, 45, 0, 20));
@@ -293,42 +296,6 @@ public class Main {
 		   MAIN GAME LOOP*******************************************************************/
 		
 		System.out.println("About to start Main Game Loop");
-		
-		/*float timer = 0;
-		float timer2 = 0;
-		float timer3 = 0;
-		
-		float timer4 = 0;
-		float timer5 = 0;
-		
-		GUITexture sf = new GUITexture(Loader.loadTexture("image"), new Vector2f(-0.666f, 0.35f), TM.sqrgui(0.2f));
-		sf.flagAlpha = true;
-		sf.custAlpha = 0.1f;
-		preguis.add(sf);
-		
-		GUIText sftxt = new GUIText("Programming By: Splitfire", 2, TM.font, TM.coordtext(new Vector2f(
-				sf.getPosition().x - 0.75f, sf.getPosition().y + 0.5f)), 0.5f, false, 0);
-		sftxt.setColour(0.6f, 1, 0.6f);
-		//sftxt.setColour(1, 1, 1);
-		
-		GUITexture zc = new GUITexture(Loader.loadTexture("image"), new Vector2f(0.666f, -0.35f), TM.sqrgui(0.2f));
-		zc.flagAlpha = true;
-		zc.custAlpha = 0.1f;
-		preguis.add(zc);
-		
-		GUIText zctxt = new GUIText("Art Designs By: Zoe Chevrier", 2, TM.font, TM.coordtext(new Vector2f(
-				zc.getPosition().x + 0.75f, zc.getPosition().y + 0.5f)), 0.5f, false, 0);
-		zctxt.setColour(0.6f, 1, 0.6f);
-		//zctxt.setColour(1, 1, 1);
-		
-		GUITexture accent = new GUITexture(Loader.loadTexture("accentegu"), new Vector2f(0.715f, 1.5f), TM.sqrgui(0.025f));
-		accent.flagAlpha = true;
-		accent.custAlpha = 0.1f;
-		preguis.add(accent);
-		accent.setRotation(-10);*/
-		
-		//GUIText txt = new GUIText("HI", 4, TM.font, new Vector2f(0f, 0.5f), 1, true, 0);
-		//txt.setColour(0, 1, 0.1f, 0.25f);
 		
 		GUITexture ellipse = new GUITexture(Loader.loadTexture("ellipse"), new Vector2f(0, 0.1f), TM.sqrgui(1));
 		preguis.add(ellipse);	
@@ -527,219 +494,6 @@ public class Main {
 				else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
 					player.setRotY(180);
 				}
-			}
-			
-			Vector3f col = new Vector3f(1, 0, 0);	
-			int cnt = 0;
-			
-			while (gamePaused) {
-				
-				GL11.glClearColor(col.x, col.y, col.z, 1);
-				float f = 0.01f;
-				switch (cnt) {
-				
-				case 0:
-					if (col.y < 1) {
-						col.y += (f / 2);
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 1:
-					if (col.x > 0) {
-						col.x -= (f / 2);
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 2:
-					if (col.z < 1) {
-						col.z += f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 3:
-					if (col.y > 0) {
-						col.y -= f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 4:
-					if (col.x < 1) {
-						col.x += f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-				
-				case 5:
-					if (col.z > 0) {
-						col.z -= f;
-					}
-					else {
-						cnt = 0;
-					}
-					break;
-				
-				}
-				
-				/*switch (cnt) {
-				
-				case 0:
-					if (col.x < 1) {
-						col.x += 0.01f;
-					}
-					else if (col.y < 1) {
-						col.y += 0.01f;
-					}
-					else if (col.z < 1) {
-						col.z += 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 1:
-					if (col.x > 0) {
-						col.x -= 0.01f;
-					}
-					else if (col.y > 0) {
-						col.y -= 0.01f;
-					}
-					else if (col.z > 0) {
-						col.z -= 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 2:
-					if (col.y < 1) {
-						col.y += 0.01f;
-					}
-					else if (col.z < 1) {
-						col.z += 0.01f;
-					}
-					else if (col.x < 1) {
-						col.x += 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 3:
-					if (col.y > 0) {
-						col.y -= 0.01f;
-					}
-					else if (col.z > 0) {
-						col.z -= 0.01f;
-					}
-					else if (col.x > 0) {
-						col.x -= 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 4:
-					if (col.z < 1) {
-						col.z += 0.01f;
-					}
-					else if (col.x < 1) {
-						col.x += 0.01f;
-					}
-					else if (col.y < 1) {
-						col.y += 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 5:
-					if (col.z > 0) {
-						col.z -= 0.01f;
-					}
-					else if (col.x > 0) {
-						col.x -= 0.01f;
-					}
-					else if (col.y > 0) {
-						col.y -= 0.01f;
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 6:
-					if (col.x < 1) {
-						Vector3f.add(col, new Vector3f(0.01f, 0.01f, 0.01f), col);
-					}
-					else {
-						cnt++;
-					}
-					break;
-					
-				case 7:
-					if (col.x > 0) {
-						Vector3f.sub(col, new Vector3f(0.01f, 0.01f, 0.01f), col);
-					}
-					else {
-						cnt = 0;
-					}
-					break;
-					
-				}*/
-				
-				
-				
-				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-				GUIText lcl = new GUIText("HI THERE!", 1f, TM.font, new Vector2f(0.5f, 0.5f), 1, false, 0);
-				lcl.setColour(1, 0, 0);
-				TextMaster.drawSecondaryText();
-				while (Keyboard.next()) {
-					if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-						gamePaused = false;
-					}
-				}
-				
-				
-				
-				if (Display.isCloseRequested()) {
-					mmfx.cleanUp();
-					TextMaster.cleanUp();
-					buffers.cleanUp();
-					guiRenderer.cleanUp();
-					PostProcessing.cleanUp();
-					fbo.cleanUp();
-					output.cleanUp();
-					output2.cleanUp();
-					waterShader.cleanUp();
-					engine.cleanUp();
-					Loader.cleanUp();
-					ParticleWatcher.cleanUp();
-					AudioEngine.cleanUp();
-					DisplayManager.closeDisplay();
-					System.exit(0);
-				}
-				
-				DisplayManager.updateDisplay();
-				//SFMath.xTranslation = new Vector3f();
 			}
 			
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);

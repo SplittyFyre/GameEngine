@@ -75,6 +75,6 @@ void main(void) {
 	
 	out_Color.gb += 0.4;
 	out_Color.g -= 0.1;
-	
+
 	out_BrightColor = vec4(0);
 }
