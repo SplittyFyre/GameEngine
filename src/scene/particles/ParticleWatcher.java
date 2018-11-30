@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 import org.lwjgl.util.vector.Matrix4f;
 
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 
 public class ParticleWatcher {
 	

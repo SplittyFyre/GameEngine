@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import collision.BoundingBox;
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 import scene.terrain.Terrain;
 
 public class RaysCast {

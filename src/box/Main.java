@@ -17,6 +17,7 @@ import audio.AudioSrc;
 import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import gameplay.collision.CollisionManager;
+import gameplay.entities.PlayerCamera;
 import gameplay.entities.hostiles.BorgVessel;
 import gameplay.entities.hostiles.Enemy;
 import gameplay.entities.players.Player;
@@ -39,10 +40,10 @@ import renderEngine.textures.ModelTexture;
 import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
 import scene.Scene;
-import scene.entities.Camera;
 import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.StaticEntity;
+import scene.entities.camera.Camera;
 import scene.particles.ParticleWatcher;
 import scene.terrain.Island;
 import scene.terrain.Terrain;
@@ -241,7 +242,7 @@ public class Main {
 		
 		//OTHER UTILS************************************************************************
 		
-		Camera camera = new Camera(player);
+		Camera camera = new PlayerCamera(player);
 		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), terrain);
 		
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
@@ -516,7 +517,7 @@ public class Main {
 			TM.f1 = camera.getPitch();
 			TM.f2 = camera.getYaw();
 			TM.f3 = camera.getRoll();
-			TM.f4 = camera.getDistanceFrom();
+			TM.f4 = ((PlayerCamera) camera).getDistanceFrom();
 			
 			switch (viewScreenMode) {
 			
@@ -526,7 +527,7 @@ public class Main {
 				break;
 				
 			case AFT:
-				camera.setDistanceFrom(30);
+				((PlayerCamera) camera).setDistanceFrom(30);
 				camera.setYaw(camera.getYaw() + 180);
 				camera.setPitch(0);
 				break;
@@ -555,7 +556,7 @@ public class Main {
 			camera.setPitch(TM.f1);
 			camera.setYaw(TM.f2); 
 			camera.setRoll(TM.f3);
-			camera.setDistanceFrom(TM.f4);
+			((PlayerCamera) camera).setDistanceFrom(TM.f4);
 			
 			fbo.bindFrameBuffer();
 			

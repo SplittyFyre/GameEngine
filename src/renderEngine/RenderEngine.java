@@ -3,14 +3,14 @@ package renderEngine;
 import org.lwjgl.util.vector.Matrix4f;
 
 import scene.Scene;
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 
 public class RenderEngine {
 	
 	private MasterRenderSystem renderer;
 	private static Matrix4f passMatrix;
-	private static final Matrix4f permenantNormalMatrix = Camera.createProjectionMatrix();
-	private static final Matrix4f permenantLargeMatrix = Camera.createLargerProjectionMatrix();
+	private static final Matrix4f permenantNormalMatrix = Camera.createProjectionMatrix(1, 200000);
+	private static final Matrix4f permenantLargeMatrix = Camera.createProjectionMatrix(1, 200000);
 	
 	private RenderEngine(MasterRenderSystem renderer) {
 		this.renderer = renderer;
@@ -32,7 +32,7 @@ public class RenderEngine {
 	
 	public static RenderEngine init() {
 		Loader loader = new Loader();
-		passMatrix = Camera.createProjectionMatrix();
+		passMatrix = Camera.createProjectionMatrix(1, 200000);
 		MasterRenderSystem mRenderer = new MasterRenderSystem(loader, passMatrix);
 		return new RenderEngine(mRenderer);
 	}

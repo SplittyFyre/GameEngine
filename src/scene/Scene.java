@@ -9,9 +9,9 @@ import org.lwjgl.util.vector.Vector4f;
 import gameplay.entities.players.Player;
 import gameplay.entities.projectiles.Bolt;
 import renderEngine.DisplayManager;
-import scene.entities.Camera;
 import scene.entities.Entity;
 import scene.entities.Light;
+import scene.entities.camera.Camera;
 import scene.terrain.Terrain;
 
 public class Scene {

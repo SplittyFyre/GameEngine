@@ -3,8 +3,8 @@ package water;
 import org.lwjgl.util.vector.Matrix4f;
 
 import renderEngine.ShaderProgram;
-import scene.entities.Camera;
 import scene.entities.Light;
+import scene.entities.camera.Camera;
 import utils.SFMath;
 
 

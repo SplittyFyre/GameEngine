@@ -13,8 +13,8 @@ import org.lwjgl.util.vector.Vector4f;
 import renderEngine.MasterRenderSystem;
 import renderEngine.models.RawModel;
 import renderEngine.textures.TerrainTexturePack;
-import scene.entities.Camera;
 import scene.entities.Light;
+import scene.entities.camera.Camera;
 import scene.terrain.Terrain;
 import utils.SFMath;
 

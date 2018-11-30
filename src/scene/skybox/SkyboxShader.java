@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.DisplayManager;
 import renderEngine.ShaderProgram;
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 import utils.SFMath;
 
 public class SkyboxShader extends ShaderProgram {

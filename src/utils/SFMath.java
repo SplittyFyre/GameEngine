@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.DisplayManager;
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 
 public class SFMath {
 	

@@ -17,6 +17,7 @@ import box.Main;
 import box.TM;
 import collision.BoundingBox;
 import fontMeshCreator.GUIText;
+import gameplay.entities.PlayerCamera;
 import gameplay.entities.entityUtils.ModelSys;
 import gameplay.entities.entityUtils.StatusText;
 import gameplay.entities.hostiles.Enemy;
@@ -531,7 +532,7 @@ public class PlayerVoyager extends Player {
 		@Override
 		public void onClick(IButton button) {
 			Mouse.setGrabbed(true);
-			camera.setAngleAround(0);
+			((PlayerCamera) camera).setAngleAround(0);
 			camera.setPitch(20);
 			
 			for (IGUI el : miscElements) {

@@ -15,9 +15,9 @@ import renderEngine.MasterRenderSystem;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
-import scene.entities.Camera;
 import scene.entities.Entity;
 import scene.entities.Light;
+import scene.entities.camera.Camera;
 import utils.SFMath;
 
 public class EntityRenderSystem {

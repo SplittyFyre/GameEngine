@@ -17,8 +17,8 @@ import gameplay.entities.hostiles.Enemy;
 import gameplay.entities.projectiles.Projectile;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.GUITexture;
-import scene.entities.Camera;
 import scene.entities.Entity;
+import scene.entities.camera.Camera;
 import utils.RaysCast;
 import utils.SFMath;
 

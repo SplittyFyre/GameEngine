@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
-import scene.entities.Camera;
+import scene.entities.camera.Camera;
 
 public class SkyboxRenderSystem {
 	
