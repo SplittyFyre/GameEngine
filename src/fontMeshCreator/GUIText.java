@@ -6,9 +6,9 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import fontRendering.TextMaster;
+import gameplay.entities.entityUtils.StatusText;
 import renderEngine.guis.IGUI;
 import renderEngine.textures.GUITexture;
-import scene.entities.entityUtils.StatusText;
 
 /**
  * Represents a piece of text in the game.

@@ -1,10 +1,10 @@
-package scene.entities.hostiles;
+package gameplay.entities.hostiles;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import gameplay.entities.entityUtils.ITakeDamage;
 import renderEngine.models.TexturedModel;
 import scene.entities.Entity;
-import scene.entities.entityUtils.ITakeDamage;
 
 public abstract class Enemy extends Entity implements ITakeDamage {
 

@@ -1,4 +1,4 @@
-package scene.entities.projectiles;
+package gameplay.entities.projectiles;
 
 import org.lwjgl.util.vector.Vector3f;
 

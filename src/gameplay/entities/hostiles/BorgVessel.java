@@ -1,4 +1,4 @@
-package scene.entities.hostiles;
+package gameplay.entities.hostiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,16 @@ import org.lwjgl.util.vector.Vector4f;
 
 import box.Main;
 import box.TM;
+import gameplay.entities.players.Player;
+import gameplay.entities.projectiles.Bolt;
+import gameplay.entities.projectiles.HomingTorpedo;
+import gameplay.entities.projectiles.Torpedo;
 import objStuff.OBJParser;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
-import scene.entities.players.Player;
-import scene.entities.projectiles.Bolt;
-import scene.entities.projectiles.HomingTorpedo;
-import scene.entities.projectiles.Torpedo;
 import utils.SFMath;
 
 public class BorgVessel extends Enemy {

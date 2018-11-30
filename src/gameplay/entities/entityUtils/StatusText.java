@@ -1,4 +1,4 @@
-package scene.entities.entityUtils;
+package gameplay.entities.entityUtils;
 
 public class StatusText {
 	

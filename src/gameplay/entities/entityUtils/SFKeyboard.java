@@ -1,4 +1,4 @@
-package scene.entities.entityUtils;
+package gameplay.entities.entityUtils;
 
 import org.lwjgl.input.Keyboard;
 

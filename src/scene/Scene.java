@@ -6,12 +6,12 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import gameplay.entities.players.Player;
+import gameplay.entities.projectiles.Bolt;
 import renderEngine.DisplayManager;
 import scene.entities.Camera;
 import scene.entities.Entity;
 import scene.entities.Light;
-import scene.entities.players.Player;
-import scene.entities.projectiles.Bolt;
 import scene.terrain.Terrain;
 
 public class Scene {

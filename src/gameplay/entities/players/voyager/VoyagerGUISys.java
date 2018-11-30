@@ -1,4 +1,4 @@
-package scene.entities.players.voyager;
+package gameplay.entities.players.voyager;
 
 import java.util.List;
 

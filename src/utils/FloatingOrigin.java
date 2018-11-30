@@ -2,7 +2,7 @@ package utils;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import scene.entities.players.Player;
+import gameplay.entities.players.Player;
 
 public class FloatingOrigin {
 	

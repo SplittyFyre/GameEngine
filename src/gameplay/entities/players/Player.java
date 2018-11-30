@@ -1,4 +1,4 @@
-package scene.entities.players;
+package gameplay.entities.players;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,14 +11,14 @@ import org.lwjgl.util.vector.Vector3f;
 
 import box.TM;
 import fontMeshCreator.GUIText;
+import gameplay.entities.entityUtils.ITakeDamage;
+import gameplay.entities.entityUtils.StatusText;
+import gameplay.entities.hostiles.Enemy;
+import gameplay.entities.projectiles.Projectile;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.GUITexture;
 import scene.entities.Camera;
 import scene.entities.Entity;
-import scene.entities.entityUtils.ITakeDamage;
-import scene.entities.entityUtils.StatusText;
-import scene.entities.hostiles.Enemy;
-import scene.entities.projectiles.Projectile;
 import utils.RaysCast;
 import utils.SFMath;
 

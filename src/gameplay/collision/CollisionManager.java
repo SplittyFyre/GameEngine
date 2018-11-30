@@ -1,12 +1,12 @@
-package collision;
+package gameplay.collision;
 
 import java.util.List;
 
 import box.Main;
-import scene.entities.entityUtils.ITakeDamage;
-import scene.entities.hostiles.Enemy;
-import scene.entities.players.Player;
-import scene.entities.projectiles.Projectile;
+import gameplay.entities.entityUtils.ITakeDamage;
+import gameplay.entities.hostiles.Enemy;
+import gameplay.entities.players.Player;
+import gameplay.entities.projectiles.Projectile;
 import utils.RaysCast;
 
 public class CollisionManager {

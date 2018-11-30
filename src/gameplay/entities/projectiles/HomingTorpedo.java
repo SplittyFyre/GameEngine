@@ -1,12 +1,12 @@
-package scene.entities.projectiles;
+package gameplay.entities.projectiles;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import box.TM;
+import gameplay.entities.players.Player;
 import renderEngine.DisplayManager;
 import renderEngine.models.TexturedModel;
 import scene.entities.Entity;
-import scene.entities.players.Player;
 import scene.particles.Particle;
 import scene.particles.ParticleSystem;
 import scene.particles.ParticleTexture;
