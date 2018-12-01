@@ -197,7 +197,7 @@ public class Main {
 		
 		Vector3f yellow = new Vector3f(1.3f, 1.3f, 1.3f);
 		
-		Light sun = new Light(new Vector3f(7000, 3600, 26000), new Vector3f(1.3f, 1.3f, 1.3f));
+		Light sun = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
 		lights.add(sun);
 		
 		//entities.add(new StaticEntity(new TexturedModel(OBJParser.loadObjModel("photon"), new ModelTexture(Loader.loadTexture("image"))),
@@ -207,9 +207,9 @@ public class Main {
 		Vector3f[196894.77, 104802.63, 214692.56]
 		Vector3f[216764.22, 122352.484, 44561.39]*/
 		
-		lights.add(new Light(new Vector3f(2201.2888f, 190080.38f, 6211.6206f), yellow));
-		lights.add(new Light(new Vector3f(196894.77f, 104802.63f, 214692.56f), yellow));
-		lights.add(new Light(new Vector3f(-216764.22f, 122352.484f, -44561.39f), yellow));
+		//lights.add(new Light(new Vector3f(2201.2888f, 190080.38f, 6211.6206f), yellow));
+		//lights.add(new Light(new Vector3f(196894.77f, 104802.63f, 214692.56f), yellow));
+		//lights.add(new Light(new Vector3f(-216764.22f, 122352.484f, -44561.39f), yellow));
 		
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
@@ -235,7 +235,7 @@ public class Main {
 		
 		}
 		
-		Scene scene = new Scene(player);
+		Scene scene = new Scene();
 		
 		//StaticEntity en = new StaticEntity(voyagerShip, new Vector3f(0, 0, 0), 0, 0, 0, 10);
 		//entities.add(en);
@@ -420,7 +420,6 @@ public class Main {
 			caster.update();
 			AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 			ParticleWatcher.update();
-			scene.shootProps();
 			
 			Vector3f trans = FloatingOrigin.update();
 			

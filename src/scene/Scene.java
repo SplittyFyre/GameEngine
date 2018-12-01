@@ -3,12 +3,8 @@ package scene;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import gameplay.entities.players.Player;
-import gameplay.entities.projectiles.Bolt;
-import renderEngine.DisplayManager;
 import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.camera.Camera;
@@ -16,22 +12,14 @@ import scene.terrain.Terrain;
 
 public class Scene {
 	
-	public Scene(Player player) {
-		this.player = player;
-	}
-	
-	private float counter = 0;
-	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
+	private List<Light> lights;
 	 
 	private float skyR = 0, skyG = 0, skyB = 0;
-	private List<Light> lights;
 	private Camera camera;
 	private Vector4f clipPlane;
-	
-	private Player player;
-	
+		
 	public Vector4f getClipPlanePointer() {
 		return clipPlane;
 	}
@@ -41,15 +29,15 @@ public class Scene {
 	}
 	
 	public void setEntityList(List<Entity> e) {
-		entities = new ArrayList<Entity>(e);
+		entities = (e);
 	}
 	
 	public void setTerrainList(List<Terrain> t) {
-		terrains = new ArrayList<Terrain> (t);
+		terrains = (t);
 	}
 	
 	public void setLightList(List<Light> l) {
-		lights = new ArrayList<Light> (l);
+		lights = (l);
 	}
 	
 	public void setCamera(Camera c) {
@@ -82,28 +70,6 @@ public class Scene {
 
 	public float getSkyB() {
 		return skyB;
-	}
-	
-	public void shootProps() {
-		
-		counter += DisplayManager.getFrameTime();
-		
-		if (counter > 0) {
-			
-			player.getProjectiles().add(Bolt.bluephaser(new Vector3f(-2500, 750, 2900)
-					, 0, 20, 0,
-					5, 0, 45, 0, 0));
-			
-			player.getProjectiles().add(Bolt.bluephaser(new Vector3f(-2500, 750, 2900)
-					, -5, 20, 0,
-					5, 0, 45, 0, 0));
-
-			
-			if (counter > 2) {
-				counter = -5;
-			}
-		}
-		
 	}
 	
 }
