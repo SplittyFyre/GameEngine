@@ -41,7 +41,6 @@ public class MasterRenderSystem {
 		prepare();
 		skyboxRenderer.render(scene.getCamera(), skyR, skyG, skyB);
 		entityRenderer.render(entities, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
-		disableFaceCulling();
 		terrainRenderer.render(terrains, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
 		//FINISH***********************************************************
 		terrains.clear();

@@ -298,23 +298,23 @@ public class Main {
 		
 		System.out.println("About to start Main Game Loop");
 		
-		GUITexture ellipse = new GUITexture(Loader.loadTexture("ellipse"), new Vector2f(0, 0.1f), TM.sqrgui(1));
+		GUITexture ellipse = new GUITexture(Loader.loadTexture("ellipse"), new Vector2f(0, 0.1f), TM.sqrgui(0.66f));
 		preguis.add(ellipse);	
 		
-		Vector2f rectscale2 = TM.sqrgui(0.6f);
+		Vector2f rectscale2 = TM.sqrgui(0.45f);
 		rectscale2.x *= 1.55f;
 		GUITexture ellipsecover = new GUITexture(Loader.loadTexture("black"), new Vector2f(ellipse.getPosition()), rectscale2);
 		preguis.add(ellipsecover);
 		
-		GUITexture sftxt = new GUITexture(Loader.loadTexture("prog"), new Vector2f(0, -0.65f), TM.sqrgui(0.75f));
+		GUITexture sftxt = new GUITexture(Loader.loadTexture("prog"), new Vector2f(0, -0.7f), TM.sqrgui(0.6f));
 		preguis.add(sftxt);
 		
-		Vector2f rectscale = TM.sqrgui(0.15f);
+		Vector2f rectscale = TM.sqrgui(0.1f);
 		rectscale.x *= 5;
 		GUITexture txtcover = new GUITexture(Loader.loadTexture("black"), new Vector2f(sftxt.getPosition()), rectscale);
 		preguis.add(txtcover);
 		
-		GUITexture icon = new GUITexture(Loader.loadTexture("slice"), new Vector2f(-0.05f, 0.11f), TM.sqrgui(0.35f));
+		GUITexture icon = new GUITexture(Loader.loadTexture("slice"), new Vector2f(-0.05f, 0.13f), TM.sqrgui(0.24f));
 		icon.flagAlpha = true;
 		icon.custAlpha = 0;
 		preguis.add(icon);

@@ -135,7 +135,7 @@ public class TM {
 		
 		phaserBolt.getTexture().setUseFakeLighting(true);
 		phaserBolt.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
-		phaserBolt.getTexture().setBrightDamper(4);
+		phaserBolt.getTexture().setBrightDamper(0.4f);
 		
 		phaserBoltBlue.getTexture().setUseFakeLighting(true);
 		phaserBoltBlue.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
