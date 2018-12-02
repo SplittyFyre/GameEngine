@@ -364,21 +364,6 @@ public class PlayerVoyager extends Player {
 	private List<GUIText> abilityTexts = new ArrayList<GUIText>();
 	private float listpos = 0;
 	
-	private void addAbility(SFAbstractButton button, String msg) {
-		button.getTexture().setPosition(new Vector2f(0.8f, listpos));
-		button.getTexture().setScale(new Vector2f(0.075f, 0.065f / TM.GUI_SCALE_DIV));
-		GUIText o = new GUIText(msg, 1, TM.font, TM.coordtext(
-				
-				0.8f - 0.07f,
-				listpos + (0.08f / TM.GUI_SCALE_DIV / 2) + 0.01f)
-				
-				, 0.5f, false);
-		
-		o.setColour(0, 65f / 255f, 171f / 255f);
-		
-		listpos -= 0.1f;
-	}
-	
 	private SFAbstractButton abilityStinger = new SFAbstractButton(tacticalElements, "agray", new Vector2f(0.75f, -0.1f), TM.sqr4) {
 		
 		@Override
@@ -871,42 +856,42 @@ public class PlayerVoyager extends Player {
 		guis.add(gui_panel);
 		tacticalElements.add(schematic);
 				
-		impulseslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 0.25f, "1/4", 1f, 0.04f
+		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.25f, "1/4", 1f, 0.04f
 				, 0, 65f / 255f, 171f / 255f);
 		
-		impulseslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 0.5f, "1/2", 1f, 0.04f
+		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.5f, "1/2", 1f, 0.04f
 				, 0, 1, 1);
 		
-		impulseslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 0.75f, "3/4", 1f, 0.04f
+		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.75f, "3/4", 1f, 0.04f
 				, 1, 1, 0);
 		
-		impulseslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 1, "full", 1f, 0.04f
+		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 1, "full", 1f, 0.04f
 				, 1, 1, 0);
 		
 		
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 1f / MAX_WARP_FACTOR, "Warp 1", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 1f / MAX_WARP_FACTOR, "Warp 1", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 2f / MAX_WARP_FACTOR, "Warp 2", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 2f / MAX_WARP_FACTOR, "Warp 2", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 3f / MAX_WARP_FACTOR, "Warp 3", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 3f / MAX_WARP_FACTOR, "Warp 3", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 4f / MAX_WARP_FACTOR, "Warp 4", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 4f / MAX_WARP_FACTOR, "Warp 4", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 5f / MAX_WARP_FACTOR, "Warp 5", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 5f / MAX_WARP_FACTOR, "Warp 5", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 6f / MAX_WARP_FACTOR, "Warp 6", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 6f / MAX_WARP_FACTOR, "Warp 6", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 7f / MAX_WARP_FACTOR, "Warp 7", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 7f / MAX_WARP_FACTOR, "Warp 7", 1f, 0.04f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", new Vector2f(0.08f / 1.68f, 0.08f), 0.05f, 8f / MAX_WARP_FACTOR, "Warp 8", 1f, 0.04f
+		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 8f / MAX_WARP_FACTOR, "Warp 8", 1f, 0.04f
 				, 1, 1, 0);
 		
 		//addAbility(abilityStinger, "Fire Stinger");
@@ -919,12 +904,12 @@ public class PlayerVoyager extends Player {
 		
 		for (int i = 0; i <= TURRET_MAX; i++) {
 			String path = "hb" + i;
-			GUITexture o = new GUITexture(Loader.loadTexture(path), new Vector2f(x, hotbarheight), new Vector2f(0.04f / 1.68f, 0.04f));
+			GUITexture o = new GUITexture(Loader.loadTexture(path), new Vector2f(x, hotbarheight), TM.sqr4);
 			tacticalElements.add(o);
 			x += distBetweenSlots;
 		}
 		
-		turrethotbar = new GUITexture(Loader.loadTexture("hotbarptr"), new Vector2f(hotbarx, hotbarheight), new Vector2f(0.04f / 1.68f, 0.04f));
+		turrethotbar = new GUITexture(Loader.loadTexture("hotbarptr"), new Vector2f(hotbarx, hotbarheight), TM.sqr4);
 		tacticalElements.add(turrethotbar);
 		
 		

@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector2f;
 import box.TM;
 import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
+import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.textures.GUITexture;
 
@@ -77,7 +78,7 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 				
 			}
 		};
-		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f / 1.68f, scale.y * sliderLength));
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f, scale.y * sliderLength * DisplayManager.getAspectRatio()));
 	}
 	
 	public SFVerticalSlider(List<IGUI> list, float sliderLength, float xoff, float yoff, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {
@@ -116,7 +117,7 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 				
 			}
 		};
-		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f / 1.68f, sliderLength));
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.02f, sliderLength));
 		list.add(this);
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 
 import box.TM;
+import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.guis.IButton;
 import renderEngine.guis.IGUI;
@@ -419,7 +420,7 @@ public class VoyagerGUISys {
 		
 		int a4 = Loader.loadTexture("sqgui");
 		int b4 = Loader.loadTexture("sqguifilled");
-		Vector2f varl = new Vector2f(0.03f / TM.GUI_SCALE_DIV, 0.02f);
+		Vector2f varl = new Vector2f(0.015f, 0.01f * DisplayManager.getAspectRatio());
 		//BOOKMARK shoot port arrays
 		buttonPortArrays1 = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(-0.055f, 0.15f), varl) {
 			

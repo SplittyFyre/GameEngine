@@ -104,7 +104,8 @@ public class DisplayManager {
 	}
 	
 	public static float getAspectRatio() {
-		return (float) Display.getHeight() / (float) Display.getWidth();
+		System.out.println((float) Display.getWidth() / (float) Display.getHeight());
+		return (float) Display.getWidth()/ (float) Display.getHeight();
 		//return (float) Display.getWidth() / (float) Display.getHeight();
 	}
 	
