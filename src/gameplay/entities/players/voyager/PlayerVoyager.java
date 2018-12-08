@@ -29,6 +29,7 @@ import gameplay.entities.projectiles.Torpedo;
 import objStuff.OBJParser;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.IButton;
 import renderEngine.guis.IGUI;
 import renderEngine.guis.ISlider;
@@ -36,7 +37,6 @@ import renderEngine.guis.SFAbstractButton;
 import renderEngine.guis.SFVerticalSlider;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
-import renderEngine.textures.GUITexture;
 import renderEngine.textures.ModelTexture;
 import scene.entities.Entity;
 import scene.particles.Particle;
@@ -47,12 +47,8 @@ import utils.SFMath;
 
 public class PlayerVoyager extends Player {
 	
-	static Vector2f panelpos = new Vector2f(0.65f, -0.3f);
-	static Vector2f schmpos = Vector2f.add(panelpos, new Vector2f(-0.2455f, 0), null);
-	//schmpos = [0.4045, -0.3f]
-	
-	private GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), panelpos, new Vector2f(0.35f, 0.7f));
-	private GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), schmpos, new Vector2f(0.233f, 0.466f));
+	private GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), new Vector2f(0.65f, -0.3f), new Vector2f(0.35f, 0.7f));
+	private GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0.65f - 0.2455f, -0.3f), new Vector2f(0.233f, 0.466f));
 	
 	//package visibility
 	List<IGUI> tacticalElements = new ArrayList<IGUI>();
@@ -577,6 +573,7 @@ public class PlayerVoyager extends Player {
 		}
 	};
 	
+	private static final Vector2f colPos = new Vector2f(0, -0.1f);
 	//BOOKMARK maneuvaring 'joystick'
 	private boolean grabStick = false;
 	private SFAbstractButton joystick = new SFAbstractButton(helmElements, "cntrl", colPos, TM.sqr4, 0.1f, 0.1f) {
@@ -608,7 +605,7 @@ public class PlayerVoyager extends Player {
 	};
 	
 	//BOOKMARK break target
-	private SFAbstractButton breaktarget = new SFAbstractButton(tacticalElements, "break", schmpos, new Vector2f(0.13f, 0.525f), TM.sqr4) {
+	private SFAbstractButton breaktarget = new SFAbstractButton(tacticalElements, "break", new Vector2f(0.13f, 0.525f), TM.sqr4) {
 		
 		@Override
 		public void whileHovering(IButton button) {
@@ -758,8 +755,6 @@ public class PlayerVoyager extends Player {
 	private float mainPhaserTimer = 0;
 	
 	//BOOKMARK: NAVIGATION VARS
-	
-	private static final Vector2f colPos = new Vector2f(0, -0.1f); 
 	
 	private static final float MAX_WARP_FACTOR = 9.975f;
 	

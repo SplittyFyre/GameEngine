@@ -22,5 +22,5 @@ void main(void){
     
     out_Color = texture(cubeMap, textureCoords);
     
-    out_BrightColor = out_Color / 4;
+    out_BrightColor = vec4(0);
 }

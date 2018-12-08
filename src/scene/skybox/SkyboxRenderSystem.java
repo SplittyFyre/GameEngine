@@ -59,7 +59,9 @@ public class SkyboxRenderSystem {
 		};
 	
 	private String[] TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
-	private String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "nightBottom", "nightBack", "nightFront"};
+	//private String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "nightBottom", "nightBack", "nightFront"};
+	String name = "high";
+	private String[] NIGHT_TEXTURE_FILES = {name + "RT", name + "LF", name + "DN", name + "UP", name + "BK", name + "FT"};
 	
 	private RawModel cube;
 	private int texture;
@@ -80,6 +82,8 @@ public class SkyboxRenderSystem {
 	}
 	
 	public void render(Camera camera, float r, float g, float b) {
+		//GL11.glEnable(GL11.GL_BLEND);
+		//L11.glBlendFunc(GL11.GL_ONE, GL11.GL_SRC_ALPHA);
 		GL11.glDepthMask(false);
 		shader.start();
 		shader.loadViewMatrix(camera);
@@ -92,6 +96,7 @@ public class SkyboxRenderSystem {
 		GL30.glBindVertexArray(0);
 		shader.stop();
 		GL11.glDepthMask(true);
+		//GL11.glDisable(GL11.GL_BLEND);
 	}
 	
 	private void bindTextures() {

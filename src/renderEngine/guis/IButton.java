@@ -2,8 +2,6 @@ package renderEngine.guis;
 
 import java.util.List;
 
-import renderEngine.textures.GUITexture;
-
 public interface IButton {
 	
 	void onClick(IButton button);

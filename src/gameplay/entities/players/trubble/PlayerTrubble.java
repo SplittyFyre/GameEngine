@@ -21,10 +21,8 @@ import gameplay.entities.projectiles.Projectile;
 import gameplay.entities.projectiles.Torpedo;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.guis.IButton;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.IGUI;
-import renderEngine.guis.SFAbstractButton;
-import renderEngine.textures.GUITexture;
 import scene.entities.Entity;
 import scene.particles.Particle;
 import scene.particles.ParticleTexture;
@@ -69,7 +67,7 @@ public class PlayerTrubble extends Player {
 	};*/
 	
 	//BOOKMARK transfer button energy to shields
-	private SFAbstractButton energyshields = new SFAbstractButton(miscElements, "clear", new Vector2f(0.35f, 0.45f), new Vector2f(0.08f, 0.04f)) {
+	/*private SFAbstractButton energyshields = new SFAbstractButton(miscElements, "clear", new Vector2f(0.35f, 0.45f), new Vector2f(0.08f, 0.04f)) {
 		
 		@Override
 		public void whileHovering(IButton button) {
@@ -99,7 +97,7 @@ public class PlayerTrubble extends Player {
 			
 		}
 		
-	};	
+	};	*/
 	
 	//BOOKMARK GUI SETUP
 	

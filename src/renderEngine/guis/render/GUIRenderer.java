@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import renderEngine.Loader;
+import renderEngine.guis.GUITexture;
 import renderEngine.models.RawModel;
-import renderEngine.textures.GUITexture;
 import utils.SFMath;
 
 public class GUIRenderer {

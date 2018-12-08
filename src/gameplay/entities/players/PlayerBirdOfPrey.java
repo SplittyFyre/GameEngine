@@ -21,11 +21,9 @@ import gameplay.entities.projectiles.Projectile;
 import gameplay.entities.projectiles.Torpedo;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.guis.IButton;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.IGUI;
-import renderEngine.guis.SFAbstractButton;
 import renderEngine.models.TexturedModel;
-import renderEngine.textures.GUITexture;
 import scene.entities.Entity;
 import scene.particles.Particle;
 import scene.particles.ParticleTexture;
@@ -44,7 +42,7 @@ public class PlayerBirdOfPrey extends Player {
 	
 	private List<IGUI> elements = new ArrayList<IGUI>();
 	
-	private SFAbstractButton grabmouse = new SFAbstractButton(elements, "image", new Vector2f(0, 0.5f), TM.sqr4) {
+	/*private SFAbstractButton grabmouse = new SFAbstractButton(elements, "image", new Vector2f(0, 0.5f), TM.sqr4) {
 		
 		@Override
 		public void whileHovering(IButton button) {
@@ -73,7 +71,7 @@ public class PlayerBirdOfPrey extends Player {
 				el.hide(guis);
 			}
 		}
-	};
+	};*/
 	
 	@Override
 	public Enemy getTarget() {

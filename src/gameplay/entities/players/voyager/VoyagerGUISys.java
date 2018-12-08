@@ -7,23 +7,15 @@ import org.lwjgl.util.vector.Vector2f;
 import box.TM;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
+import renderEngine.guis.GUIStruct;
 import renderEngine.guis.IButton;
 import renderEngine.guis.IGUI;
 import renderEngine.guis.ISlider;
 import renderEngine.guis.SFAbstractButton;
 import renderEngine.guis.SFVerticalSlider;
-import renderEngine.textures.GUITexture;
 
 public class VoyagerGUISys {
-	
-	private static Vector2f panelpos = PlayerVoyager.panelpos;
-	private static Vector2f schmpos = PlayerVoyager.schmpos;
-	//schmpos = [0.4045, -0.3f]
-	
-	private static GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), panelpos, new Vector2f(0.35f, 0.7f));
-	private static GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), schmpos, new Vector2f(0.233f, 0.466f));
-	
-	
+		
 	private static List<IGUI> tacticalElements;
 	private static List<IGUI> opsElements;
 	private static List<IGUI> helmElements;
@@ -39,6 +31,8 @@ public class VoyagerGUISys {
 		VoyagerGUISys.player = player;
 		setupTactical();
 	}
+	
+	GUIStruct struct = new GUIStruct(new Vector2f(0.4045f, -0.3f));
 	
 	SFAbstractButton buttonFrontPhasers;
 	
@@ -82,7 +76,7 @@ public class VoyagerGUISys {
 		int a1 = Loader.loadTexture("voyphaserdiag2");
 		int b1 = Loader.loadTexture("voyphaserdiagactive");
 		//BOOKMARK front phaser shoot button 
-		buttonFrontPhasers = new SFAbstractButton(tacticalElements, "voyphaserdiag2", schematic.getPosition(), new Vector2f(-0.0045f, 0.375f), TM.sqr8) {
+		buttonFrontPhasers = new SFAbstractButton(struct, "voyphaserdiag2", new Vector2f(-0.0045f, 0.375f), TM.sqr8) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -111,7 +105,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire individual phaser cannons
-		button_port_front_phaser = new SFAbstractButton(tacticalElements, "stdbutton", schematic.getPosition(), new Vector2f(0.09f, 0.435f), TM.sqr2) {
+		button_port_front_phaser = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.09f, 0.435f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -139,7 +133,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		button_center_front_phaser = new SFAbstractButton(tacticalElements, "stdbutton", schematic.getPosition(), new Vector2f(0.09f, 0.385f), TM.sqr2) {
+		button_center_front_phaser = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.09f, 0.385f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -167,7 +161,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		button_starb_front_phaser = new SFAbstractButton(tacticalElements, "stdbutton", schematic.getPosition(), new Vector2f(0.09f, 0.335f), TM.sqr2) {
+		button_starb_front_phaser = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.09f, 0.335f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -198,7 +192,7 @@ public class VoyagerGUISys {
 		int a2 = Loader.loadTexture("guisys");
 		int b2 = Loader.loadTexture("guisysfilled");
 		//BOOKMARK front double photon shots
-		buttonFrontPhotons = new SFAbstractButton(tacticalElements, "guisys", schmpos, new Vector2f(-0.0545f, 0.25f), TM.sqr8) {
+		buttonFrontPhotons = new SFAbstractButton(struct, "guisys", new Vector2f(-0.0545f, 0.25f), TM.sqr8) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -229,7 +223,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire individual front photon tubes
-		button_port_front_photon = new SFAbstractButton(tacticalElements, "stdbutton", schmpos, new Vector2f(0.1f, 0.275f), TM.sqr2) {
+		button_port_front_photon = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.1f, 0.275f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -259,7 +253,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		button_starb_front_photon = new SFAbstractButton(tacticalElements, "stdbutton", schmpos, new Vector2f(0.125f, 0.275f), TM.sqr2) {
+		button_starb_front_photon = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.125f, 0.275f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -290,7 +284,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire individual front quantum tubes
-		button_port_front_quantum = new SFAbstractButton(tacticalElements, "stdbutton", schmpos, new Vector2f(0.1f, 0.225f), TM.sqr2) {
+		button_port_front_quantum = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.1f, 0.225f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -320,7 +314,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		button_starb_front_quantum = new SFAbstractButton(tacticalElements, "stdbutton", schmpos, new Vector2f(0.125f, 0.225f), TM.sqr2) {
+		button_starb_front_quantum = new SFAbstractButton(struct, "stdbutton", new Vector2f(0.125f, 0.225f), TM.sqr2) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -351,7 +345,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK front double quantum shots
-		buttonFrontQuantums = new SFAbstractButton(tacticalElements, "guisys", schmpos, new Vector2f(0.0455f, 0.25f), TM.sqr8) {
+		buttonFrontQuantums = new SFAbstractButton(struct, "guisys", new Vector2f(0.0455f, 0.25f), TM.sqr8) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -388,7 +382,7 @@ public class VoyagerGUISys {
 		int a3 = Loader.loadTexture("subsec");
 		int b3 = Loader.loadTexture("subsecfilled");
 		//BOOKMARK phaser spray
-		buttonPhaserSpray = new SFAbstractButton(tacticalElements, "subsec", schmpos, new Vector2f(-0.0045f, 0.175f), TM.sqr4) {
+		buttonPhaserSpray = new SFAbstractButton(struct, "subsec", new Vector2f(-0.0045f, 0.175f), TM.sqr4) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -422,7 +416,7 @@ public class VoyagerGUISys {
 		int b4 = Loader.loadTexture("sqguifilled");
 		Vector2f varl = new Vector2f(0.015f, 0.01f * DisplayManager.getAspectRatio());
 		//BOOKMARK shoot port arrays
-		buttonPortArrays1 = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(-0.055f, 0.15f), varl) {
+		buttonPortArrays1 = new SFAbstractButton(struct, "sqgui", new Vector2f(-0.055f, 0.15f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -450,7 +444,7 @@ public class VoyagerGUISys {
 			}
 		};
 
-		buttonPortArrays2 = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(-0.055f, 0.1f), varl) {
+		buttonPortArrays2 = new SFAbstractButton(struct, "sqgui", new Vector2f(-0.055f, 0.1f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -478,7 +472,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		buttonBackPortArrays = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(-0.055f, 0.05f), varl) {
+		buttonBackPortArrays = new SFAbstractButton(struct, "sqgui", new Vector2f(-0.055f, 0.05f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -507,7 +501,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire starboard arrays
-		buttonStarbArrays1 = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(0.0455f, 0.15f), varl) {
+		buttonStarbArrays1 = new SFAbstractButton(struct, "sqgui", new Vector2f(0.0455f, 0.15f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -535,7 +529,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		buttonStarbArrays2 = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(0.0455f, 0.1f), varl) {
+		buttonStarbArrays2 = new SFAbstractButton(struct, "sqgui", new Vector2f(0.0455f, 0.1f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -563,7 +557,7 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		buttonBackStarbArrays = new SFAbstractButton(tacticalElements, "sqgui", schmpos, new Vector2f(0.0455f, 0.05f), varl) {
+		buttonBackStarbArrays = new SFAbstractButton(struct, "sqgui", new Vector2f(0.0455f, 0.05f), varl) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -622,7 +616,7 @@ public class VoyagerGUISys {
 		int a5 = Loader.loadTexture("shieldiconfilled");
 		int b5 = Loader.loadTexture("shieldicon");
 		//BOOKMARK toggle shields
-		toggleshields = new SFAbstractButton(tacticalElements, "shieldiconfilled", schmpos, new Vector2f(0, 0.51f), TM.sqr4) {
+		toggleshields = new SFAbstractButton(struct, "shieldiconfilled", new Vector2f(0, 0.51f), TM.sqr4) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -657,7 +651,7 @@ public class VoyagerGUISys {
 		int a8 = Loader.loadTexture("rect");
 		int b8 = Loader.loadTexture("rectfilled");
 		//BOOKMARK fire aft mounted phaser gun
-		buttonBackMountedPhaser = new SFAbstractButton(tacticalElements, "rect", schmpos, new Vector2f(-0.0045f, 0.075f), TM.sqr4) {
+		buttonBackMountedPhaser = new SFAbstractButton(struct, "rect", new Vector2f(-0.0045f, 0.075f), TM.sqr4) {
 
 			@Override
 			public void onClick(IButton button) {
@@ -687,7 +681,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire backmost phaser gun
-		buttonBackEndPhaser = new SFAbstractButton(tacticalElements, "rect", schmpos, new Vector2f(-0.0045f, -0.34f), TM.sqr4) {
+		buttonBackEndPhaser = new SFAbstractButton(struct, "rect", new Vector2f(-0.0045f, -0.34f), TM.sqr4) {
 
 			@Override
 			public void onClick(IButton button) {
@@ -719,7 +713,7 @@ public class VoyagerGUISys {
 		int a9 = Loader.loadTexture("junction");
 		int b9 = Loader.loadTexture("junctionfilled");
 		//BOOKMARK fire aft mounted torpedo
-		buttonBackMountedTorpedo = new SFAbstractButton(tacticalElements, "junction", schmpos, new Vector2f(-0.0045f, 0), TM.sqr4) {
+		buttonBackMountedTorpedo = new SFAbstractButton(struct, "junction", new Vector2f(-0.0045f, 0), TM.sqr4) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -748,7 +742,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK fire backmost torpedo
-		buttonBackEndTorpedo = new SFAbstractButton(tacticalElements, "junction", schmpos, new Vector2f(-0.0045f, -0.1f), TM.sqr4) {
+		buttonBackEndTorpedo = new SFAbstractButton(struct, "junction", new Vector2f(-0.0045f, -0.1f), TM.sqr4) {
 			
 			@Override
 			public void whileHovering(IButton button) {
@@ -775,6 +769,8 @@ public class VoyagerGUISys {
 				player.fireBackEndTorpedo();
 			}
 		};
+		
+		tacticalElements.add(struct);
 		
 	}
 	

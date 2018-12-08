@@ -32,10 +32,10 @@ import postProcessing.PostProcessing;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.RenderEngine;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.render.GUIRenderer;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
-import renderEngine.textures.GUITexture;
 import renderEngine.textures.ModelTexture;
 import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
@@ -306,7 +306,7 @@ public class Main {
 		GUITexture ellipsecover = new GUITexture(Loader.loadTexture("black"), new Vector2f(ellipse.getPosition()), rectscale2);
 		preguis.add(ellipsecover);
 		
-		GUITexture sftxt = new GUITexture(Loader.loadTexture("prog"), new Vector2f(0, -0.7f), TM.sqrgui(0.6f));
+		GUITexture sftxt = new GUITexture(Loader.loadTexture("prog"), new Vector2f(0, -0.75f), TM.sqrgui(0.6f));
 		preguis.add(sftxt);
 		
 		Vector2f rectscale = TM.sqrgui(0.1f);
@@ -352,7 +352,7 @@ public class Main {
 			if (timer > 3.5f) {
 				float mov = 0.2f * time;
 				txtcover.getPosition().x += mov;
-				ellipsecover.getPosition().x -= mov;
+				ellipsecover.getPosition().x -= (mov * 1.35f);
 			}
 
 			DisplayManager.updateDisplay();

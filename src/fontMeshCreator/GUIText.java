@@ -5,10 +5,11 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
+import box.TM;
 import fontRendering.TextMaster;
 import gameplay.entities.entityUtils.StatusText;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.IGUI;
-import renderEngine.textures.GUITexture;
 
 /**
  * Represents a piece of text in the game.
@@ -279,6 +280,12 @@ public class GUIText implements IGUI {
 	public void show(List<GUITexture> textures) {
 		this.show();
 		System.out.println("IGUI show");
+	}
+
+	@Override
+	public void move(float dx, float dy) {
+		this.position.x += TM.coordtextx(dx);
+		this.position.y += TM.coordtexty(dy);
 	}
 
 }

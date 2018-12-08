@@ -13,7 +13,6 @@ import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.textures.GUITexture;
 
 public abstract class SFVerticalSlider implements ISlider, IGUI {
 
@@ -39,6 +38,19 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 	
 	public float getTopY() {
 		return background.getPosition().y + background.getScale().y + slide.getTexture().getScale().y;
+	}
+	
+	@Override
+	public void move(float dx, float dy) {
+		background.move(dx, dy);
+		counter.move(dx, dy);
+		slide.move(dx, dy);
+		for (IGUI el : marks) {
+			el.move(dx, dy);
+		}
+		for (GUIText el : markTexts) {
+			el.move(dx, dy);
+		}
 	}
 	
 	public SFVerticalSlider(float sliderLength, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {

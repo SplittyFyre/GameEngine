@@ -7,7 +7,6 @@ import org.lwjgl.util.vector.Vector2f;
 
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
-import renderEngine.textures.GUITexture;
 
 public abstract class SFAbstractButton implements IButton, IGUI {
 	
@@ -15,18 +14,24 @@ public abstract class SFAbstractButton implements IButton, IGUI {
 	private Vector2f defaultScale;
 	private boolean isHidden = true, isHovering = false;
 	private float px = 0, py = 0;
-	private Vector2f origin = null;
+	
+	public SFAbstractButton(GUIStruct parent, String texture, Vector2f position, Vector2f scale) {
+		buttonTexture = new GUITexture(Loader.loadTexture(texture), position, scale);
+		defaultScale = new Vector2f(scale);
+		parent.addChild(this);
+	}
+	
+	public SFAbstractButton(GUIStruct parent, String texture, Vector2f position, Vector2f scale, float hitboxXP, float hitboxYP) {
+		buttonTexture = new GUITexture(Loader.loadTexture(texture), position, scale);
+		defaultScale = new Vector2f(scale);
+		this.px = hitboxXP;
+		this.py = hitboxYP;
+		parent.addChild(this);
+	}
 	
 	public SFAbstractButton(List<IGUI> list, String texture, Vector2f position, Vector2f scale) {
 		buttonTexture = new GUITexture(Loader.loadTexture(texture), position, scale);
 		defaultScale = new Vector2f(scale);
-		list.add(this);
-	}
-	
-	public SFAbstractButton(List<IGUI> list, String texture, Vector2f origin, Vector2f position, Vector2f scale) {
-		buttonTexture = new GUITexture(Loader.loadTexture(texture), origin, position, scale);
-		defaultScale = new Vector2f(scale);
-		this.origin = origin;
 		list.add(this);
 	}
 	
@@ -69,6 +74,7 @@ public abstract class SFAbstractButton implements IButton, IGUI {
 		return buttonTexture;
 	}
 	
+	@Override
 	public void move(float dx, float dy) {
 		buttonTexture.getPosition().x += dx;
 		buttonTexture.getPosition().y += dy;

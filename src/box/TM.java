@@ -96,6 +96,14 @@ public class TM {
 		return new Vector2f(((x / 2) + 0.5f), -(y / 2) + 0.5f);
 	}
 	
+	public static float coordtextx(float x) {
+		return (x / 2) + 0.5f;
+	}
+	
+	public static float coordtexty(float y) {
+		return -(y / 2) + 0.5f;
+	}
+	
 	public static RawModel dm = OBJParser.loadObjModel("TRUBBLEDeck");
 	public static TexturedModel deck_model = new TexturedModel(dm, new ModelTexture(Loader.loadTexture("uss")));
 	
