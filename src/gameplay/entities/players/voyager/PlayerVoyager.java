@@ -48,7 +48,6 @@ import utils.SFMath;
 public class PlayerVoyager extends Player {
 	
 	private GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), new Vector2f(0.65f, -0.3f), new Vector2f(0.35f, 0.7f));
-	private GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0.65f - 0.2455f, -0.3f), new Vector2f(0.233f, 0.466f));
 	
 	//package visibility
 	List<IGUI> tacticalElements = new ArrayList<IGUI>();
@@ -849,7 +848,6 @@ public class PlayerVoyager extends Player {
 		//guis.add(gui);
 		//gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), panelpos, new Vector2f(0.35f, 0.7f));
 		guis.add(gui_panel);
-		tacticalElements.add(schematic);
 				
 		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.25f, "1/4", 1f, 0.04f
 				, 0, 65f / 255f, 171f / 255f);
@@ -1036,6 +1034,10 @@ public class PlayerVoyager extends Player {
 	
 	@Override
 	public void update(RaysCast caster) {
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
+			pacman.struct.setPosition(0, 0);
+		}
 		
 		prerequisite();
 		

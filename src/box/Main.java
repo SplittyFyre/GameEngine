@@ -121,13 +121,15 @@ public class Main {
 		TexturedModel apacheShip = new TexturedModel(apacheRaw, new ModelTexture(Loader.loadTexture("dartship")));
 		
 		RawModel voyagerRaw = OBJParser.loadObjModel("warship_voyager_model");
+		//RawModel voyagerRaw = OBJParser.loadObjModel("voyager_test1");
 		TexturedModel voyagerShip = new TexturedModel(voyagerRaw, new ModelTexture(Loader.loadTexture("warship_voyager_texture")));
+		//TexturedModel voyagerShip = new TexturedModel(voyagerRaw, new ModelTexture(Loader.loadTexture("uss")));
 		
-		//RawModel voyagerRaw = OBJParser.loadObjModel("birdOP");
-		//TexturedModel voyagerShip = new TexturedModel(voyagerRaw, new ModelTexture(Loader.loadTexture("try")));
 		voyagerShip.getTexture().setSpecularMap(Loader.loadTexture("warship_voyager_glowMap"));
-		//voyagerShip.getTexture().setSpecularMap(Loader.loadTexture("tempGlowMap"));
 		voyagerShip.getTexture().setBrightDamper(4);
+		
+		//voyagerShip.getTexture().setReflectivity(15);
+		//voyagerShip.getTexture().setShineDamper(5);
 		
 		//PINE TREES*************************************************************************
 		

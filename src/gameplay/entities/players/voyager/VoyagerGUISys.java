@@ -8,6 +8,7 @@ import box.TM;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.guis.GUIStruct;
+import renderEngine.guis.GUITexture;
 import renderEngine.guis.IButton;
 import renderEngine.guis.IGUI;
 import renderEngine.guis.ISlider;
@@ -34,6 +35,8 @@ public class VoyagerGUISys {
 	
 	GUIStruct struct = new GUIStruct(new Vector2f(0.4045f, -0.3f));
 	
+	GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0, 0), new Vector2f(0.233f, 0.466f));
+	
 	SFAbstractButton buttonFrontPhasers;
 	
 	SFAbstractButton button_port_front_phaser;
@@ -58,6 +61,7 @@ public class VoyagerGUISys {
 	SFAbstractButton buttonStarbArrays2;
 	SFAbstractButton buttonBackStarbArrays;
 	
+	//Sliders
 	SFVerticalSlider sliderBackPortArrays;
 	SFVerticalSlider sliderBackStarbArrays;
 	
@@ -69,6 +73,8 @@ public class VoyagerGUISys {
 	SFAbstractButton buttonBackEndTorpedo;
 	
 	private void setupTactical() {
+		
+		struct.addChild(schematic);
 		
 		int a0 = Loader.loadTexture("stdbutton");
 		int b0 = Loader.loadTexture("stdbuttonfilled");
@@ -586,7 +592,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK sliders for back array angles
-		sliderBackPortArrays = new SFVerticalSlider(tacticalElements, 0.12f, -0.01f, 0, new Vector2f(0.325f, -0.345f), TM.sqr4, "knob", "tramp") {
+		sliderBackPortArrays = new SFVerticalSlider(struct, 0.12f, -0.01f, 0, new Vector2f(-0.075f, -0.045f), TM.sqr4, "knob", "tramp") {
 			
 			@Override
 			public void sliderStopHover(ISlider slider) {
@@ -600,7 +606,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK starboard phaser angle slider
-		sliderBackStarbArrays = new SFVerticalSlider(tacticalElements, 0.12f, -0.01f, 0, new Vector2f(0.48f, -0.345f), TM.sqr4, "knob", "tramp") {
+		sliderBackStarbArrays = new SFVerticalSlider(struct, 0.12f, -0.01f, 0, new Vector2f(0.075f, -0.045f), TM.sqr4, "knob", "tramp") {
 			
 			@Override
 			public void sliderStopHover(ISlider slider) {

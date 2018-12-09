@@ -43,7 +43,8 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 	@Override
 	public void move(float dx, float dy) {
 		background.move(dx, dy);
-		counter.move(dx, dy);
+		if (counter != null)
+			counter.move(dx, dy);
 		slide.move(dx, dy);
 		for (IGUI el : marks) {
 			el.move(dx, dy);
@@ -131,6 +132,46 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 		};
 		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.02f, sliderLength));
 		list.add(this);
+	}
+	
+	public SFVerticalSlider(GUIStruct struct, float sliderLength, float xoff, float yoff, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {
+		
+		marks = new ArrayList<IGUI>();
+		markTexts = new ArrayList<GUIText>();
+		
+		slide = new SFAbstractButton(slidetex, position, scale, xoff, yoff) {
+			
+			@Override
+			public void whileHovering(IButton button) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void whileHolding(IButton button) {
+				this.move(0, (float) (Mouse.getDY() * 0.00125));
+				
+			}
+			
+			@Override
+			public void onStopHover(IButton button) {
+				sliderStopHover(that);
+				
+			}
+			
+			@Override
+			public void onStartHover(IButton button) {
+				sliderStartHover(that);
+				
+			}
+			
+			@Override
+			public void onClick(IButton button) {
+				
+			}
+		};
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.02f, sliderLength));
+		struct.addChild(this);
 	}
 	
 	public void addMark(List<GUITexture> guis, String texture, Vector2f scale, float xoffset, float value) {
