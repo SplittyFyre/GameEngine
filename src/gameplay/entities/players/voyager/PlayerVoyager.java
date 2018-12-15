@@ -58,6 +58,7 @@ public class PlayerVoyager extends Player {
 	ControlPanel indexPanel;
 	
 	List<IGUI> tabs = new ArrayList<IGUI>();
+	List<GUIText> tabTexts = new ArrayList<GUIText>();
 	
 	//package visibility
 	List<IGUI> tacticalElements = new ArrayList<IGUI>();
@@ -936,8 +937,8 @@ public class PlayerVoyager extends Player {
 					break;
 			}*/
 			
-			for (IGUI el : tabs) {
-				el.update();
+			for (int i = 0; i < tabs.size(); i++) {
+				tabs.get(i).update();
 			}
 			
 			List<ControlPanel> group = null;
@@ -946,21 +947,7 @@ public class PlayerVoyager extends Player {
 				indexPanel.update();
 			}
 			else {
-				switch (VoyagerGUISys.activeGroup) {
-				
-				case VoyagerGUISys.TACTICAL_GROUP:
-					group = tacticalPanelGroup;
-					break;
-					
-				case VoyagerGUISys.HELM_GROUP:
-					group = helmPanelGroup;
-					break;
-					
-				case VoyagerGUISys.OPS_GROUP:
-					group = opsPanelGroup;
-					break;
-				}
-				
+				group = VoyagerGUISys.hashref.get(VoyagerGUISys.activeGroup);
 				for (ControlPanel el : group) {
 					el.update();
 				}

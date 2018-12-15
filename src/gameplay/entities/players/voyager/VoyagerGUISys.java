@@ -26,6 +26,7 @@ public class VoyagerGUISys {
 	private static List<ControlPanel> opsPanelGroup;
 	private static ControlPanel indexPanel;
 	private static List<IGUI> tabs;
+	private static List<GUIText> tabTexts;
 	
 	static HashMap<Integer, List<ControlPanel>> hashref = new HashMap<Integer, List<ControlPanel>>();
 	
@@ -39,9 +40,14 @@ public class VoyagerGUISys {
 	
 	private static PlayerVoyager player;
 		
+	private static int bluerect = Loader.loadTexture("sqgui");
+	private static int filledrect = Loader.loadTexture("sqguifilled");
+	
 	private static final Vector2f WEAPON_ARRAY_POS_STD = new Vector2f(0.55f, -0.2f);
 	private static final Vector2f WEAPON_ARRAY_POS_RIGHT = new Vector2f(0.7f, -0.2f);
-	GUIStruct struct = new GUIStruct(WEAPON_ARRAY_POS_STD);
+	GUIStruct struct = new GUIStruct(new Vector2f(WEAPON_ARRAY_POS_STD));
+	GUIStruct indexChanges = new GUIStruct(new Vector2f(0.5f, -1 + TM.sqr4.y));
+	//GUIStruct indexChanges = new GUIStruct(new Vector2f(0.5f, 0.2f));
 	
 	GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0, 0), new Vector2f(0.233f, 0.466f));
 	
@@ -88,7 +94,7 @@ public class VoyagerGUISys {
 		helmPanelGroup = player.helmPanelGroup;
 		opsPanelGroup = player.opsPanelGroup;
 		tabs = player.tabs;
-		
+		tabTexts = player.tabTexts;
 		hashref.put(TACTICAL_GROUP, tacticalPanelGroup);
 		hashref.put(HELM_GROUP, helmPanelGroup);
 		hashref.put(OPS_GROUP, opsPanelGroup);
@@ -101,6 +107,7 @@ public class VoyagerGUISys {
 			@Override
 			public void init() {
 				struct.show(player.getGuis());
+				indexChanges.show(player.getGuis());
 				struct.setPosition(WEAPON_ARRAY_POS_STD);
 			}
 		};
@@ -111,25 +118,37 @@ public class VoyagerGUISys {
 	
 	void setActiveGroup(int group) {
 		
-		for (IGUI el : tabs) {
+		tabIndex = 0;
+		
+		for (IGUI el : guiElements) {
 			el.hide(player.getGuis());
 		}
 		
+		for (IGUI el : tabs) {
+			el.hide(player.getGuis());
+		}
+		for (GUIText el : tabTexts) {
+			el.hide();
+		}
+		
 		tabs.clear();
+		tabTexts.clear();
 		
 		activeGroup = group;
 		
 		if (activeGroup != INDEX_GROUP) {
 			
 			float stride = -1 + TM.sqr4.y;
+			
+			Vector2f scale = new Vector2f(TM.sqr4);
+			scale.x *= 2f;
 		
 			List<ControlPanel> list = hashref.get(activeGroup);
 			
-			for (int i = 0; i < list.size(); i++) {
+			int i;
+			for (i = 0; i < list.size(); i++) {
 				int a = i;
 				ControlPanel el = list.get(i);
-				Vector2f scale = new Vector2f(TM.sqr4);
-				scale.x *= 2f;
 				Vector2f pos = new Vector2f(0.5f, stride);
 				tabs.add(new SFAbstractButton("sqgui", pos, scale) {
 					
@@ -145,25 +164,68 @@ public class VoyagerGUISys {
 					
 					@Override
 					public void onStopHover(IButton button) {
-						
+						this.getTexture().setTexture(bluerect);
+						tabTexts.get(a).setColour(1, 1, 1);
 					}
 					
 					@Override
 					public void onStartHover(IButton button) {
-						
+						this.getTexture().setTexture(filledrect);
+						tabTexts.get(a).setColour(0, 0, 0);
 					}
 					
 					@Override
 					public void onClick(IButton button) {
 						tabIndex = a;
-						System.out.println(a);
+						setUpPanel();
 					}
 				});
 				
-				tabs.add(new GUIText(el.name, 1.2f, TM.font, TM.coordtextcenter(pos, scale.x, scale.y), scale.x, true).setColourret(1, 1, 1));
+				tabTexts.add(new GUIText(el.name, 1.2f, TM.font, TM.coordtextcenter(pos, scale.x, scale.y), scale.x, true).setColourret(1, 1, 1));
 				stride += TM.sqr4.y * 2;
 			}
 			
+			
+			int a = i;
+			Vector2f pos = new Vector2f(0.5f, stride);
+			tabs.add(new SFAbstractButton("sqgui", pos, scale) {
+				
+				@Override
+				public void whileHovering(IButton button) {
+					
+				}
+				
+				@Override
+				public void whileHolding(IButton button) {
+					
+				}
+				
+				@Override
+				public void onStopHover(IButton button) {
+					this.getTexture().setTexture(bluerect);
+					tabTexts.get(a).setColour(1, 1, 1);
+				}
+				
+				@Override
+				public void onStartHover(IButton button) {
+					this.getTexture().setTexture(filledrect);
+					tabTexts.get(a).setColour(0, 0, 0);
+				}
+				
+				@Override
+				public void onClick(IButton button) {
+					setActiveGroup(INDEX_GROUP);
+				}
+			});
+			
+			tabTexts.add(new GUIText("index", 1.2f, TM.font, TM.coordtextcenter(pos, scale.x, scale.y), scale.x, true).setColourret(1, 1, 1));
+			stride += TM.sqr4.y * 2;
+			
+			
+			setUpPanel();
+		}
+		else {
+			indexPanel.init();
 		}
 		
 		for (IGUI el : tabs) {
@@ -887,29 +949,27 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		SFAbstractButton temp = new SFAbstractButton(struct, "sqgui", new Vector2f(0, -0.5f), TM.sqr8) {
+		Vector2f beta = new Vector2f(TM.sqr4);
+		beta.x *= 2;
+		SFAbstractButton changeToTactical = new SFAbstractButton(indexChanges, "sqgui", new Vector2f(0, 0), beta) {
 			
 			@Override
 			public void whileHovering(IButton button) {
-				// FIXME Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void whileHolding(IButton button) {
-				// FIXME Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void onStopHover(IButton button) {
-				// FIXME Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void onStartHover(IButton button) {
-				// FIXME Auto-generated method stub
 				
 			}
 			
@@ -919,15 +979,19 @@ public class VoyagerGUISys {
 			}
 		};
 		
+		indexChanges.addChildWithoutTransform(new GUIText("tactical", 1.2f, TM.font, TM.coordtextcenter(new Vector2f(0.5f, -1 + TM.sqr4.y), beta.x, beta.y), beta.x, true));
+		
 		guiElements.add(struct);
+		guiElements.add(indexChanges);
 		struct.show(player.getGuis());
+		indexChanges.show(player.getGuis());
 		
 		tacticalPanelGroup.add(new ControlPanel("normal") {
 			
 			@Override
 			public void init() {
 				struct.show(player.getGuis());
-				struct.setPosition(WEAPON_ARRAY_POS_RIGHT);
+				struct.setPosition(new Vector2f(WEAPON_ARRAY_POS_RIGHT));
 			}
 		});
 		
