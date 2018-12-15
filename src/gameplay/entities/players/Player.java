@@ -101,5 +101,9 @@ public abstract class Player extends Entity implements ITakeDamage {
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}
+	
+	public List<GUITexture> getGuis() {
+		return guis;
+	}
 
 }

@@ -156,6 +156,11 @@ public class GUIText implements IGUI {
 		colour.set(r, g, b);
 	}
 	
+	public GUIText setColourret(float r, float g, float b) {
+		colour.set(r, g, b);
+		return this;
+	}
+	
 	public void setColour(float r, float g, float b, float a) {
 		colour.set(r, g, b, a);
 	}
@@ -273,13 +278,11 @@ public class GUIText implements IGUI {
 	@Override
 	public void hide(List<GUITexture> textures) {
 		this.hide();
-		System.out.println("IGUI hide");
 	}
 
 	@Override
 	public void show(List<GUITexture> textures) {
 		this.show();
-		System.out.println("IGUI show");
 	}
 
 	@Override

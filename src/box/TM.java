@@ -92,6 +92,20 @@ public class TM {
 		return coordtext(pos.x, pos.y);
 	}
 	
+	public static Vector2f coordtextcenter(Vector2f pos, float scaleX, float scaleY) {
+		Vector2f retval = coordtext(pos.x, pos.y);
+		retval.x -= (scaleX / 2f);
+		retval.y -= (scaleY / 2f);
+		return retval;
+	}
+	
+	public static Vector2f coordtextcenter(Vector2f pos, float scaleX, float scaleY, float yscalediv) {
+		Vector2f retval = coordtext(pos.x, pos.y);
+		retval.x -= (scaleX / 2f);
+		retval.y -= (scaleY / yscalediv);
+		return retval;
+	}
+	
 	public static Vector2f coordtext(float x, float y) {	
 		return new Vector2f(((x / 2) + 0.5f), -(y / 2) + 0.5f);
 	}

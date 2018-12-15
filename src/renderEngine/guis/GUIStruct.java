@@ -31,16 +31,16 @@ public class GUIStruct implements IGUI {
 	}
 
 	@Override
-	public void hide(List<GUITexture> textures) {
+	public void hide(List<GUITexture> guis) {
 		for (IGUI child : children) {
-			child.hide(textures);
+			child.hide(guis);
 		}
 	}
 
 	@Override
-	public void show(List<GUITexture> textures) {
+	public void show(List<GUITexture> guis) {
 		for (IGUI child : children) {
-			child.show(textures);
+			child.show(guis);
 		}
 	}
 
@@ -56,6 +56,12 @@ public class GUIStruct implements IGUI {
 	public void setPosition(float x, float y) {
 		float dx = x - this.position.x;
 		float dy = y - this.position.y;
+		this.move(dx, dy);
+	}
+	
+	public void setPosition(Vector2f vec) {
+		float dx = vec.x - this.position.x;
+		float dy = vec.y - this.position.y;
 		this.move(dx, dy);
 	}
 

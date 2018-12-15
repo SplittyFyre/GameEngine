@@ -47,7 +47,17 @@ import utils.SFMath;
 
 public class PlayerVoyager extends Player {
 	
-	private GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), new Vector2f(0.65f, -0.3f), new Vector2f(0.35f, 0.7f));
+	private GUITexture gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), new Vector2f(0.725f, -0.3f), new Vector2f(0.275f, 0.7f));
+	
+	List<IGUI> guiElements = new ArrayList<IGUI>();
+	
+	List<ControlPanel> tacticalPanelGroup = new ArrayList<ControlPanel>();
+	List<ControlPanel> helmPanelGroup = new ArrayList<ControlPanel>();
+	List<ControlPanel> opsPanelGroup = new ArrayList<ControlPanel>();
+	
+	ControlPanel indexPanel;
+	
+	List<IGUI> tabs = new ArrayList<IGUI>();
 	
 	//package visibility
 	List<IGUI> tacticalElements = new ArrayList<IGUI>();
@@ -63,7 +73,7 @@ public class PlayerVoyager extends Player {
 	private SFAbstractButton viewScreenViewAft;
 	//private SFAbstractButton viewScreenViewMap;
 	
-	VoyagerGUISys pacman = new VoyagerGUISys(this);
+	VoyagerGUISys pacman;
 
 	private int a1 = Loader.loadTexture("voyphaserdiag2");
 	private int b1 = Loader.loadTexture("voyphaserdiagactive");
@@ -97,77 +107,6 @@ public class PlayerVoyager extends Player {
 		public void onClick(IButton button) {
 			if (target != null)
 				fireTurret(target.getPosition());
-		}
-	};
-	
-	//BOOKMARK switch LCARS to tactical
-	private SFAbstractButton changebuttontactical = new SFAbstractButton(miscElements, "tacticalicon", new Vector2f(0.324f, 0.36f), TM.sqr4) {
-		
-		@Override
-		public void whileHovering(IButton button) {
-			
-		}
-		
-		@Override
-		public void whileHolding(IButton button) {
-			
-		}
-		
-		@Override
-		public void onStopHover(IButton button) {
-			
-		}
-		
-		@Override
-		public void onStartHover(IButton button) {
-			
-		}
-		
-		@Override
-		public void onClick(IButton button) {
-			currentPanel = TACTICAL_PANEL;
-			
-			for (IGUI el : helmElements) {
-				el.hide(guis);
-			}
-			for (IGUI el : tacticalElements) {
-				el.show(guis);
-			}
-		}
-	};
-	
-	//BOOKMARK switch LCARS to helm
-	private SFAbstractButton changebuttonhelm = new SFAbstractButton(miscElements, "helmicon", new Vector2f(0.394f, 0.36f), TM.sqr4) {
-		
-		@Override
-		public void whileHovering(IButton button) {
-			
-		}
-		
-		@Override
-		public void whileHolding(IButton button) {
-			
-		}
-		
-		@Override
-		public void onStopHover(IButton button) {
-			
-		}
-		
-		@Override
-		public void onStartHover(IButton button) {
-			
-		}
-		
-		@Override
-		public void onClick(IButton button) {
-			currentPanel = HELM_PANEL;
-			for (IGUI el : tacticalElements) {
-				el.hide(guis);
-			}
-			for (IGUI el : helmElements) {
-				el.show(guis);
-			}
 		}
 	};
 	
@@ -317,7 +256,7 @@ public class PlayerVoyager extends Player {
 		public void onClick(IButton button) {
 			autoFunc = DEADWEIGHT;
 		}
-		
+		 
 	};
 	
 	//BOOKMARK impulse speed slider
@@ -807,6 +746,8 @@ public class PlayerVoyager extends Player {
 		privateSpecialTorpedoTexture.getTexture().setBrightDamper(1);
 		
 		this.guis = guin;
+		guis.add(gui_panel);
+		pacman = new VoyagerGUISys(this);
 		initGUIS();
 		initsuper(MAX_HEALTH, FULL_SHIELDS, MAX_ENERGY);
 	}
@@ -847,7 +788,7 @@ public class PlayerVoyager extends Player {
 		//GUITexture gui = new GUITexture(this.loader.loadTexture("orange"), new Vector2f(0.f, 0.5f), new Vector2f(0.05f, 0.5f));
 		//guis.add(gui);
 		//gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), panelpos, new Vector2f(0.35f, 0.7f));
-		guis.add(gui_panel);
+		//guis.add(gui_panel);
 				
 		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.25f, "1/4", 1f, 0.04f
 				, 0, 65f / 255f, 171f / 255f);
@@ -936,13 +877,18 @@ public class PlayerVoyager extends Player {
 			}
 		};*/
 		
-		for (IGUI el : miscElements) {
+		
+		
+		
+		
+		//BOOKMARK
+		/*for (IGUI el : miscElements) {
 			el.show(guis);
 		}
 		
 		for (IGUI el : tacticalElements) {
 			el.show(guis);
-		}
+		}*/
 		
 	}
 	
@@ -962,6 +908,7 @@ public class PlayerVoyager extends Player {
 		rottext.setText(Float.toString(UPWARDS_ROT_CAP));
 		
 		if (shieldWarning && SHIELD > 0) {
+			
 			shieldWarning = false;
 		}
 		
@@ -970,14 +917,11 @@ public class PlayerVoyager extends Player {
 		//trmText.setColour(119f / 255f, 68f / 255f, 102f / 255f);
 		
 		if (!Mouse.isGrabbed()) {
-			for (IGUI el : miscElements) {
-				el.update();
-			}
 			
 			warpFlag = false;
 			WARP_SPEED_VAR = 0;
 			
-			switch (currentPanel) {
+			/*switch (currentPanel) {
 			
 				case TACTICAL_PANEL:
 					for (IGUI el : tacticalElements) {
@@ -990,7 +934,43 @@ public class PlayerVoyager extends Player {
 						el.update();
 					}
 					break;
-			}	
+			}*/
+			
+			for (IGUI el : tabs) {
+				el.update();
+			}
+			
+			List<ControlPanel> group = null;
+			
+			if (VoyagerGUISys.activeGroup == VoyagerGUISys.INDEX_GROUP) {
+				indexPanel.update();
+			}
+			else {
+				switch (VoyagerGUISys.activeGroup) {
+				
+				case VoyagerGUISys.TACTICAL_GROUP:
+					group = tacticalPanelGroup;
+					break;
+					
+				case VoyagerGUISys.HELM_GROUP:
+					group = helmPanelGroup;
+					break;
+					
+				case VoyagerGUISys.OPS_GROUP:
+					group = opsPanelGroup;
+					break;
+				}
+				
+				for (ControlPanel el : group) {
+					el.update();
+				}
+				
+			}
+			
+			for (IGUI el : guiElements) {
+				el.update();
+			}
+			
 		}
 		
 		if (grabStick && Mouse.isButtonDown(0)) {

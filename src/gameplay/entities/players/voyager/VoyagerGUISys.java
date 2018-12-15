@@ -1,10 +1,12 @@
 package gameplay.entities.players.voyager;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
 import box.TM;
+import fontMeshCreator.GUIText;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.guis.GUIStruct;
@@ -17,23 +19,29 @@ import renderEngine.guis.SFVerticalSlider;
 
 public class VoyagerGUISys {
 		
-	private static List<IGUI> tacticalElements;
-	private static List<IGUI> opsElements;
-	private static List<IGUI> helmElements;
-	private static List<IGUI> miscElements;
+	private static List<IGUI> guiElements;
+	
+	private static List<ControlPanel> tacticalPanelGroup;
+	private static List<ControlPanel> helmPanelGroup;
+	private static List<ControlPanel> opsPanelGroup;
+	private static ControlPanel indexPanel;
+	private static List<IGUI> tabs;
+	
+	static HashMap<Integer, List<ControlPanel>> hashref = new HashMap<Integer, List<ControlPanel>>();
+	
+	static final int INDEX_GROUP = 0;
+	static final int TACTICAL_GROUP = 1;
+	static final int HELM_GROUP = 2;
+	static final int OPS_GROUP = 3;
+	
+	static int activeGroup = INDEX_GROUP;
+	static int tabIndex = 0;
 	
 	private static PlayerVoyager player;
-	
-	public VoyagerGUISys(PlayerVoyager player) {
-		tacticalElements = player.tacticalElements;
-		opsElements = player.opsElements;
-		helmElements = player.helmElements;
-		miscElements = player.miscElements;
-		VoyagerGUISys.player = player;
-		setupTactical();
-	}
-	
-	GUIStruct struct = new GUIStruct(new Vector2f(0.4045f, -0.3f));
+		
+	private static final Vector2f WEAPON_ARRAY_POS_STD = new Vector2f(0.55f, -0.2f);
+	private static final Vector2f WEAPON_ARRAY_POS_RIGHT = new Vector2f(0.7f, -0.2f);
+	GUIStruct struct = new GUIStruct(WEAPON_ARRAY_POS_STD);
 	
 	GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0, 0), new Vector2f(0.233f, 0.466f));
 	
@@ -71,6 +79,109 @@ public class VoyagerGUISys {
 	
 	SFAbstractButton buttonBackMountedTorpedo;
 	SFAbstractButton buttonBackEndTorpedo;
+	
+	public VoyagerGUISys(PlayerVoyager player) {
+		
+		guiElements = player.guiElements;
+		
+		tacticalPanelGroup = player.tacticalPanelGroup;
+		helmPanelGroup = player.helmPanelGroup;
+		opsPanelGroup = player.opsPanelGroup;
+		tabs = player.tabs;
+		
+		hashref.put(TACTICAL_GROUP, tacticalPanelGroup);
+		hashref.put(HELM_GROUP, helmPanelGroup);
+		hashref.put(OPS_GROUP, opsPanelGroup);
+		
+		VoyagerGUISys.player = player;
+		setupTactical();
+				
+		player.indexPanel = new ControlPanel("index") {
+			
+			@Override
+			public void init() {
+				struct.show(player.getGuis());
+				struct.setPosition(WEAPON_ARRAY_POS_STD);
+			}
+		};
+		
+		indexPanel = player.indexPanel;
+				
+	}
+	
+	void setActiveGroup(int group) {
+		
+		for (IGUI el : tabs) {
+			el.hide(player.getGuis());
+		}
+		
+		tabs.clear();
+		
+		activeGroup = group;
+		
+		if (activeGroup != INDEX_GROUP) {
+			
+			float stride = -1 + TM.sqr4.y;
+		
+			List<ControlPanel> list = hashref.get(activeGroup);
+			
+			for (int i = 0; i < list.size(); i++) {
+				int a = i;
+				ControlPanel el = list.get(i);
+				Vector2f scale = new Vector2f(TM.sqr4);
+				scale.x *= 2f;
+				Vector2f pos = new Vector2f(0.5f, stride);
+				tabs.add(new SFAbstractButton("sqgui", pos, scale) {
+					
+					@Override
+					public void whileHovering(IButton button) {
+						
+					}
+					
+					@Override
+					public void whileHolding(IButton button) {
+						
+					}
+					
+					@Override
+					public void onStopHover(IButton button) {
+						
+					}
+					
+					@Override
+					public void onStartHover(IButton button) {
+						
+					}
+					
+					@Override
+					public void onClick(IButton button) {
+						tabIndex = a;
+						System.out.println(a);
+					}
+				});
+				
+				tabs.add(new GUIText(el.name, 1.2f, TM.font, TM.coordtextcenter(pos, scale.x, scale.y), scale.x, true).setColourret(1, 1, 1));
+				stride += TM.sqr4.y * 2;
+			}
+			
+		}
+		
+		for (IGUI el : tabs) {
+			el.show(player.getGuis());
+		}
+		
+	}
+	
+	void setUpPanel() {
+		
+		for (IGUI el : guiElements) {
+			el.hide(player.getGuis());
+		}
+		
+		ControlPanel panel = hashref.get(activeGroup).get(tabIndex);
+		panel.init();
+		
+	}
 	
 	private void setupTactical() {
 		
@@ -776,7 +887,58 @@ public class VoyagerGUISys {
 			}
 		};
 		
-		tacticalElements.add(struct);
+		SFAbstractButton temp = new SFAbstractButton(struct, "sqgui", new Vector2f(0, -0.5f), TM.sqr8) {
+			
+			@Override
+			public void whileHovering(IButton button) {
+				// FIXME Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void whileHolding(IButton button) {
+				// FIXME Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onStopHover(IButton button) {
+				// FIXME Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onStartHover(IButton button) {
+				// FIXME Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onClick(IButton button) {
+				setActiveGroup(TACTICAL_GROUP);
+			}
+		};
+		
+		guiElements.add(struct);
+		struct.show(player.getGuis());
+		
+		tacticalPanelGroup.add(new ControlPanel("normal") {
+			
+			@Override
+			public void init() {
+				struct.show(player.getGuis());
+				struct.setPosition(WEAPON_ARRAY_POS_RIGHT);
+			}
+		});
+		
+		tacticalPanelGroup.add(new ControlPanel("hai") {
+			
+			@Override
+			public void init() {
+				
+			}
+		});
+		
 		
 	}
 	
