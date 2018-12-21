@@ -366,14 +366,14 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 		return (slide.getTexture().getPosition().y - floor) / (background.getScale().y * 2);
 	}
 	
-	public void setCounter(float fontSize, FontType font, float r, float g, float b) {
-		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY()), 0.25f, false);
+	public void setCounter(float fontSize, FontType font, float yoffset,  float r, float g, float b) {
+		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.df = new DecimalFormat("#.###");
 	}
 	
-	public void setCounter(float fontSize, FontType font, float r, float g, float b, Callable<String> run) {
-		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY()), 0.25f, false);
+	public void setCounter(float fontSize, FontType font, float yoffset, float r, float g, float b, Callable<String> run) {
+		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.run = run;
 	}

@@ -45,11 +45,20 @@ public class VoyagerGUISys {
 	
 	private static final Vector2f WEAPON_ARRAY_POS_STD = new Vector2f(0.55f, -0.2f);
 	private static final Vector2f WEAPON_ARRAY_POS_RIGHT = new Vector2f(0.7f, -0.2f);
+	
+	private static final Vector2f SPEED_SLIDERS_POS_STD = new Vector2f(0.8f, -0.18f);
+	
+	private static final Vector2f ATTITUDE_POS_INDEX = new Vector2f(0.65f, -0.2f);
+	
 	GUIStruct struct = new GUIStruct(new Vector2f(WEAPON_ARRAY_POS_STD));
 	GUIStruct indexChanges = new GUIStruct(new Vector2f(0.5f, -1 + TM.sqr4.y));
-	//GUIStruct indexChanges = new GUIStruct(new Vector2f(0.5f, 0.2f));
+	GUIStruct attitude = new GUIStruct(new Vector2f(ATTITUDE_POS_INDEX));
+	
+	GUIStruct speedsliders = new GUIStruct(new Vector2f(SPEED_SLIDERS_POS_STD));
 	
 	GUITexture schematic = new GUITexture(Loader.loadTexture("schematic1"), new Vector2f(0, 0), new Vector2f(0.233f, 0.466f));
+	
+	GUITexture attitudecenter = new GUITexture(Loader.loadTexture("attitudecenter"), new Vector2f(0, 0), TM.sqr4);
 	
 	SFAbstractButton buttonFrontPhasers;
 	
@@ -78,6 +87,9 @@ public class VoyagerGUISys {
 	//Sliders
 	SFVerticalSlider sliderBackPortArrays;
 	SFVerticalSlider sliderBackStarbArrays;
+	
+	SFVerticalSlider impulseslider;
+	SFVerticalSlider warpslider;
 	
 	SFAbstractButton toggleshields;
 	SFAbstractButton buttonBackMountedPhaser;
@@ -109,6 +121,9 @@ public class VoyagerGUISys {
 				struct.show(player.getGuis());
 				indexChanges.show(player.getGuis());
 				struct.setPosition(WEAPON_ARRAY_POS_STD);
+				
+				speedsliders.show(player.getGuis());
+				attitude.show(player.getGuis());
 			}
 		};
 		
@@ -981,11 +996,6 @@ public class VoyagerGUISys {
 		
 		indexChanges.addChildWithoutTransform(new GUIText("tactical", 1.2f, TM.font, TM.coordtextcenter(new Vector2f(0.5f, -1 + TM.sqr4.y), beta.x, beta.y), beta.x, true));
 		
-		guiElements.add(struct);
-		guiElements.add(indexChanges);
-		struct.show(player.getGuis());
-		indexChanges.show(player.getGuis());
-		
 		tacticalPanelGroup.add(new ControlPanel("normal") {
 			
 			@Override
@@ -1002,6 +1012,51 @@ public class VoyagerGUISys {
 				
 			}
 		});
+		
+		
+		
+		
+		//BOOKMARK impulse speed slider
+		impulseslider = new SFVerticalSlider(speedsliders, 0.45f, 0, 0, new Vector2f(-0.075f, 0), TM.sqr4, "knob", "tramp") {
+			
+			@Override
+			public void sliderStopHover(ISlider slider) {
+				
+			}
+			
+			@Override
+			public void sliderStartHover(ISlider slider) {
+				
+			}
+		};
+		
+		//BOOKMARK impulse speed slider
+		warpslider = new SFVerticalSlider(speedsliders, 0.45f, 0, 0, new Vector2f(0.05f, 0), TM.sqr4, "knob", "tramp") {
+			
+			@Override
+			public void sliderStopHover(ISlider slider) {
+					
+			}
+				
+			@Override
+			public void sliderStartHover(ISlider slider) {
+					
+			}
+		};
+		
+		
+		
+		
+		attitude.addChild(attitudecenter);		
+		
+		guiElements.add(struct);
+		guiElements.add(indexChanges);
+		guiElements.add(speedsliders);
+		guiElements.add(attitude);
+		struct.show(player.getGuis());
+		indexChanges.show(player.getGuis());
+		speedsliders.show(player.getGuis());
+		attitude.show(player.getGuis());
 		
 		
 	}

@@ -64,7 +64,7 @@ public class TM {
 	public static ParticleSystem explosionParticleSystem = new ParticleSystem(tex2, 250, 21, 0, 1, 150);
 	public static ParticleSystem bigexplosionParticleSystem = new ParticleSystem(tex2, 250, 21, 0, 1, 350);
 	private static ParticleTexture tex3 = new ParticleTexture(Loader.loadTexture("greenfire"), 8);
-	public static ParticleSystem borgExplosionSystem = new ParticleSystem(tex3, 250, 21, 0, 9, 5000);
+	public static ParticleSystem borgExplosionSystem = new ParticleSystem(tex3, 250, 21, 0, 4, 5000);
 	
 	private static ParticleTexture tex4 = new ParticleTexture(Loader.loadTexture("shieldBlue"), 1);
 	public static ParticleSystem blueShieldSystem = new ParticleSystem(tex4, 1000, 125, 0, 0.5f, 20);

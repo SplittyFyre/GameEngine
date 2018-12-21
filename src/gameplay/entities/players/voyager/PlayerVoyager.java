@@ -32,9 +32,7 @@ import renderEngine.Loader;
 import renderEngine.guis.GUITexture;
 import renderEngine.guis.IButton;
 import renderEngine.guis.IGUI;
-import renderEngine.guis.ISlider;
 import renderEngine.guis.SFAbstractButton;
-import renderEngine.guis.SFVerticalSlider;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
@@ -258,34 +256,6 @@ public class PlayerVoyager extends Player {
 			autoFunc = DEADWEIGHT;
 		}
 		 
-	};
-	
-	//BOOKMARK impulse speed slider
-	private SFVerticalSlider impulseslider = new SFVerticalSlider(helmElements, 0.48f, 0.01f, 0, new Vector2f(0.65f, -0.5f), TM.sqr8, "knob", "ramp") {
-		
-		@Override
-		public void sliderStopHover(ISlider slider) {
-			
-		}
-		
-		@Override
-		public void sliderStartHover(ISlider slider) {
-			
-		}
-	};
-	
-	//BOOKMARK impulse speed slider
-	private SFVerticalSlider warpslider = new SFVerticalSlider(helmElements, 0.48f, 0.01f, 0, new Vector2f(0.81f, -0.5f), TM.sqr8, "knob", "ramp") {
-		
-		@Override
-		public void sliderStopHover(ISlider slider) {
-				
-		}
-			
-		@Override
-		public void sliderStartHover(ISlider slider) {
-				
-		}
 	};
 	
 	//BOOKMARK
@@ -575,7 +545,7 @@ public class PlayerVoyager extends Player {
 		}
 	};
 	
-	private GUIText rottext = new GUIText("", 1, TM.font, new Vector2f(0, 0), 0.25f, false, helmElements);
+	//private GUIText rottext = new GUIText("", 1, TM.font, new Vector2f(0, 0), 0.25f, false, helmElements);
 	
 	private SFAbstractButton temp = new SFAbstractButton(helmElements, "image", new Vector2f(0.5f, -0.5f), TM.sqr4) {
 		
@@ -770,64 +740,58 @@ public class PlayerVoyager extends Player {
 	
 	private void initGUIS() {
 		
-		rottext.setPosition(TM.coordtext(temp.getTexture().getPosition()));
-		rottext.getPosition().x -= 0.01f;
-		rottext.getPosition().y -= 0.05f;
-		rottext.setColour(0, 0, 1);
-		
 		trmText.setColour(0, 0, 1);
 		
-		impulseslider.setCounter(1, TM.font, 0, 0, 1);
-		warpslider.setCounter(1, TM.font, 0, 0, 1, new Callable<String>() {
+		
+		
+		pacman.impulseslider.setCounter(1, TM.font, 0.02f, 0, 0, 1);
+		pacman.warpslider.setCounter(1, TM.font, 0.02f, 0, 0, 1, new Callable<String>() {
 			
 			@Override
 			public String call() throws Exception {
-				return "Warp " + TM.df.format((warpslider.getSliderValue() * MAX_WARP_FACTOR));
+				return "Warp " + TM.df.format((pacman.warpslider.getSliderValue() * MAX_WARP_FACTOR));
 			}
 		});
-		
-		//GUITexture gui = new GUITexture(this.loader.loadTexture("orange"), new Vector2f(0.f, 0.5f), new Vector2f(0.05f, 0.5f));
-		//guis.add(gui);
-		//gui_panel = new GUITexture(Loader.loadTexture("LCARSpanel"), panelpos, new Vector2f(0.35f, 0.7f));
-		//guis.add(gui_panel);
 				
-		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.25f, "1/4", 1f, 0.04f
+		pacman.impulseslider.addMark(guis, "mk", TM.sqr4, 0.04f, 0.25f, "1/4", 1f, 0.02f
 				, 0, 65f / 255f, 171f / 255f);
 		
-		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.5f, "1/2", 1f, 0.04f
+		pacman.impulseslider.addMark(guis, "mk", TM.sqr4, 0.04f, 0.5f, "1/2", 1f, 0.02f
 				, 0, 1, 1);
 		
-		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 0.75f, "3/4", 1f, 0.04f
+		pacman.impulseslider.addMark(guis, "mk", TM.sqr4, 0.04f, 0.75f, "3/4", 1f, 0.02f
 				, 1, 1, 0);
 		
-		impulseslider.addMark(guis, "mk", TM.sqr8, 0.05f, 1, "full", 1f, 0.04f
+		pacman.impulseslider.addMark(guis, "mk", TM.sqr4, 0.04f, 1, "full", 1f, 0.02f
 				, 1, 1, 0);
 		
 		
 		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 1f / MAX_WARP_FACTOR, "Warp 1", 1f, 0.04f
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 1f / MAX_WARP_FACTOR, "Warp 1", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 2f / MAX_WARP_FACTOR, "Warp 2", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 3f / MAX_WARP_FACTOR, "Warp 3", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 4f / MAX_WARP_FACTOR, "Warp 4", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 5f / MAX_WARP_FACTOR, "Warp 5", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 6f / MAX_WARP_FACTOR, "Warp 6", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 7f / MAX_WARP_FACTOR, "Warp 7", 1f, 0.02f
+				, 1, 1, 0);                               
+		                                                  
+		pacman.warpslider.addMark(guis, "mk", TM.sqr4, 0.04f, 8f / MAX_WARP_FACTOR, "Warp 8", 1f, 0.02f
 				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 2f / MAX_WARP_FACTOR, "Warp 2", 1f, 0.04f
-				, 1, 1, 0);
 		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 3f / MAX_WARP_FACTOR, "Warp 3", 1f, 0.04f
-				, 1, 1, 0);
-		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 4f / MAX_WARP_FACTOR, "Warp 4", 1f, 0.04f
-				, 1, 1, 0);
-		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 5f / MAX_WARP_FACTOR, "Warp 5", 1f, 0.04f
-				, 1, 1, 0);
-		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 6f / MAX_WARP_FACTOR, "Warp 6", 1f, 0.04f
-				, 1, 1, 0);
-		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 7f / MAX_WARP_FACTOR, "Warp 7", 1f, 0.04f
-				, 1, 1, 0);
-		
-		warpslider.addMark(guis, "mk", TM.sqr8, 0.05f, 8f / MAX_WARP_FACTOR, "Warp 8", 1f, 0.04f
-				, 1, 1, 0);
 		
 		//addAbility(abilityStinger, "Fire Stinger");
 		//addAbility(abilityHydraRockets, "");
@@ -895,6 +859,8 @@ public class PlayerVoyager extends Player {
 	
 	private void updateGUIS() {
 		
+		pacman.attitudecenter.setRotation(-super.getRotZ());
+		
 		healthText.setText(Float.toString(this.HEALTH));
 		
 		shieldsText.setText(Integer.toString((int) (this.SHIELD / FULL_SHIELDS * 100)) + '%');
@@ -905,8 +871,6 @@ public class PlayerVoyager extends Player {
 		coordsY.setText(Float.toString(super.getPosition().y));
 		coordsZ.setText(Float.toString(super.getPosition().z));
 		gridText.setText("Grid: " + FloatingOrigin.getGridX() + ", " + FloatingOrigin.getGridZ());
-		
-		rottext.setText(Float.toString(UPWARDS_ROT_CAP));
 		
 		if (shieldWarning && SHIELD > 0) {
 			
@@ -992,8 +956,8 @@ public class PlayerVoyager extends Player {
 		}
 			
 		
-		IMPULSE_MOVE_SPEED_VAR = FULL_IMPULSE_SPEED * impulseslider.getSliderValue();
-		WARP_SPEED_VAR = (float) Math.pow((warpslider.getSliderValue() * MAX_WARP_FACTOR), 1.25) * WARP_SPEED;
+		IMPULSE_MOVE_SPEED_VAR = FULL_IMPULSE_SPEED * pacman.impulseslider.getSliderValue();
+		WARP_SPEED_VAR = (float) Math.pow((pacman.warpslider.getSliderValue() * MAX_WARP_FACTOR), 1.25) * WARP_SPEED;
 
 	}
 	
