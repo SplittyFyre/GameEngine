@@ -139,6 +139,7 @@ public class Island {
 		return size;
 	}
 
+	//CURR
 	public Island(TerrainTexturePack texturePack, TerrainTexture blendMap, 
 			List<Terrain> terrains, List<WaterTile> waters, List<Entity> entities, float x, float y, float z, float size, int seed) {
 		
@@ -157,26 +158,26 @@ public class Island {
 		fernTextureAtlas.setNumRows(2);
 		TexturedModel fern = new TexturedModel(fernRaw, fernTextureAtlas);
 		
-		fern.getTexture().setUseFakeLighting(true);
+		//fern.getTexture().setUseFakeLighting(true);
 		fern.getTexture().setTransparent(true);
 		
 		RawModel pineRaw = OBJParser.loadObjModel("pine");
 		TexturedModel pineText = new TexturedModel(pineRaw, new ModelTexture(Loader.loadTexture("pine")));
 		
 		pineText.getTexture().setTransparent(true);
-		pineText.getTexture().setUseFakeLighting(true);
+		//pineText.getTexture().setUseFakeLighting(true);
 		
 		float sz = size / 2;
 		
 		for (int i = 0; i < 4000; i++) {
 			
-			if (i % 20 == 0) {
+			if (i % 2 == 0) {
 				float x1 = random.nextFloat() * 2 * sz + (x - sz);
 				float z1 = random.nextFloat() * 2 * sz + (z - sz);
 				float y1 = terrain.getTerrainHeight(x1, z1);
 				if (y1 > 0)
 					entities.add(new StaticEntity(pineText, new Vector3f(x1, y1 + y, z1), 0, random.nextFloat() * 360, 0,
-							10 + (random.nextFloat() - 0.5f)));
+							0.25f + (random.nextFloat() - 0.5f)));
 			}
 			
 			

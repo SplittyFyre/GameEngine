@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import scene.entities.camera.Camera;
 
@@ -35,6 +36,19 @@ public class ParticleWatcher {
 						mapIterator.remove();
 					}
 				}
+			}
+		}
+	}
+	
+	public static void shiftParticles(Vector3f trans) {
+		
+		Iterator<Entry<ParticleTexture, List<Particle>>> mapIterator = particles.entrySet().iterator();
+		while (mapIterator.hasNext()) {
+			List<Particle> list = mapIterator.next().getValue();
+			Iterator<Particle> iter = list.iterator();
+			while(iter.hasNext()) {
+				Particle particle = iter.next();
+				Vector3f.add(particle.getPosition(), trans, particle.getPosition());
 			}
 		}
 	}

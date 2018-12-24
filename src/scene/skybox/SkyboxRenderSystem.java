@@ -58,7 +58,7 @@ public class SkyboxRenderSystem {
 		     SIZE, -SIZE,  SIZE
 		};
 	
-	private String[] TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
+	//private String[] NIGHT_TEXTURE_FILES = {"right", "left", "top", "bottom", "back", "front"};
 	//private String[] NIGHT_TEXTURE_FILES = {"nightRight", "nightLeft", "nightTop", "nightBottom", "nightBack", "nightFront"};
 	String name = "high";
 	private String[] NIGHT_TEXTURE_FILES = {name + "RT", name + "LF", name + "DN", name + "UP", name + "BK", name + "FT"};
@@ -71,7 +71,7 @@ public class SkyboxRenderSystem {
 	public SkyboxRenderSystem(Matrix4f projMatrix) {
 		
 		cube = Loader.loadToVAO(VERTICES, 3);
-		texture = Loader.loadCubeMap(TEXTURE_FILES);
+		//texture = Loader.loadCubeMap(TEXTURE_FILES);
 		nightTexture = Loader.loadCubeMap(NIGHT_TEXTURE_FILES);
 		shader = new SkyboxShader();
 		shader.start();

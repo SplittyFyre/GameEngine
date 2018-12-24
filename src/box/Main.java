@@ -88,7 +88,7 @@ public class Main {
 		
 		//TERRAIN TEXTURE********************************************************************
 		
-		TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grass"));
+		TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grassy2"));
 		TerrainTexture rTexture = new TerrainTexture(Loader.loadTexture("dirt"));
 		TerrainTexture gTexture = new TerrainTexture(Loader.loadTexture("pinkFlowers"));
 		TerrainTexture bTexture = new TerrainTexture(Loader.loadTexture("path"));
@@ -185,7 +185,8 @@ public class Main {
 		
 		//ENEMIES****************************************************************************
 		
-		RawModel borgRaw = OBJParser.loadObjModel("borge");
+		RawModel borgRaw = OBJParser.loadObjModel(""
+				+ "borge");
 		TexturedModel borgShip = new TexturedModel(borgRaw, new ModelTexture(Loader.loadTexture("borge")));
 		borgShip.getTexture().setSpecularMap(Loader.loadTexture("borge_glowMap"));
 		borgShip.getTexture().setBrightDamper(2);
@@ -465,20 +466,26 @@ public class Main {
 			allEntities.addAll(foeprojectiles);
 			allEntities.addAll(player.getProjectiles());
 			
-			for (Entity el : allEntities) {
-				Vector3f.add(el.getPosition(), trans, el.getPosition());
-			}
-			
-			for (Terrain el : terrains) {
-				el.addVec(trans);
-			}
-			
-			for (WaterTile el : waters) {
-				el.addVec(trans);
-			}
-			
-			for (Light el : lights) {
-				el.setPosition(Vector3f.add(el.getPosition(), trans, null));
+			//maybe implement a better detection system?
+			if (trans.lengthSquared() != 0) {
+				for (Entity el : allEntities) {
+					Vector3f.add(el.getPosition(), trans, el.getPosition());
+				}
+				
+				for (Terrain el : terrains) {
+					el.addVec(trans);
+				}
+				
+				for (WaterTile el : waters) {
+					el.addVec(trans);
+				}
+				
+				for (Light el : lights) {
+					el.setPosition(Vector3f.add(el.getPosition(), trans, null));
+				}
+				
+				ParticleWatcher.shiftParticles(trans);
+				System.out.println("CHANGE!");
 			}
 			
 			scene.setEntityList(allEntities);
