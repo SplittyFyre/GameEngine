@@ -413,7 +413,7 @@ public class Main {
 		version.setColour(1, 1, 1);
 		
 		FloatingOrigin.init(player, 200000);
-		
+				
 		while (!Display.isCloseRequested()) {
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);

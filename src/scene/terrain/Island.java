@@ -161,11 +161,11 @@ public class Island {
 		//fern.getTexture().setUseFakeLighting(true);
 		fern.getTexture().setTransparent(true);
 		
-		RawModel pineRaw = OBJParser.loadObjModel("pine");
-		TexturedModel pineText = new TexturedModel(pineRaw, new ModelTexture(Loader.loadTexture("pine")));
+		RawModel pineRaw = OBJParser.loadObjModel("biquadgroup");
+		TexturedModel pineText = new TexturedModel(pineRaw, new ModelTexture(Loader.loadTexture("evertreesqr")));
 		
 		pineText.getTexture().setTransparent(true);
-		//pineText.getTexture().setUseFakeLighting(true);
+		pineText.getTexture().setUseFakeLighting(true);
 		
 		float sz = size / 2;
 		
@@ -177,7 +177,7 @@ public class Island {
 				float y1 = terrain.getTerrainHeight(x1, z1);
 				if (y1 > 0)
 					entities.add(new StaticEntity(pineText, new Vector3f(x1, y1 + y, z1), 0, random.nextFloat() * 360, 0,
-							0.25f + (random.nextFloat() - 0.5f)));
+							10.25f + (random.nextFloat() - 0.5f)));
 			}
 			
 			

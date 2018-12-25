@@ -39,6 +39,7 @@ public class MasterRenderSystem {
 		for (Terrain terrain : scene.getTerrains())
 			terrains.add(terrain);
 		prepare();
+		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		skyboxRenderer.render(scene.getCamera(), skyR, skyG, skyB);
 		entityRenderer.render(entities, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
 		terrainRenderer.render(terrains, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
