@@ -1142,10 +1142,10 @@ public class PlayerVoyager extends Player {
 		//System.out.println(SFKeyboard.getNumKeys());
 		if (Keyboard.isKeyDown(Keyboard.KEY_W) && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			this.currentSpeed = IMPULSE_MOVE_SPEED_VAR;
-			this.getModel().getTexture().setBrightDamper(4);
+			this.getModel().getTexture().setBrightDamper(0.25f);
 		}
 		else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			this.getModel().getTexture().setBrightDamper(4);
+			this.getModel().getTexture().setBrightDamper(0.25f);
 			this.currentSpeed = -IMPULSE_MOVE_SPEED_VAR;
 		}
 		
@@ -1162,7 +1162,7 @@ public class PlayerVoyager extends Player {
 			else {
 				this.currentSpeed = 0;
 			}
-			this.getModel().getTexture().setBrightDamper(4);
+			this.getModel().getTexture().setBrightDamper(0.25f);
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_A) || flagLeft) { 

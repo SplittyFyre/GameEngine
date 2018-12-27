@@ -37,7 +37,7 @@ public class ParticleRenderer {
 		this.vbo = Loader.createEmptyVBO(INSTANCE_DATA_LEN * MAX_INSTANCES); 
 		quad = Loader.loadToVAO(VERTICES, 2);
 		
-		//use for loop instead? (Matrix)
+		//use for loop instead? (Matrix)				   +
 		Loader.addInstancedAttribute(quad.getVaoID(), vbo, 1, 4, INSTANCE_DATA_LEN, 0);
 		Loader.addInstancedAttribute(quad.getVaoID(), vbo, 2, 4, INSTANCE_DATA_LEN, 4);
 		Loader.addInstancedAttribute(quad.getVaoID(), vbo, 3, 4, INSTANCE_DATA_LEN, 8);
