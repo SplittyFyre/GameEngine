@@ -1,4 +1,4 @@
-#version 400 core
+#version 330 core
 
 in vec2 textureCoords;
 
@@ -6,7 +6,7 @@ out vec4 out_Colour;
 
 uniform sampler2D colourTexture;
 
-const float contrast = 0f;
+const float contrast = 0;
 
 void main(void) {
 

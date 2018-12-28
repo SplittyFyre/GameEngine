@@ -44,7 +44,7 @@ public class DisplayManager {
 			Display.setResizable(true);
 			Display.create(new PixelFormat().withDepthBits(24), attributes);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
-			Display.setTitle("This game is Work In Progress -Oscar");
+			Display.setTitle("JTrek Game Engine");
 			
 			ByteBuffer[] icons = new ByteBuffer[ICON_PATHS.length];
 			
