@@ -18,8 +18,8 @@ public class DisplayManager {
 	
 	private static String[] ICON_PATHS = {"sficon16", "sficon32", "sficon"};
 	
-	private static final int WIDTH = 3200;
-	private static final int HEIGHT = 1800;
+	private static final int WIDTH = 3200 - 1600;
+	private static final int HEIGHT = 1800 - 900;
 	private static final int FPS_CAP = 120;
 	
 	private static long lastFrameTime;
@@ -63,15 +63,14 @@ public class DisplayManager {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
-		
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		lastFrameTime = getCurrentTime();
 	}
 	
 	public static void updateDisplay() {
 		if (Display.wasResized()) {
-			System.out.println("Resized");
-			GL11.glViewport(0, 0, WIDTH, HEIGHT);
+			System.out.println("resized");
+			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		}
 		Display.sync(FPS_CAP);
 		Display.update();

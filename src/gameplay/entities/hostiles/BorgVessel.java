@@ -57,6 +57,7 @@ public class BorgVessel extends Enemy {
 		this.player = player;
 	}
 	
+	@Override
 	public void update() {
 		//WARNING: EXPERIMENTAL
 		float dist = SFMath.distance(player.getPlayerPos(), super.getPosition());
@@ -97,12 +98,12 @@ public class BorgVessel extends Enemy {
 						torpmv.x, torpmv.y, 
 						torpmv.z, TM.smlexplosionParticleSystem));
 				
-				if (!player.cloaked) { 
+				/*if (!player.cloaked) { 
 					Main.foeprojectiles.add(new HomingTorpedo(privateTorpedoTexture,
 							new Vector3f(super.getPosition().x, super.getPosition().y, super.getPosition().z), 
 							3, 3, 6.5f, 300, 3100, 15, player, 
 							0, 20, 0, TM.smlexplosionParticleSystem));
-				}
+				}*/
 				
 				counter = 0;
 				flag = false;

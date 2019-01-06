@@ -68,7 +68,7 @@ void main(void){
 	
 	}
 	
-	totalDiffuse = min(totalDiffuse, 2);
+	totalDiffuse = max(totalDiffuse, 0.2);
 	
 	if (base > 0.5f) {
 		totalDiffuse /= vec3(2);

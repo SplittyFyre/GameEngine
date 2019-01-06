@@ -37,6 +37,14 @@ public class BoundingBox {
 		
 	}
 	
+	public boolean intersects(BoundingBox other, float inflation) {
+		
+		return ((this.minX * inflation <= other.maxX && this.maxX * inflation >= other.minX) && 
+				(this.minY * inflation <= other.maxY && this.maxY * inflation >= other.minY) && 
+				(this.minZ * inflation <= other.maxZ && this.maxZ * inflation >= other.minZ));
+		
+	}
+	
 	public void printSpecs(String bbID) {
 		
 		System.out.println(bbID + "*********************");

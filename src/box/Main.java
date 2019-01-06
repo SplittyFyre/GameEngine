@@ -1,5 +1,6 @@
 package box;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +21,7 @@ import gameplay.collision.CollisionManager;
 import gameplay.entities.PlayerCamera;
 import gameplay.entities.hostiles.BorgVessel;
 import gameplay.entities.hostiles.Enemy;
+import gameplay.entities.hostiles.RogueVessel;
 import gameplay.entities.players.Player;
 import gameplay.entities.players.PlayerBirdOfPrey;
 import gameplay.entities.players.trubble.PlayerTrubble;
@@ -72,7 +74,7 @@ public class Main {
 		viewScreenMode = param;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		List<Terrain> terrains = new ArrayList<Terrain>();
 		List<Light> lights = new ArrayList<Light>();
@@ -95,7 +97,7 @@ public class Main {
 		
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		
-		TerrainTexture blendMap = new TerrainTexture(Loader.loadTexture("blendMap"));
+		TerrainTexture blendMap = new TerrainTexture(Loader.loadTexture("black"));
 		
 		//OTHER TERRAIN STUFF****************************************************************
 		
@@ -185,8 +187,7 @@ public class Main {
 		
 		//ENEMIES****************************************************************************
 		
-		RawModel borgRaw = OBJParser.loadObjModel(""
-				+ "borge");
+		RawModel borgRaw = OBJParser.loadObjModel("borge");
 		TexturedModel borgShip = new TexturedModel(borgRaw, new ModelTexture(Loader.loadTexture("borge")));
 		borgShip.getTexture().setSpecularMap(Loader.loadTexture("borge_glowMap"));
 		borgShip.getTexture().setBrightDamper(2);
@@ -197,9 +198,7 @@ public class Main {
 		//END TEXTURE SECTION****************************************************************
 		
 		Random random = new Random();
-		
-		Vector3f yellow = new Vector3f(1.3f, 1.3f, 1.3f);
-		
+				
 		Light sun = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
 		lights.add(sun);
 		
@@ -270,7 +269,7 @@ public class Main {
 		
 		//ADDING RANDOM STUFF (PLACE HOLDER?)*************************************************
 		
-		BorgVessel borj = new BorgVessel(borgShip, new Vector3f(1000, 750, 6000), 0, 0, 0, 300, player);
+		BorgVessel borj = new BorgVessel(borgShip, new Vector3f(-1000, 750, -6000), 0, 0, 0, 300, player);
 		enemies.add(borj);
 		
 		for (int i = 0; i < 0; i++) {
@@ -279,6 +278,10 @@ public class Main {
 					* 100, random.nextFloat() * 100000), 0, 0, 0, 300, player);
 			enemies.add(borj2);
 		}
+		
+		RogueVessel rogue = new RogueVessel(TM.BOPModel, new Vector3f(0, 650, 100), 0, 0, 0, 7.5f, player);
+		enemies.add(rogue);
+		enemies.add(new RogueVessel(TM.BOPModel, new Vector3f(1000, 700, 200), 0, 0, 0, 7.5f, player));
 
 		Fbo fbo = new Fbo(Display.getWidth(), Display.getHeight());
 		Fbo output = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_TEXTURE);
@@ -413,14 +416,29 @@ public class Main {
 		version.setColour(1, 1, 1);
 		
 		FloatingOrigin.init(player, 200000);
-				
+		
+		/*BufferedWriter fout = null;
+		
+		try {
+			fout = new BufferedWriter(new FileWriter(new File("log")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}*/
+		
 		while (!Display.isCloseRequested()) {
+			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
 
 			player.update(caster);
+			
+			//fout.write(String.format("player update:        %d\n", System.nanoTime() - start));
+			
 			camera.move(); 
 			caster.update();
+			
+			//fout.write(String.format("camera update:        %d\n", System.nanoTime() - start));
+			
 			AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 			ParticleWatcher.update();
 			
@@ -445,8 +463,8 @@ public class Main {
 				SFMath.xTranslation = Vector3f.sub(techicalOrigin, player.getPosition(), null);
 			}*/
 			
-			for (Entity e : enemies) {
-				((BorgVessel) e).update();
+			for (Enemy e : enemies) {
+				e.update();
 			}
 			
 			for (int i = 0; i < foeprojectiles.size(); i++) {
@@ -459,12 +477,16 @@ public class Main {
 				}
 			}
 			
+			//fout.write(String.format("update enemies &proj: %d\n", System.nanoTime() - start));
+			
 			//SFUT.println(borj.getBoundingBox().maxX - borj.getBoundingBox().minX);
 			allEntities.clear();
 			allEntities.addAll(enemies);
 			allEntities.addAll(entities);
 			allEntities.addAll(foeprojectiles);
 			allEntities.addAll(player.getProjectiles());
+			
+			//fout.write(String.format("appending crap:       %d\n", System.nanoTime() - start));
 			
 			//maybe implement a better detection system?
 			if (trans.lengthSquared() != 0) {
@@ -485,13 +507,16 @@ public class Main {
 				}
 				
 				ParticleWatcher.shiftParticles(trans);
-				System.out.println("CHANGE!");
 			}
+			
+			//fout.write(String.format("floating origin:      %d\n", System.nanoTime() - start));
 			
 			scene.setEntityList(allEntities);
 			scene.setCamera(camera);
 			scene.setTerrainList(terrains);
 			scene.setLightList(lights); 
+			
+			//fout.write(String.format("setting stuff:        %d\n", System.nanoTime() - start));
 			
 			while (Keyboard.next()) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
@@ -520,6 +545,8 @@ public class Main {
 			engine.renderScene(scene);
 			buffers.unbindCurrentFrameBuffer();
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+															
+			//fout.write(String.format("water stuff:          %d\n", System.nanoTime() - start));
 			
 			TM.vec31 = camera.getPosition();
 			TM.f1 = camera.getPitch();
@@ -583,6 +610,7 @@ public class Main {
 			TextMaster.drawText();
 			AudioEngine.update();
 			DisplayManager.updateDisplay();//SFMath.xTranslation = new Vector3f(0, 0, 0);
+			//fout.flush();
 		}
 		
 		/**MAIN GAME LOOP*******************************************************************
@@ -615,7 +643,7 @@ public class Main {
 		
 		for (int i = 0; i < enemies.size(); i++) {
 
-            BorgVessel enemy = (BorgVessel) enemies.get(i);
+            Enemy enemy = enemies.get(i);
             
             if (enemy.isDead()) {
             	enemies.remove(i);

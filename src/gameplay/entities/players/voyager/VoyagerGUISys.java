@@ -1017,7 +1017,7 @@ public class VoyagerGUISys {
 		
 		
 		//BOOKMARK impulse speed slider
-		impulseslider = new SFVerticalSlider(speedsliders, 0.45f, 0, 0, new Vector2f(-0.075f, 0), TM.sqr4, "knob", "tramp") {
+		impulseslider = new SFVerticalSlider(speedsliders, 0.45f, 0.01f, 0.02f, new Vector2f(-0.075f, 0), TM.sqr4, "knob", "tramp") {
 			
 			@Override
 			public void sliderStopHover(ISlider slider) {
@@ -1031,7 +1031,7 @@ public class VoyagerGUISys {
 		};
 		
 		//BOOKMARK impulse speed slider
-		warpslider = new SFVerticalSlider(speedsliders, 0.45f, 0, 0, new Vector2f(0.05f, 0), TM.sqr4, "knob", "tramp") {
+		warpslider = new SFVerticalSlider(speedsliders, 0.45f, 0.01f, 0.02f, new Vector2f(0.05f, 0), TM.sqr4, "knob", "tramp") {
 			
 			@Override
 			public void sliderStopHover(ISlider slider) {

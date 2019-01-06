@@ -215,5 +215,44 @@ public class RaysCast {
 		
 		return tmax > Math.max(tmin, 0);
 	}
+	
+	public boolean penetrates(BoundingBox bb, float bbinflation) {
+		
+		//float tmin = Float.NEGATIVE_INFINITY, tmax = Float.POSITIVE_INFINITY;
+		
+		Vector3f invdir = new Vector3f(1 / this.getCurrentRay().x, 1 / this.getCurrentRay().y, 1 / this.getCurrentRay().z);
+		
+		float t1 = (bb.minX / bbinflation - this.getCamera().getPosition().x) * invdir.x;
+		float t2 = (bb.maxX * bbinflation - this.getCamera().getPosition().x) * invdir.x;
+		
+		float tmin = Math.min(t1, t2);
+		float tmax = Math.max(t1, t2);
+		
+		//******************************************************
+		
+		//tmin = max(tmin, min(t1, t2));
+		//tmax = min(tmax, max(t1, t2));
+		
+		//******************************************************
+		
+		t1 = (bb.minY / bbinflation - this.getCamera().getPosition().y) * invdir.y;
+		t2 = (bb.maxY * bbinflation - this.getCamera().getPosition().y) * invdir.y;
+		
+		//tmin = Math.max(tmin, Math.min(Math.min(t1, t2), tmax));
+		//tmax = Math.min(tmax, Math.max(Math.max(t1, t2), tmin));
+
+		tmin = Math.max(tmin, Math.min(t1, t2));
+		tmax = Math.min(tmax, Math.max(t1, t2));
+		
+		//******************************************************
+		
+		t1 = (bb.minZ / bbinflation - this.getCamera().getPosition().z) * invdir.z;
+		t2 = (bb.maxZ * bbinflation - this.getCamera().getPosition().z) * invdir.z;
+		
+		tmin = Math.max(tmin, Math.min(t1, t2));
+		tmax = Math.min(tmax, Math.max(t1, t2));
+		
+		return tmax > Math.max(tmin, 0);
+	}
 
 }

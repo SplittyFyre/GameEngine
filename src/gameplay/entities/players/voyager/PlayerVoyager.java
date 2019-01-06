@@ -1087,36 +1087,23 @@ public class PlayerVoyager extends Player {
 		}
 		
 		if (this.target != null && Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			/*float mv = this.target.getPosition().y - super.getPosition().y;
-
-			super.move(0, mv * 0.03f, 0);
 			
-			if (super.getPosition().y < this.target.getPosition().y + 50) {
-				flagUp = true;
-			}
-			else if (super.getPosition().y > this.target.getPosition().y - 50) {
-				flagDown = true;
-			}
-			
-			float ty = SFMath.rotateToFaceVector(getPosition(), this.target.getPosition()).y;
-			
-			super.setRotY(ty + Math.signum(ty));*/
-			
+			super.getPosition().y += 10.5;
 			Vector3f vec = SFMath.rotateToFaceVector(getPosition(), this.target.getPosition());
-			
+			super.getPosition().y -= 10.5;
+						
 			float rot = super.getRotY() - vec.y;
 			
 			if (Math.abs(rot) > 180) {
 				rot += (rot > 0 ? -360 : 360);
 			}
-			
+									
 			vec.x = -vec.x;
 			
 			float rtx = super.getRotX();
 			
 			if (Math.abs(rtx - vec.x) < 0.3f) {
 				super.setRotX(vec.x);
-				//System.out.println("Exception Made");
 			}
 			else if (rtx > vec.x) {
 				flagUp = true;
@@ -1124,14 +1111,20 @@ public class PlayerVoyager extends Player {
 			else if (rtx < vec.x) {
 				flagDown = true;
 			}
+						
+			float cap = 0.35f;
+			//float flt = DisplayManager.getFrameTime() * TURN_SPEED;
 			
-			//System.out.println(rot);
-			
-			if (rot < -0.3f) {
+			if (rot < -(cap)) {
 				flagLeft = true;
 			}
-			else if (rot > 0.3f) {
+			else if (rot > cap) {
 				flagRight = true;
+			}
+			else {
+				if (Math.abs(super.getRotY() - vec.y) < cap) {
+					super.setRotY(vec.y);
+				}
 			}
 			
 		}
@@ -1304,9 +1297,9 @@ public class PlayerVoyager extends Player {
 		
 			leftPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (leftPhaserTimer > 0.05f) {		
-				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(4, 22.375f, 40 + distMoved)),
-						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
+			if (leftPhaserTimer > 0.03f) {		
+				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(4, 22.375f, 23.7f + distMoved)),
+						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
 				ENERGY--;
 				leftPhaserTimer = 0;
 			}
@@ -1321,9 +1314,9 @@ public class PlayerVoyager extends Player {
 			
 			centerPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (centerPhaserTimer > 0.05f) {
-				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-0.75f, 20.9f, 54 + distMoved)),
-						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
+			if (centerPhaserTimer > 0.03f) {
+				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-0.75f, 20.9f, 37.7f + distMoved)),
+						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
 				ENERGY--;
 				centerPhaserTimer = 0;
 			}
@@ -1338,9 +1331,9 @@ public class PlayerVoyager extends Player {
 			
 			rightPhaserTimer += DisplayManager.getFrameTime();
 			
-			if (rightPhaserTimer > 0.05f) {
-				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-5, 22.375f, 40 + distMoved)),
-						20, super.getRotX(), super.getRotY(), 0, this.currentSpeed));
+			if (rightPhaserTimer > 0.03f) {
+				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-5, 22.375f, 23.7f + distMoved)),
+						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
 				ENERGY--;
 				rightPhaserTimer = 0;
 			}
@@ -1364,7 +1357,7 @@ public class PlayerVoyager extends Player {
 						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
 				
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(4, 22.375f, 23.7f + distMoved)),
-						20, super.getRotX(), super.getRotY(), super.getRotZ()  , this.currentSpeed));
+						20, super.getRotX(), super.getRotY(), super.getRotZ(), this.currentSpeed));
 				
 				ENERGY -= 3;
 				mainPhaserTimer = 0;
@@ -1455,7 +1448,7 @@ public class PlayerVoyager extends Player {
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
 				-rots.x, rots.y, 0,
-				1.5f, 1.5f, 20, 15, this.currentSpeed + 5000));
+				Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 15, this.currentSpeed + 5000));
 		
 	}
 	
@@ -1480,7 +1473,7 @@ public class PlayerVoyager extends Player {
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
 				-rots.x, rots.y, 0,
-				1.5f, 1.5f, 20, 15, this.currentSpeed + 5000));
+				Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 15, this.currentSpeed + 5000));
 		
 	}
 	
@@ -1494,7 +1487,7 @@ public class PlayerVoyager extends Player {
 						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 9.1f)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
 				-super.getRotX() - angle, super.getRotY() + 180, 0
-				, 1.5f, 1.5f, 20, 10, tracingX, tracingY, tracingZ, true));
+				, Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 10, tracingX, tracingY, tracingZ, true));
 		
 		ENERGY--;
 		
@@ -1510,7 +1503,7 @@ public class PlayerVoyager extends Player {
 						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 9.1f)
 						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
 				-super.getRotX() - angle, super.getRotY() + 180, 0
-				, 1.5f, 1.5f, 20, 10, tracingX, -tracingY, tracingZ, true));
+				, Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 10, tracingX, -tracingY, tracingZ, true));
 		
 		ENERGY--;
 		
@@ -1667,8 +1660,6 @@ public class PlayerVoyager extends Player {
 	
 	public void fireAutoGun() {
 		
-		autogunTimer += DisplayManager.getFrameTime();
-		
 		float spd = (this.currentSpeed < 0 ? 0 : this.currentSpeed);
 		
 		switch (autoFunc) {
@@ -1731,6 +1722,7 @@ public class PlayerVoyager extends Player {
 		float cof = 40;
 		
 		dx *= cof; dy *= cof; dz *= cof;
+		dx += tracingX; dy += tracingY; dz += tracingZ;
 		
 		switch (turretFunc) {
 		
@@ -1764,7 +1756,7 @@ public class PlayerVoyager extends Player {
 		
 		case ONE_TORP:
 			if (turretTimer > 0.5f || turretToggle) {
-				projectiles.add(Torpedo.photonTorpedo(super.getPosition(), vec.x, vec.y, vec.z));
+				projectiles.add(Torpedo.photonTorpedo(super.getPosition(), vec.x + tracingX, vec.y + tracingY, vec.z + tracingZ));
 				
 				turretTimer = 0;
 				turretToggle = false;
@@ -1844,7 +1836,7 @@ public class PlayerVoyager extends Player {
 			
 			BoundingBox bb1 = enemy.getBoundingBox(); 
 			
-			if (!Mouse.isGrabbed() && caster.penetrates(bb1)) {
+			if (!Mouse.isGrabbed() && caster.penetrates(bb1, 1.025f)) {
 				
 				if (this.retical == null) {
 					this.setPreRetical(enemy.getPosition());

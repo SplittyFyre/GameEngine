@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 
 import box.TM;
@@ -63,14 +64,13 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 			
 			@Override
 			public void whileHovering(IButton button) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void whileHolding(IButton button) {
-				this.move(0, (float) (Mouse.getDY() * 0.001));
-				
+				//this.move(0, (float) (Mouse.getDY() * 0.001));
+				this.getTexture().getPosition().y = Mouse.getY();
 			}
 			
 			@Override
@@ -87,7 +87,6 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 			
 			@Override
 			public void onClick(IButton button) {
-				// TODO Auto-generated method stub
 				
 			}
 		};
@@ -109,8 +108,8 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 			
 			@Override
 			public void whileHolding(IButton button) {
-				this.move(0, (float) (Mouse.getDY() * 0.00125));
-				
+				//this.move(0, (float) (Mouse.getDY() * 0.00125));
+				this.getTexture().getPosition().y = Mouse.getY();
 			}
 			
 			@Override
@@ -149,8 +148,8 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 			
 			@Override
 			public void whileHolding(IButton button) {
-				this.move(0, (float) (Mouse.getDY() * 0.00125));
-				
+				//this.move(0, (float) (Mouse.getDY() * 0.00125));
+				this.getTexture().getPosition().y = -1.0f + 2.0f * Mouse.getY() / Display.getHeight();
 			}
 			
 			@Override

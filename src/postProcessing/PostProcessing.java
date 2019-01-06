@@ -28,6 +28,7 @@ public class PostProcessing {
 	private static CombineFilter combiner;
 
 	public static void init() {
+		System.out.println("post re init");
 		quad = Loader.loadToVAO(POSITIONS, 2);
 		contrastMod = new ContrastModification();
 		hBlur = new HorizontalBlur(Display.getWidth() / 2, Display.getHeight() / 2);
