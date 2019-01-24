@@ -2,10 +2,11 @@ package gameplay.entities.hostiles;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import audio.AudioEngine;
 import box.Main;
 import box.TM;
 import gameplay.entities.players.Player;
-import gameplay.entities.projectiles.Torpedo;
+import gameplay.entities.projectiles.Bolt;
 import objStuff.OBJParser;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
@@ -17,9 +18,10 @@ import utils.SFMath;
 public class RogueVessel extends Enemy {
 	
 	private float HEALTH = 2500;
-	private float movetimer = 0, avoidtimer = 0, guntimer = 0, swingtimer = 0;
-	private float neededswing = 0;
+	private float movetimer = 0, avoidtimer = 0, guntimer = 0;
+	private float neededswing = 0, swingspeed = 0, hasswung = 0;
 	private boolean allowInitSwing = true;
+	private boolean odd = true;
 	
 	private float currSpeed = 0;
 	private float currentTurnSpeed = 0;
@@ -32,7 +34,7 @@ public class RogueVessel extends Enemy {
 	private boolean flagUp = false, flagDown = false;
 	private static final float UPWARDS_ROT_CAP = 50.0f;
 	
-	private static final float TURN_SPEED = 180.0f;
+	private static final float TURN_SPEED = 90.0f;
 	
 	private Player player;
 	
@@ -42,6 +44,38 @@ public class RogueVessel extends Enemy {
 	public RogueVessel(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, Player player) {
 		super(model, position, rotX, rotY, rotZ, scale);
 		this.player = player;
+	}
+	
+	private void fireGuns() {
+		Vector3f rots;
+		//rots = new Vector3f(-super.getRotX(), super.getRotY(), super.getRotZ());
+		rots = SFMath.rotateToFaceVector(super.getPosition(), player.getPosition());
+		
+		//float f = 28.125f;
+		float f = 20;
+		
+		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
+				
+				super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f),
+				super.getPosition().y + 3.75f,
+				super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f)
+				
+				), 
+				-rots.x, rots.y + TM.rng.nextFloat() - 0.5f, rots.z, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
+				TM.explosionParticleSystem));
+		
+		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
+				
+				super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), f),
+				super.getPosition().y + 3.75f,
+				super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), f)
+				
+				), 
+				-rots.x, rots.y + TM.rng.nextFloat() - 0.5f, rots.z, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
+				TM.explosionParticleSystem));
+		
+		//AudioEngine.playTempSrc(TM.disruptorsnd, 300, super.getPosition().x, super.getPosition().y, super.getPosition().z);
+		AudioEngine.playTempSrc(TM.disruptorsnd, 300, super.getPosition().x, super.getPosition().y, super.getPosition().z);
 	}
 
 	@Override
@@ -53,7 +87,7 @@ public class RogueVessel extends Enemy {
 		if (dist < 600) {
 			ATTACK_STAGE = SWINGING;
 		}
-		else if (dist < 12000) {
+		else if (dist < 15000) {
 			if (ATTACK_STAGE == NEUTRAL) {
 				ATTACK_STAGE = CHARGING;
 			}
@@ -70,48 +104,58 @@ public class RogueVessel extends Enemy {
 			super.setRotX(-rot.x);
 			super.setRotY(rot.y);
 			
-			guntimer += DisplayManager.getFrameTime();
-			
-			if (guntimer > 0.1f) {
-				Vector3f torpmv = SFMath.moveToVector(player.getPlayerPos(), 
-						super.getPosition(), 10000);
-				Main.foeprojectiles.add(new Torpedo(privateTorpedoTexture, 
-						new Vector3f(super.getPosition()),
-						0, 0, 0, 3, 3, 6.5f, 250, 
-						torpmv.x, torpmv.y, 
-						torpmv.z, TM.smlexplosionParticleSystem));
-				guntimer = 0;
+			if (dist < 3000) {
+				guntimer += DisplayManager.getFrameTime();
+				
+				if (guntimer > 0.1f) {
+					fireGuns();
+					guntimer = 0;
+				}	
 			}
 			
 			break;
 			
 		case SWINGING:
-			currSpeed = 1500;
+			currSpeed = 2500;
 
 			if (avoidtimer < 0.5f) {
 				flagUp = true;
 				avoidtimer += DisplayManager.getFrameTime();
 			}
+			else if (avoidtimer < 0.75f) {
+				flagDown = true;
+				avoidtimer += DisplayManager.getFrameTime();
+			}
 			
-			if (dist > 4000) {
+			if (dist > 5000) {
 				
 				if (allowInitSwing) {
 					allowInitSwing = false;
-					neededswing = TM.rng.nextFloat() + 0.5f;
-					swingtimer = 0;
+					neededswing = super.getRotY() - rot.y;
+					if (Math.abs(neededswing) > 180) {
+						neededswing = Math.abs(neededswing + (neededswing > 0 ? -360 : 360));
+					}
+					hasswung = 0;
+					swingspeed = 2600 + TM.rng.nextFloat() * 500;
 				}
 				
-				swingtimer += DisplayManager.getFrameTime();
+				currSpeed = swingspeed;
 				
-				if (swingtimer < neededswing) {
-					flagRight = true;
+				neededswing = Math.abs(neededswing);
+				
+				// INSTA TURN BUG, neededswing is negative for some reason
+				if (hasswung < neededswing) {
+					flagRight = odd;
+					flagLeft = !odd;
+					hasswung += TURN_SPEED * DisplayManager.getFrameTime();
 				}
 				else {
 					allowInitSwing = true;
 					ATTACK_STAGE = CHARGING;
+					avoidtimer = 0;
+					odd = !odd;
 				}
 				
-				avoidtimer = 0;
 			}
 			
 			break;
