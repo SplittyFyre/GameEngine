@@ -18,8 +18,8 @@ public class DisplayManager {
 	
 	private static String[] ICON_PATHS = {"sficon16", "sficon32", "sficon"};
 	
-	private static final int WIDTH = 3200 - 1600;
-	private static final int HEIGHT = 1800 - 900;
+	private static final int WIDTH = 3200;
+	private static final int HEIGHT = 1800;
 	private static final int FPS_CAP = 120;
 	
 	private static long lastFrameTime;

@@ -1171,7 +1171,7 @@ public class PlayerVoyager extends Player {
 				super.rotate(0, 0, 60 * DisplayManager.getFrameTime());
 		}
 		else {											
-			this.currentTurnSpeed = 0; 	
+			this.currentTurnSpeed = 0;
 			
 			if (this.getRotZ() < 0) {
 				super.rotate(0, 0, 70 * DisplayManager.getFrameTime());
@@ -1205,7 +1205,8 @@ public class PlayerVoyager extends Player {
 						super.setRotX(0);
 				}
 				
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || flagDown) {
+			} 
+			else if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || flagDown) {
 				
 				flagDown = false;
 				
@@ -1756,7 +1757,8 @@ public class PlayerVoyager extends Player {
 		
 		case ONE_TORP:
 			if (turretTimer > 0.5f || turretToggle) {
-				projectiles.add(Torpedo.photonTorpedo(super.getPosition(), vec.x + tracingX, vec.y + tracingY, vec.z + tracingZ));
+				//projectiles.add(Torpedo.photonTorpedo(super.getPosition(), vec.x + tracingX, vec.y + tracingY, vec.z + tracingZ));
+				projectiles.add(Torpedo.photonTorpedo(super.getPosition(), vec.x, vec.y, vec.z));
 				
 				turretTimer = 0;
 				turretToggle = false;
@@ -1941,7 +1943,7 @@ public class PlayerVoyager extends Player {
 	
 	@Override
 	public Vector3f getPlayerPos() {
-		return new Vector3f(super.getPosition().x, super.getPosition().y + 5, super.getPosition().z);
+		return new Vector3f(super.getPosition().x, super.getPosition().y + 2.5f, super.getPosition().z);
 		/*return new Vector3f(super.getPosition().x + (TM.rng.nextFloat() - 0.5f) * 100000,
 				super.getPosition().y + (TM.rng.nextFloat() - 0.5f) * 10000,
 				super.getPosition().z + (TM.rng.nextFloat() - 0.5f) * 100000);*/

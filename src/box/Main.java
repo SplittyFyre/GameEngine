@@ -199,7 +199,7 @@ public class Main {
 		
 		Random random = new Random();
 				
-		Light sun = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
+		Light sun = new Light(new Vector3f(200000, 400000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
 		lights.add(sun);
 		
 		//entities.add(new StaticEntity(new TexturedModel(OBJParser.loadObjModel("photon"), new ModelTexture(Loader.loadTexture("image"))),
@@ -260,7 +260,7 @@ public class Main {
 					10000, 1750093151);
 		}*/
 		
-		Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, 0, 10000, 1750093151);
+		Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, /*30000*/0, 10000, 1750093151);
 		//Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, 0, 50000, "tryme2", 5000);
 		//Island copy = new Island(texturePack, blendMap, terrains, waters, entities, 30000 , 0, 0, 10000, 1750093151);
 		WaterTile water = home.getWater();

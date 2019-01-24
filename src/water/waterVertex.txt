@@ -14,7 +14,7 @@ uniform vec3 lightPosition;
 
 uniform vec3 cameraPosition;
 
-const float tiling = 20;
+const float tiling = 50;
 
 void main(void) {
 	

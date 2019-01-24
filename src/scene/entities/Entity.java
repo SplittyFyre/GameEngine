@@ -142,6 +142,12 @@ public abstract class Entity {
 	public void setRotZ(float rotZ) {
 		this.rotZ = rotZ;
 	}
+	
+	public void setRotVec(Vector3f rot) {
+		this.rotX = rot.x;
+		this.rotY = rot.y;
+		this.rotZ = rot.z;
+	}
 
 	public Vector3f getScale() {
 		return new Vector3f(scaleX, scaleY, scaleZ);
