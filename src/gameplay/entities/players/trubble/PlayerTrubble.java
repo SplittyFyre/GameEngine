@@ -140,8 +140,8 @@ public class PlayerTrubble extends Player {
 	
 	//BOOKMARK TACTICAL VARS
 	
-	private PlayerTrubbleDeck deck = new PlayerTrubbleDeck(SFMath.vecadd(getPosition(), 50, 0, 0), this);
-	private PlayerTrubbleStern stern = new PlayerTrubbleStern(SFMath.vecadd(getPosition(), -50, 0, 0), this);
+	private PlayerTrubbleDeck deck = new PlayerTrubbleDeck(SFMath.vecoffset(getPosition(), 50, 0, 0), this);
+	private PlayerTrubbleStern stern = new PlayerTrubbleStern(SFMath.vecoffset(getPosition(), -50, 0, 0), this);
 	
 	public boolean isSeperated = false;
 	

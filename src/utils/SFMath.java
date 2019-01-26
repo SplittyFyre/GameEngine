@@ -216,22 +216,25 @@ public class SFMath {
 	}
 	
 	public static Vector3f rotateToFaceVector(Vector3f rotatingObjectPosition, Vector3f destination) {
-		
 		Vector3f a = rotatingObjectPosition;
 		Vector3f b = destination;
 		Vector3f front = new Vector3f();
 		Vector3f.sub(b, a, front);
-		//float xy = (float) Math.sqrt(dx * dx + dz * dz);
 		if (front.length() != 0)
 			front.normalise();
 		float requiredRotY = (float) Math.toDegrees(Math.atan2(front.x, front.z));
-		//float requiredRotX = (float) Math.toDegrees(Math.atan2(front.y, Math.sqrt(front.x * front.x + front.z * front.z)));
 		float requiredRotX = (float) Math.toDegrees(Math.asin(front.y));
-		//float requiredRotX = (float) Math.toDegrees(Math.atan2(Math.sqrt(front.x * front.x + front.y * front.y), front.z));
-		//System.out.println("rotx: " + requiredRotX);
-		//System.out.println(a + ", " + b + ": " + front);
-		//requiredRotY = (requiredRotY < 0) ? requiredRotY + 360 : requiredRotY;
 		return new Vector3f(requiredRotX, requiredRotY, 0);
+	}
+	
+	public static float Y_rotateToFaceVector(Vector3f rotatingObjectPosition, Vector3f destination) {
+		Vector3f a = rotatingObjectPosition;
+		Vector3f b = destination;
+		Vector3f front = new Vector3f();
+		Vector3f.sub(b, a, front);
+		if (front.length() != 0)
+			front.normalise();
+		return (float) Math.toDegrees(Math.atan2(front.x, front.z));
 	}
 	
 	public static Vector3f moveToVector(Vector3f a, Vector3f b, float speed) {
@@ -246,7 +249,7 @@ public class SFMath {
 		return new Vector3f(d.x / xy * ca * f, d.y * f, d.z / xy * ca * f);
 	}
 	
-	public static Vector3f vecadd(Vector3f vec, float x, float y, float z) {
+	public static Vector3f vecoffset(Vector3f vec, float x, float y, float z) {
 		return new Vector3f(vec.x + x, vec.y + y, vec.z + z);
 	}
 

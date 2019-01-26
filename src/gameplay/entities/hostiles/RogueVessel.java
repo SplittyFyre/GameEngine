@@ -47,31 +47,34 @@ public class RogueVessel extends Enemy {
 	}
 	
 	private void fireGuns() {
-		Vector3f rots;
-		//rots = new Vector3f(-super.getRotX(), super.getRotY(), super.getRotZ());
-		rots = SFMath.rotateToFaceVector(super.getPosition(), player.getPosition());
 		
-		//float f = 28.125f;
-		float f = 20;
+		float f = 28.125f;
+		
+		float ex = SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
+		float zed = SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
+		
+		// shouldn't these be reversed? like the negatives...
+		Vector3f rots = SFMath.rotateToFaceVector(super.getPosition(), SFMath.vecoffset(player.getPlayerPos(), -ex, 0, -zed));
+		float rot2 = SFMath.Y_rotateToFaceVector(super.getPosition(), SFMath.vecoffset(player.getPlayerPos(), ex, 0, zed));
 		
 		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 				
-				super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f),
+				super.getPosition().x + ex,
 				super.getPosition().y + 3.75f,
-				super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f)
+				super.getPosition().z + zed
 				
 				), 
-				-rots.x, rots.y + TM.rng.nextFloat() - 0.5f, rots.z, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
+				-rots.x, rots.y, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
 				TM.explosionParticleSystem));
 		
 		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 				
-				super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), f),
+				super.getPosition().x - ex,
 				super.getPosition().y + 3.75f,
-				super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), f)
+				super.getPosition().z - zed
 				
 				), 
-				-rots.x, rots.y + TM.rng.nextFloat() - 0.5f, rots.z, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
+				-rots.x, rot2, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
 				TM.explosionParticleSystem));
 		
 		//AudioEngine.playTempSrc(TM.disruptorsnd, 300, super.getPosition().x, super.getPosition().y, super.getPosition().z);

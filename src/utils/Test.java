@@ -4,6 +4,14 @@ public class Test {
 	
 	public static void main(String[] args) {
 
+		float f = 22.542069f;
+		
+		System.out.println(SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, 67.5f, f));
+		System.out.println(SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, 67.5f, -f));
+		
+		
+		System.exit(0);
+		
 		char[] togen = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '.'};
 		
 		for (int i = 0; i < togen.length; i++) {

@@ -597,7 +597,7 @@ public class PlayerVoyager extends Player {
 	//BOOKMARK: TACTICAL VARS
 	
 	private static final float MAX_HEALTH = 12500;
-	private static final float FULL_SHIELDS = 100000;
+	private static final float FULL_SHIELDS = 1000000;
 	
 	private float turretTimer = 0;
 	private boolean turretToggle = true;
