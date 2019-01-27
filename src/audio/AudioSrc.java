@@ -4,7 +4,7 @@ import org.lwjgl.openal.AL10;
 
 public class AudioSrc {
 	
-	private int srcID;
+	public int srcID;
 	
 	public float volume = 1;
 	

@@ -36,7 +36,7 @@ public class AudioEngine {
 	public static int loadSound(String file) {
 		int buffer = 0;
 		
-		buffer = AL10.alGenBuffers();
+		buffer = AL10.alGenBuffers(); 
 		buffers.add(buffer);
 		//ClassLoader load = Class.class.getClassLoader();
 		//URL url = load.getResource("/res/" + file + ".wav");
@@ -82,7 +82,7 @@ public class AudioEngine {
 			AudioSrc el = autoKills.get(i);
 			if (!el.isPlaying()) {
 				autoKills.remove(i);
-				el = null;
+				el.delete(); // VERY IMPORTANT! otherwise sources just pile up
 			}
 		}
 		
