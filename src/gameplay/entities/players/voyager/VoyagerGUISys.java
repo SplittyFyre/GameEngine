@@ -153,7 +153,7 @@ public class VoyagerGUISys {
 		
 		if (activeGroup != INDEX_GROUP) {
 			
-			float stride = -1 + TM.sqr4.y;
+			float stride = TM.sqr4.y - 1;
 			
 			Vector2f scale = new Vector2f(TM.sqr4);
 			scale.x *= 2f;
