@@ -603,7 +603,7 @@ public class PlayerVoyager extends Player {
 	private boolean turretToggle = true;
 	
 	private int turretFunc = 0;
-	
+	 
 	private static final int TURRET_MIN = 0;
 	private static final int TURRET_MAX = 2; 
 	
@@ -1434,10 +1434,10 @@ public class PlayerVoyager extends Player {
 		Vector3f firing;
 		
 		if (mode) {
-			firing = ModelSys.pos(super.tmat, new Vector3f(9, 20, 57.5f));
+			firing = ModelSys.pos(super.tmat, 8, 20, 30);
 		}
 		else {
-			firing = ModelSys.pos(super.tmat, new Vector3f(10, 20, 45));
+			firing = ModelSys.pos(super.tmat, 10, 20, 23);
 		}
 		
 		if (this.target == null) {
@@ -1459,10 +1459,10 @@ public class PlayerVoyager extends Player {
 		Vector3f firing;
 		
 		if (mode) {
-			firing = ModelSys.pos(super.tmat, new Vector3f(-9, 20, 57.5f));
+			firing = ModelSys.pos(super.tmat, -8, 20, 30);
 		}
 		else {
-			firing = ModelSys.pos(super.tmat, new Vector3f(-10, 20, 45));
+			firing = ModelSys.pos(super.tmat, -10, 20, 23);
 		}
 		
 		if (this.target == null) {

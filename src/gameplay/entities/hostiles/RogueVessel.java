@@ -18,7 +18,7 @@ import utils.SFMath;
 public class RogueVessel extends Enemy {
 	
 	private float HEALTH = 2500;
-	private float movetimer = 0, avoidtimer = 0, guntimer = 0;
+	private float movetimer = 0, avoidtimer = 0, guntimer = 0, stagetimer = 0;
 	private float neededswing = 0, swingspeed = 0, hasswung = 0;
 	private boolean allowInitSwing = true;
 	private boolean odd = true;
@@ -86,11 +86,8 @@ public class RogueVessel extends Enemy {
 		move();
 		float dist = SFMath.distance(super.getPosition(), player.getPosition());
 		Vector3f rot = SFMath.rotateToFaceVector(super.getPosition(), player.getPosition());
-		
-		if (dist < 600) {
-			ATTACK_STAGE = SWINGING;
-		}
-		else if (dist < 15000) {
+			
+		if (dist < 15000) {
 			if (ATTACK_STAGE == NEUTRAL) {
 				ATTACK_STAGE = CHARGING;
 			}
@@ -103,11 +100,19 @@ public class RogueVessel extends Enemy {
 		switch (ATTACK_STAGE) {
 		
 		case CHARGING:
+			
+			if (dist < 600 || stagetimer > 5) {
+				stagetimer = 0;
+				ATTACK_STAGE = SWINGING;
+			}
+			
 			currSpeed = 1500;
+			
 			super.setRotX(-rot.x);
 			super.setRotY(rot.y);
 			
 			if (dist < 3000) {
+				stagetimer += DisplayManager.getFrameTime();
 				guntimer += DisplayManager.getFrameTime();
 				
 				if (guntimer > 0.1f) {
@@ -120,6 +125,7 @@ public class RogueVessel extends Enemy {
 			
 		case SWINGING:
 			currSpeed = 2500;
+			stagetimer += DisplayManager.getFrameTime();
 
 			if (avoidtimer < 0.5f) {
 				flagUp = true;
@@ -130,7 +136,7 @@ public class RogueVessel extends Enemy {
 				avoidtimer += DisplayManager.getFrameTime();
 			}
 			
-			if (dist > 5000) {
+			if (dist > 5000 || stagetimer > 10) {
 				
 				if (allowInitSwing) {
 					allowInitSwing = false;
@@ -139,7 +145,7 @@ public class RogueVessel extends Enemy {
 						neededswing = Math.abs(neededswing + (neededswing > 0 ? -360 : 360));
 					}
 					hasswung = 0;
-					swingspeed = 2600 + TM.rng.nextFloat() * 500;
+					swingspeed = 2600 + TM.rng.nextFloat() * 1000;
 				}
 				
 				currSpeed = swingspeed;
@@ -155,6 +161,7 @@ public class RogueVessel extends Enemy {
 				else {
 					allowInitSwing = true;
 					ATTACK_STAGE = CHARGING;
+					stagetimer = 0;
 					avoidtimer = 0;
 					odd = !odd;
 				}

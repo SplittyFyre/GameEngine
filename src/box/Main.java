@@ -281,7 +281,6 @@ public class Main {
 		
 		RogueVessel rogue = new RogueVessel(TM.BOPModel, new Vector3f(0, 650, 100), 0, 0, 0, 7.5f, player);
 		enemies.add(rogue);
-		for (int i = 0; i < 5; i++)
 		enemies.add(new RogueVessel(TM.BOPModel, new Vector3f(1000, 700, 200), 0, 0, 0, 7.5f, player));
 
 		Fbo fbo = new Fbo(Display.getWidth(), Display.getHeight());
