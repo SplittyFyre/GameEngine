@@ -109,7 +109,7 @@ public class EntityShader extends ShaderProgram{
 		super.load2dVector(location_offset, new Vector2f(x, y));
 	}
 	
-	public void loadShineVariables(float damper, float reflectivity){
+	public void loadShineVariables(float damper, float reflectivity) {
 		super.loadFloat(location_shineDamper, damper);
 		super.loadFloat(location_reflectivity, reflectivity);
 	}

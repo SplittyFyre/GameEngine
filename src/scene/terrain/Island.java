@@ -145,7 +145,8 @@ public class Island {
 		
 		this.position = new Vector3f(x, y, z);
 		
-		terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
+		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
+		terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
 		terrains.add(terrain);
 		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
 		water = new WaterTile(x, z, y, size / 2);

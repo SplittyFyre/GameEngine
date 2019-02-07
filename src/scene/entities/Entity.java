@@ -15,6 +15,8 @@ public abstract class Entity {
 	private BoundingBox boundingBox;
 	private final BoundingBox staticBoundingBox;
 	
+	public float bbyoffset = 0;
+	
 	public Entity matpremul = null;
 	
 	public boolean customRotationAxis = false;

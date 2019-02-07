@@ -84,10 +84,7 @@ public abstract class ShaderProgram {
 	}
 	
 	protected void loadBoolean(int location, boolean value) {
-		float toLoad = 0;
-		if (value)
-			toLoad = 1;
-		GL20.glUniform1f(location, toLoad);
+		GL20.glUniform1f(location, value ? 1.0f : 0.0f);
 	}
 	
 	protected void loadMatrix(int location, Matrix4f matrix) {

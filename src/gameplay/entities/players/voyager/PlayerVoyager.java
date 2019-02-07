@@ -708,6 +708,7 @@ public class PlayerVoyager extends Player {
 	
 	public PlayerVoyager(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, List<GUITexture> guin) {
 		super(model, position, rotX, rotY, rotZ, scale, guin);
+		super.bbyoffset = 15;
 		
 		privatePhaserTexture.getTexture().setUseFakeLighting(true);
 		privateTorpedoTexture.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
@@ -1943,7 +1944,7 @@ public class PlayerVoyager extends Player {
 	
 	@Override
 	public Vector3f getPlayerPos() {
-		return new Vector3f(super.getPosition().x, super.getPosition().y + 2.5f, super.getPosition().z);
+		return new Vector3f(super.getPosition().x, super.getPosition().y + super.bbyoffset, super.getPosition().z);
 		/*return new Vector3f(super.getPosition().x + (TM.rng.nextFloat() - 0.5f) * 100000,
 				super.getPosition().y + (TM.rng.nextFloat() - 0.5f) * 10000,
 				super.getPosition().z + (TM.rng.nextFloat() - 0.5f) * 100000);*/

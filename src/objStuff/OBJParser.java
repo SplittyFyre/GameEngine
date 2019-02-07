@@ -104,17 +104,17 @@ public class OBJParser {
 			
 			if (vertex.x < aabb.minX)
 				aabb.minX = vertex.x;
-			else 
+			else if (vertex.x > aabb.maxX)
 				aabb.maxX = vertex.x;
 			
 			if (vertex.y < aabb.minY)
 				aabb.minY = vertex.y;
-			else 
+			else if (vertex.y > aabb.maxY)
 				aabb.maxY = vertex.y;
 			
 			if (vertex.z < aabb.minZ)
 				aabb.minZ = vertex.z;
-			else                         
+			else if (vertex.z > aabb.maxZ)                       
 				aabb.maxZ = vertex.z;
 			
 		}

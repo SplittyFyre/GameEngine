@@ -17,7 +17,7 @@ import utils.SFMath;
 
 public class RogueVessel extends Enemy {
 	
-	private float HEALTH = 2500;
+	private float HEALTH = 5000;
 	private float movetimer = 0, avoidtimer = 0, guntimer = 0, stagetimer = 0;
 	private float neededswing = 0, swingspeed = 0, hasswung = 0;
 	private boolean allowInitSwing = true;
@@ -33,6 +33,7 @@ public class RogueVessel extends Enemy {
 	private boolean flagLeft = false, flagRight = false;
 	private boolean flagUp = false, flagDown = false;
 	private static final float UPWARDS_ROT_CAP = 50.0f;
+	private static final float UP_ROT_SPEED = 35;
 	
 	private static final float TURN_SPEED = 90.0f;
 	
@@ -101,7 +102,7 @@ public class RogueVessel extends Enemy {
 		
 		case CHARGING:
 			
-			if (dist < 600 || stagetimer > 5) {
+			if (dist < 1000 || stagetimer > 5) {
 				stagetimer = 0;
 				ATTACK_STAGE = SWINGING;
 			}
@@ -111,7 +112,7 @@ public class RogueVessel extends Enemy {
 			super.setRotX(-rot.x);
 			super.setRotY(rot.y);
 			
-			if (dist < 3000) {
+			if (dist < 3750) {
 				stagetimer += DisplayManager.getFrameTime();
 				guntimer += DisplayManager.getFrameTime();
 				
@@ -146,6 +147,9 @@ public class RogueVessel extends Enemy {
 					}
 					hasswung = 0;
 					swingspeed = 2600 + TM.rng.nextFloat() * 1000;
+					if (dist < 2000) {
+						swingspeed += player.requestCurrentSpeed() + 1500;
+					}
 				}
 				
 				currSpeed = swingspeed;
@@ -211,7 +215,7 @@ public class RogueVessel extends Enemy {
 			flagUp = false;
 			
 			if (super.getRotX() > -UPWARDS_ROT_CAP)
-				super.rotate(-20 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(-UP_ROT_SPEED * DisplayManager.getFrameTime(), 0, 0);
 			
 			if (super.getRotX() > 0) {
 				super.rotate(-60 * DisplayManager.getFrameTime(), 0, 0);
@@ -226,7 +230,7 @@ public class RogueVessel extends Enemy {
 			flagDown = false;
 			
 			if (super.getRotX() < UPWARDS_ROT_CAP)
-				super.rotate(20 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(UP_ROT_SPEED * DisplayManager.getFrameTime(), 0, 0);
 			
 			if (super.getRotX() < 0) {
 				super.rotate(60 * DisplayManager.getFrameTime(), 0, 0);

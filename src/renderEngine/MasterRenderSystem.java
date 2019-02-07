@@ -89,10 +89,10 @@ public class MasterRenderSystem {
 		}
 		
 		entity.getBoundingBox().minX = entity.getPosition().x + entity.getStaticBoundingBox().minX;
-		entity.getBoundingBox().minY = entity.getPosition().y + entity.getStaticBoundingBox().minY;
+		entity.getBoundingBox().minY = entity.getPosition().y + entity.getStaticBoundingBox().minY + entity.bbyoffset;
 		entity.getBoundingBox().minZ = entity.getPosition().z + entity.getStaticBoundingBox().minZ;
 		entity.getBoundingBox().maxX = entity.getPosition().x + entity.getStaticBoundingBox().maxX;
-		entity.getBoundingBox().maxY = entity.getPosition().y + entity.getStaticBoundingBox().maxY;
+		entity.getBoundingBox().maxY = entity.getPosition().y + entity.getStaticBoundingBox().maxY + entity.bbyoffset;
 		entity.getBoundingBox().maxZ = entity.getPosition().z + entity.getStaticBoundingBox().maxZ;
 		
 		Vector3f vec = entity.getScale();
@@ -107,8 +107,6 @@ public class MasterRenderSystem {
 			entity.getBoundingBox().minX -= modX;
 			entity.getBoundingBox().maxX += modX;
 		}
-		else
-			;
 		
 		if (vec.y > 1) {
 			float modY = (vec.y - 1) * (entity.getBoundingBox().maxY - entity.getBoundingBox().minY) / 2;
@@ -120,8 +118,6 @@ public class MasterRenderSystem {
 			entity.getBoundingBox().minY -= modY;
 			entity.getBoundingBox().maxY += modY;
 		}
-		else
-			;
 		
 		if (vec.z > 1) {
 			float modZ = (vec.z - 1) * (entity.getBoundingBox().maxZ - entity.getBoundingBox().minZ) / 2;
@@ -133,8 +129,6 @@ public class MasterRenderSystem {
 			entity.getBoundingBox().minZ -= modZ;
 			entity.getBoundingBox().maxZ += modZ;
 		}
-		else
-			;
 		
 	}
 	

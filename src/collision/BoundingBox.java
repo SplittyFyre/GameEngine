@@ -1,5 +1,7 @@
 package collision;
 
+import org.lwjgl.util.vector.Vector3f;
+
 public class BoundingBox {
 	
 	public float minX;
@@ -56,6 +58,21 @@ public class BoundingBox {
 		System.out.println(this.maxZ);
 		System.out.println(bbID + "*********************");
 		
+	}
+	
+	public Vector3f[] getBoxVertices() {
+		Vector3f[] retval = new Vector3f[8];
+		float y = minY;
+		retval[0] = new Vector3f(minX, y, minZ);
+		retval[1] = new Vector3f(minX, y, maxZ);
+		retval[2] = new Vector3f(maxX, y, minZ);
+		retval[3] = new Vector3f(maxX, y, maxZ);
+		y = maxY;
+		retval[4] = new Vector3f(minX, y, minZ);
+		retval[5] = new Vector3f(minX, y, maxZ);
+		retval[6] = new Vector3f(maxX, y, minZ);
+		retval[7] = new Vector3f(maxX, y, maxZ);
+		return retval;
 	}
 
 }

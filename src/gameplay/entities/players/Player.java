@@ -41,6 +41,10 @@ public abstract class Player extends Entity implements ITakeDamage {
 	protected float currentSpeed = 0;
 	protected float currentTurnSpeed = 0;
 	
+	public float requestCurrentSpeed() {
+		return currentSpeed;
+	}
+	
 	protected GUIText healthText;
 	protected GUIText shieldsText;
 	protected GUIText energyText;

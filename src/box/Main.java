@@ -15,6 +15,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import audio.AudioEngine;
 import audio.AudioSrc;
+import collision.BoundingBox;
 import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import gameplay.collision.CollisionManager;
@@ -269,7 +270,7 @@ public class Main {
 		
 		//ADDING RANDOM STUFF (PLACE HOLDER?)*************************************************
 		
-		BorgVessel borj = new BorgVessel(borgShip, new Vector3f(-1000, 750, -6000), 0, 0, 0, 300, player);
+		BorgVessel borj = new BorgVessel(borgShip, new Vector3f(-1000, 750, -6000), 0, 0, 0, 600, player);
 		enemies.add(borj);
 		
 		for (int i = 0; i < 0; i++) {
@@ -425,7 +426,21 @@ public class Main {
 			e1.printStackTrace();
 		}*/
 		
+		BoundingBox bb = rogue.getBoundingBox();
+		StaticEntity[] crap = new StaticEntity[8];
+		Vector3f[] poses = bb.getBoxVertices();
+		for (int i = 0; i < 8; i++) {
+			crap[i] = new StaticEntity(planet, poses[i], 0, 0, 0, 4);
+		}
+		for (int i = 0; i < 8; i++) {
+			entities.add(crap[i]);
+		}
+		
 		while (!Display.isCloseRequested()) {
+			poses = bb.getBoxVertices();
+			for (int i = 0; i < 8; i++) {
+				crap[i].setPosition(poses[i]);
+			}
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
@@ -444,24 +459,6 @@ public class Main {
 			
 			Vector3f trans = FloatingOrigin.update();
 			
-			/*if (Math.abs(SFMath.distance(player.getPosition(), new Vector3f(0, 0, 0))) > 1000) {
-				techicalOrigin = new Vector3f(player.getPosition());
-				trans = Vector3f.sub(new Vector3f(0, 0, 0), techicalOrigin, null);
-				Vector3f.add(trans, offset, offset);
-			}
-			
-			Vector3f real = Vector3f.add(player.getPosition(), offset, null);
-			
-			coordsX.setText(Float.toString(real.x));
-			coordsY.setText(Float.toString(real.y));
-			coordsZ.setText(Float.toString(real.z));*/
-			
-			//System.out.println(home.getTerrain().getY());
-			
-			/*if (Math.abs(SFMath.distance(player.getPosition(), techicalOrigin)) > 10000) {
-				techicalOrigin = new Vector3f(player.getPosition());
-				SFMath.xTranslation = Vector3f.sub(techicalOrigin, player.getPosition(), null);
-			}*/
 			
 			for (Enemy e : enemies) {
 				e.update();
