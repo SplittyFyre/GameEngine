@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import box.TM;
 import objStuff.OBJParser;
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
@@ -147,13 +148,12 @@ public class Island {
 		
 		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
 		terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
+		
 		terrains.add(terrain);
 		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
 		water = new WaterTile(x, z, y, size / 2);
 		waters.add(water);
-		
-		Random random = new Random();
-		
+				
 		RawModel fernRaw = OBJParser.loadObjModel("fernModel");
 		ModelTexture fernTextureAtlas = new ModelTexture(Loader.loadTexture("fern"));
 		fernTextureAtlas.setNumRows(2);
@@ -173,24 +173,24 @@ public class Island {
 		for (int i = 0; i < 4000; i++) {
 			
 			//if (i % 2 == 0) {
-				float x1 = random.nextFloat() * 2 * sz + (x - sz);
-				float z1 = random.nextFloat() * 2 * sz + (z - sz);
+				float x1 = TM.rng.nextFloat() * 2 * sz + (x - sz);
+				float z1 = TM.rng.nextFloat() * 2 * sz + (z - sz);
 				float y1 = terrain.getTerrainHeight(x1, z1);
 				if (y1 > 0)
-					entities.add(new StaticEntity(pineText, new Vector3f(x1, y1 + y, z1), 0, random.nextFloat() * 360, 0,
-							10.25f + (random.nextFloat() - 0.5f)));
+					entities.add(new StaticEntity(pineText, new Vector3f(x1, y1 + y, z1), 0, TM.rng.nextFloat() * 360, 0,
+							10.25f + (TM.rng.nextFloat() - 0.5f)));
 			//}
 			
 			
 		}
 		
 		for (int i = 0; i < 250; i++) {
-			float x1 = random.nextFloat() * 2 * sz + (x - sz);
-			float z1 = random.nextFloat() * 2 * sz + (z - sz);
+			float x1 = TM.rng.nextFloat() * 2 * sz + (x - sz);
+			float z1 = TM.rng.nextFloat() * 2 * sz + (z - sz);
 			float y1 = terrain.getTerrainHeight(x1, z1);
 			if (y1 > 0)
-				entities.add(new StaticEntity(fern, random.nextInt(4), new Vector3f(x1, y1 + y, z1), 0, random.nextFloat() * 360, 0, 
-						2.5f + (random.nextFloat() - 0.5f)));
+				entities.add(new StaticEntity(fern, TM.rng.nextInt(4), new Vector3f(x1, y1 + y, z1), 0, TM.rng.nextFloat() * 360, 0, 
+						2.5f + (TM.rng.nextFloat() - 0.5f)));
 		}
 		
 	}

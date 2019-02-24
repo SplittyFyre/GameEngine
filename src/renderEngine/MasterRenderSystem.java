@@ -7,47 +7,88 @@ import java.util.Map;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
+import postProcessing.Fbo;
 import renderEngine.models.TexturedModel;
 import scene.Scene;
 import scene.entities.Entity;
+import scene.entities.camera.Camera;
 import scene.entities.render.EntityRenderSystem;
+import scene.particles.ParticleWatcher;
 import scene.skybox.SkyboxRenderSystem;
 import scene.terrain.Terrain;
 import scene.terrain.render.TerrainRenderSystem;
+import water.WaterFrameBuffers;
+import water.WaterRenderer;
+import water.WaterTile;
 
 public class MasterRenderSystem {
 	
 	private EntityRenderSystem entityRenderer;
 	private TerrainRenderSystem terrainRenderer;
 	private SkyboxRenderSystem skyboxRenderer;
+	private WaterRenderer waterRenderer;
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	
-	public MasterRenderSystem(Loader loader, Matrix4f projectionMatrix) {
+	public MasterRenderSystem(Matrix4f projectionMatrix) {
 		enableFaceCulling();
 		this.entityRenderer = new EntityRenderSystem(projectionMatrix);
 		this.terrainRenderer = new TerrainRenderSystem(projectionMatrix);
 		this.skyboxRenderer = new SkyboxRenderSystem(projectionMatrix);
+		this.waterRenderer = new WaterRenderer(projectionMatrix);
 	}
 	
-	public void renderMainPass(Scene scene) {
+	private void renderWithoutWater(Scene scene) {
 		float skyR = scene.getSkyR(), skyG = scene.getSkyG(), skyB = scene.getSkyB();
 		for (Entity entity : scene.getEntities())
 			processEntity(entity);
 		for (Terrain terrain : scene.getTerrains())
 			terrains.add(terrain);
 		prepare();
+		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+		
 		skyboxRenderer.render(scene.getCamera(), skyR, skyG, skyB);
 		entityRenderer.render(entities, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
 		terrainRenderer.render(terrains, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
 		//FINISH***********************************************************
 		terrains.clear();
 		entities.clear();
+	}
+	
+	public void renderMainPass(Scene scene, Fbo fbo) {
+		
+		Camera camera = scene.getCamera();
+		WaterFrameBuffers buffers = waterRenderer.getFBOs();
+		WaterTile water = scene.getWaters().get(0);
+
+		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
+		scene.setClipPlanePointer(new Vector4f(0, -1, 0, 15));
+		buffers.bindReflectionFrameBuffer();
+		float distance = 2 * (camera.getPosition().y - water.getHeight());
+		camera.getPosition().y -= distance;
+		camera.invertPitch();
+		scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
+		renderWithoutWater(scene);
+		camera.getPosition().y += distance;
+		camera.invertPitch();
+		buffers.bindRefractionFrameBuffer();
+		scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.5f));
+		renderWithoutWater(scene);
+		buffers.unbindCurrentFrameBuffer();
+		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+		
+		fbo.bindFrameBuffer();
+		renderWithoutWater(scene);
+		waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0));
+		ParticleWatcher.renderParticles(camera);
+		fbo.unbindFrameBuffer();
 	}
 	
 	public void renderMiniMapPass(Scene scene) {
@@ -65,8 +106,10 @@ public class MasterRenderSystem {
 	}
 	
 	public void cleanUp() {
-		entityRenderer.getShaderPointer().cleanUp();
-		terrainRenderer.getShaderPointer().cleanUp();
+		entityRenderer.getShader().cleanUp();
+		terrainRenderer.getShader().cleanUp();
+		skyboxRenderer.getShader().cleanUp();
+		waterRenderer.cleanUp();
 	}
 	
 	private static void prepare() {

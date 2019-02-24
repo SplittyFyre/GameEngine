@@ -9,16 +9,18 @@ import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.camera.Camera;
 import scene.terrain.Terrain;
+import water.WaterTile;
 
 public class Scene {
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
-	private List<Light> lights;
+	private List<Light> lights = new ArrayList<Light>();
+	private List<WaterTile> waters = new ArrayList<WaterTile>();
 	 
 	private float skyR = 0, skyG = 0, skyB = 0;
 	private Camera camera;
-	private Vector4f clipPlane;
+	private Vector4f clipPlane = new Vector4f();
 		
 	public Vector4f getClipPlanePointer() {
 		return clipPlane;
@@ -54,6 +56,10 @@ public class Scene {
 	
 	public List<Light> getLights() {
 		return lights;
+	}
+	
+	public List<WaterTile> getWaters() {
+		return waters;
 	}
 	
 	public Camera getCamera() {

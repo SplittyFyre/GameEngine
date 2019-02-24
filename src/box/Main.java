@@ -11,11 +11,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import audio.AudioEngine;
 import audio.AudioSrc;
-import collision.BoundingBox;
 import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import gameplay.collision.CollisionManager;
@@ -52,9 +50,6 @@ import scene.terrain.Island;
 import scene.terrain.Terrain;
 import utils.FloatingOrigin;
 import utils.RaysCast;
-import water.WaterFrameBuffers;
-import water.WaterRenderer;
-import water.WaterShader;
 import water.WaterTile;
 
 public class Main {
@@ -76,10 +71,6 @@ public class Main {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		
-		List<Terrain> terrains = new ArrayList<Terrain>();
-		List<Light> lights = new ArrayList<Light>();
-		List<WaterTile> waters = new ArrayList<WaterTile>();
 		
 		DisplayManager.createDisplay();
 		AudioEngine.init();
@@ -198,10 +189,15 @@ public class Main {
 		
 		//END TEXTURE SECTION****************************************************************
 		
+		
+		Scene scene = new Scene();
+		
+		
 		Random random = new Random();
 				
 		Light sun = new Light(new Vector3f(200000, 400000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
-		lights.add(sun);
+		//Light sun = new Light(new Vector3f(0, 40000, 0), new Vector3f(2.5f, 2.5f, 2.5f));
+		scene.getLights().add(sun);
 		
 		//entities.add(new StaticEntity(new TexturedModel(OBJParser.loadObjModel("photon"), new ModelTexture(Loader.loadTexture("image"))),
 		//		new Vector3f(7000, 3600, 26000), 0, 0, 0, 1000));
@@ -238,34 +234,17 @@ public class Main {
 		
 		}
 		
-		Scene scene = new Scene();
-		
-		//StaticEntity en = new StaticEntity(voyagerShip, new Vector3f(0, 0, 0), 0, 0, 0, 10);
-		//entities.add(en);
-		
 		//OTHER UTILS************************************************************************
 		
 		Camera camera = new PlayerCamera(player);
+		scene.setCamera(camera);
 		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), terrain);
 		
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 		
-		//SPECIAL WATER COMPONENTS***********************************************************
-		
-		WaterFrameBuffers buffers = new WaterFrameBuffers();
-		WaterShader waterShader = new WaterShader();
-		WaterRenderer waterRenderer = new WaterRenderer(waterShader, engine.getProjectionMatrix(), buffers);
-		//waters.add(water);
-		/*for (int i = 0; i < 1; i++) {
-			new Island(texturePack, blendMap, "heightMap", terrains, waters, entities, random.nextFloat() * 30000, 0, random.nextFloat() * 30000,
-					10000, 1750093151);
-		}*/
-		
-		Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, /*30000*/0, 10000, 1750093151);
-		//Island home = new Island(texturePack, blendMap, terrains, waters, entities, 0, 0, 0, 50000, "tryme2", 5000);
-		//Island copy = new Island(texturePack, blendMap, terrains, waters, entities, 30000 , 0, 0, 10000, 1750093151);
-		WaterTile water = home.getWater();
-		
+  		
+		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 10000, 1750093151);
+
 		entities.add(new StaticEntity(playerText, new Vector3f(-2500, 750, 2900), 0, 45, 0, 20));
 		
 		//ADDING RANDOM STUFF (PLACE HOLDER?)*************************************************
@@ -366,51 +345,6 @@ public class Main {
 			
 		}
 		
-		/*while ((timer <= 0.5f || src.isPlaying()) &! Display.isCloseRequested() &! Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			float ft = DisplayManager.getFrameTime();
-			timer2 += ft;
-			timer3 += ft;
-			timer4 += ft;
-			timer5 += ft;
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			GL11.glClearColor(0, 0, 0, 1);
-			guiRenderer.render(preguis);
-			TextMaster.drawSecondaryText();
-			
-			if (timer3 > 0.01f && sftxt.getPosition().x < 0.05f) {
-				sftxt.getPosition().x += 0.00125f;
-				timer3 = 0;
-			}
-			
-			if (timer4 > 0.01f && zctxt.getPosition().x > 0.65f) {
-				zctxt.getPosition().x -= 0.0025f;
-				timer4 = 0;
-			}
-			
-			if (timer5 > 0.01f && accent.getPosition().y > 0.13f) {
-				accent.getPosition().y -= 0.006f;
-				timer5 = 0;
-			}
-			
-			if (timer2 > 0.01f && sf.custAlpha <= 1) {
-				sf.custAlpha += 0.0025f;
-				zc.custAlpha += 0.0025f;
-				accent.custAlpha += 0.0025f;
-				timer2 = 0;
-				//txt.plusAlpha(0.005f);
-			}
-			else {
-				if (!src.isPlaying())
-					timer += DisplayManager.getFrameTime();
-			}
-			
-			if (sf.custAlpha >= 1) {
-				System.out.println("FULL ALPHA");
-			}
-			
-			DisplayManager.updateDisplay();
-		}*/
-		
 		src.stop();
 		
 		GUIText version = new GUIText("Version 1.2.71", 0.65f, TM.font, new Vector2f(0, 0.9775f), 0.5f, false);
@@ -426,21 +360,10 @@ public class Main {
 			e1.printStackTrace();
 		}*/
 		
-		BoundingBox bb = rogue.getBoundingBox();
-		StaticEntity[] crap = new StaticEntity[8];
-		Vector3f[] poses = bb.getBoxVertices();
-		for (int i = 0; i < 8; i++) {
-			crap[i] = new StaticEntity(planet, poses[i], 0, 0, 0, 4);
-		}
-		for (int i = 0; i < 8; i++) {
-			entities.add(crap[i]);
-		}
+		scene.setEntityList(allEntities);
 		
 		while (!Display.isCloseRequested()) {
-			poses = bb.getBoxVertices();
-			for (int i = 0; i < 8; i++) {
-				crap[i].setPosition(poses[i]);
-			}
+			
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
@@ -456,9 +379,6 @@ public class Main {
 			
 			AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 			ParticleWatcher.update();
-			
-			Vector3f trans = FloatingOrigin.update();
-			
 			
 			for (Enemy e : enemies) {
 				e.update();
@@ -485,21 +405,22 @@ public class Main {
 			
 			//fout.write(String.format("appending crap:       %d\n", System.nanoTime() - start));
 			
-			//maybe implement a better detection system?
-			if (trans.lengthSquared() != 0) {
+			Vector3f trans = FloatingOrigin.update();
+			
+			if (trans != null) {
 				for (Entity el : allEntities) {
 					Vector3f.add(el.getPosition(), trans, el.getPosition());
 				}
 				
-				for (Terrain el : terrains) {
+				for (Terrain el : scene.getTerrains()) {
 					el.addVec(trans);
 				}
 				
-				for (WaterTile el : waters) {
+				for (WaterTile el : scene.getWaters()) {
 					el.addVec(trans);
 				}
 				
-				for (Light el : lights) {
+				for (Light el : scene.getLights()) {
 					el.setPosition(Vector3f.add(el.getPosition(), trans, null));
 				}
 				
@@ -508,41 +429,8 @@ public class Main {
 			
 			//fout.write(String.format("floating origin:      %d\n", System.nanoTime() - start));
 			
-			scene.setEntityList(allEntities);
-			scene.setCamera(camera);
-			scene.setTerrainList(terrains);
-			scene.setLightList(lights); 
-			
 			//fout.write(String.format("setting stuff:        %d\n", System.nanoTime() - start));
-			
-			while (Keyboard.next()) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
-					player.getPosition().x = 0;
-					player.getPosition().y = 0;
-					player.getPosition().z = 0;
-					System.out.println(home.getPosition());
-				}
-				else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
-					player.setRotY(180);
-				}
-			}
-			
-			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-			scene.setClipPlanePointer(new Vector4f(0, -1, 0, 15));
-			buffers.bindReflectionFrameBuffer();
-			float distance = 2 * (camera.getPosition().y - water.getHeight());
-			camera.getPosition().y -= distance;
-			camera.invertPitch();
-			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
-			engine.renderScene(scene);
-			camera.getPosition().y += distance;
-			camera.invertPitch();
-			buffers.bindRefractionFrameBuffer();
-			scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.5f));
-			engine.renderScene(scene);
-			buffers.unbindCurrentFrameBuffer();
-			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-															
+													
 			//fout.write(String.format("water stuff:          %d\n", System.nanoTime() - start));
 			
 			TM.vec31 = camera.getPosition();
@@ -590,15 +478,11 @@ public class Main {
 			camera.setRoll(TM.f3);
 			((PlayerCamera) camera).setDistanceFrom(TM.f4);
 			
-			fbo.bindFrameBuffer();
 			
 			checkDamageToEnemies();
-			engine.renderScene(scene);
+			engine.renderScene(scene, fbo);
 			CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
-			waterRenderer.render(waters, camera, sun);
-			ParticleWatcher.renderParticles(camera);
 			
-			fbo.unbindFrameBuffer();
 			
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, output);
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, output2);
@@ -619,13 +503,11 @@ public class Main {
 		mmfx.cleanUp();
 		
 		TextMaster.cleanUp();
-		buffers.cleanUp();
 		guiRenderer.cleanUp();
 		PostProcessing.cleanUp();
 		fbo.cleanUp();
 		output.cleanUp();
 		output2.cleanUp();
-		waterShader.cleanUp();
 		engine.cleanUp();
 		Loader.cleanUp();
 		ParticleWatcher.cleanUp();

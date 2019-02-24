@@ -19,7 +19,7 @@ public abstract class Entity {
 	
 	public Entity matpremul = null;
 	
-	public boolean customRotationAxis = false;
+	public boolean useCustomRotationAxis = false;
 	public boolean ignoreRY = false;
 	public Vector3f customOrigin = null;
 	

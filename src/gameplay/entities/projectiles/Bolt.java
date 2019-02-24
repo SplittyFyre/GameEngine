@@ -49,6 +49,14 @@ public class Bolt extends Projectile {
 	}
 	
 	public Bolt(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ
+			, float damage, float movCoff, int speed) {
+		super(model, position, rotX, rotY, rotZ, 0, damage);
+		this.moveCoff = movCoff < 0 ? 0 : movCoff;
+		this.SPEED = speed;
+		super.setScale(scaleX, scaleY, scaleZ);
+	}
+	
+	public Bolt(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ
 			, float damage, float movCoff, int speed, ParticleSystem sys) {
 		super(model, position, rotX, rotY, rotZ, 0, damage);
 		this.moveCoff = movCoff < 0 ? 0 : movCoff;

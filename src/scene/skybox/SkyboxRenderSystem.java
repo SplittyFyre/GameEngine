@@ -69,7 +69,6 @@ public class SkyboxRenderSystem {
 	private SkyboxShader shader;
 		
 	public SkyboxRenderSystem(Matrix4f projMatrix) {
-		
 		cube = Loader.loadToVAO(VERTICES, 3);
 		//texture = Loader.loadCubeMap(TEXTURE_FILES);
 		nightTexture = Loader.loadCubeMap(NIGHT_TEXTURE_FILES);
@@ -78,7 +77,6 @@ public class SkyboxRenderSystem {
 		shader.connectTextureUnits();
 		shader.loadProjectionMatrix(projMatrix);
 		shader.stop();
-		
 	}
 	
 	public void render(Camera camera, float r, float g, float b) {
@@ -103,6 +101,10 @@ public class SkyboxRenderSystem {
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, nightTexture);
 		shader.loadBlendFactor(0);
+	}
+	
+	public SkyboxShader getShader() {
+		return shader;
 	}
 	
 }

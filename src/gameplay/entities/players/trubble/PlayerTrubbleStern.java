@@ -17,7 +17,7 @@ public class PlayerTrubbleStern extends Player {
 		super(TM.stern_model, position, stardrive.getRotX(), stardrive.getRotY(), stardrive.getRotZ(),
 				stardrive.getScale().x, null);
 		this.stardrive = stardrive;
-		this.customRotationAxis = true;
+		this.useCustomRotationAxis = true;
 	}
 
 	@Override

@@ -20,6 +20,9 @@ public class Torpedo extends Projectile {
 	private float elapsedTime = 0;
 	private float lifeLength = 4;
 	
+	public static final float WSCALE = 2;
+	public static final float ZSCALE = 5;
+	
 	private ParticleSystem sys = null;
 	
 	@Override
@@ -85,11 +88,11 @@ public class Torpedo extends Projectile {
 	
 	public static Torpedo photonTorpedo(Vector3f position, float dx, float dy, float dz) {
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
-		return new Torpedo(TM.photonTorpedo, new Vector3f(position), 0, 0, 0, 2, 2, 5, PT, dx, dy, dz, 10);
+		return new Torpedo(TM.photonTorpedo, new Vector3f(position), 0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, dx, dy, dz, 10);
 	}
 	
 	public static Torpedo quantumTorpedo(Vector3f position, float dx, float dy, float dz) {
-		return new Torpedo(TM.quantumTorpedo, new Vector3f(position), 0, 0, 0, 2, 2, 5, QT, dx, dy, dz, 10);
+		return new Torpedo(TM.quantumTorpedo, new Vector3f(position), 0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, dx, dy, dz, 10);
 	}
 	
 	public static Torpedo photonTorpedo(Vector3f position, float dx, float dy, float dz, 
@@ -108,7 +111,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, PT, dx, dy, dz);
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, dx, dy, dz);
 	}
 	
 	public static Torpedo quantumTorpedo(Vector3f position, float dx, float dy, float dz, 
@@ -127,7 +130,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, QT, dx, dy, dz);
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, dx, dy, dz);
 	}
 	
 	public static Torpedo photonTorpedo(Vector3f position, float speed, 
@@ -150,7 +153,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, PT, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,
@@ -167,7 +170,7 @@ public class Torpedo extends Projectile {
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
 		
 		return new Torpedo(TM.photonTorpedo, new Vector3f(position),
-				0, 0, 0, 2, 2, 5, PT, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,
@@ -184,7 +187,7 @@ public class Torpedo extends Projectile {
 		AudioEngine.playTempSrc(TM.quantumsnd, 100, position.x, position.y, position.z);
 		
 		return new Torpedo(TM.quantumTorpedo, new Vector3f(position),
-				0, 0, 0, 2, 2, 5, QT, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,
@@ -214,7 +217,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, damage, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, damage, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,
@@ -244,7 +247,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, PT, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,
@@ -274,7 +277,7 @@ public class Torpedo extends Projectile {
 				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
-				0, 0, 0, 2, 2, 5, QT, 
+				0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, 
 				
 				(float) ((float) Math.sin(Math.toRadians(rotY)) * move * Math.cos(Math.toRadians(rotX)))
 				,

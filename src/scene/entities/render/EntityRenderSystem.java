@@ -24,7 +24,7 @@ public class EntityRenderSystem {
 	
 	private EntityShader shader;
 	
-	public EntityShader getShaderPointer() {
+	public EntityShader getShader() {
 		return shader;
 	}
 	
@@ -111,7 +111,7 @@ public class EntityRenderSystem {
 		
 		Matrix4f transformationMatrix;
 		
-		if (entity.customRotationAxis && entity.customOrigin != null) {
+		if (entity.useCustomRotationAxis && entity.customOrigin != null) {
 			if (entity.ignoreRY) {
 				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customOrigin,
 						entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale(), true);

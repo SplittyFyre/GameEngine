@@ -16,7 +16,6 @@ import scene.entities.Light;
 import scene.entities.camera.Camera;
 import utils.SFMath;
 
-
 public class WaterRenderer {
 	
 	private static final String DUDV_MAP = "waterDUDV";
@@ -28,14 +27,22 @@ public class WaterRenderer {
 	private WaterShader shader;
 	private WaterFrameBuffers fbos;
 	
+	public WaterShader getShader() {
+		return shader;
+	}
+	
+	public WaterFrameBuffers getFBOs() {
+		return fbos;
+	}
+	
 	private float moveFactor = 0;
 	
 	private int dudvTexture;
 	private int normalMap;
 
-	public WaterRenderer(WaterShader shader, Matrix4f projectionMatrix, WaterFrameBuffers fbos) {
-		this.shader = shader;
-		this.fbos = fbos;
+	public WaterRenderer(Matrix4f projectionMatrix) {
+		this.shader = new WaterShader();
+		this.fbos = new WaterFrameBuffers();
 		dudvTexture = Loader.loadTexture(DUDV_MAP);
 		normalMap = Loader.loadTexture(NORMAL_MAP);
 		shader.start();
@@ -89,9 +96,14 @@ public class WaterRenderer {
 	}
 
 	private void setUpVAO() {
-		// Just x and z vertex positions here, y is set to 0 in v.shader
+		// Just x and z vertex positions here, y is set in v.shader
 		float[] vertices = { -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1 };
 		quad = Loader.loadToVAO(vertices, 2);
+	}
+	
+	public void cleanUp() {
+		shader.cleanUp();
+		fbos.cleanUp();
 	}
 
 }

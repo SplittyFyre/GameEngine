@@ -1841,7 +1841,7 @@ public class PlayerVoyager extends Player {
 			
 			if (!Mouse.isGrabbed() && caster.penetrates(bb1, 1.025f)) {
 				
-				if (this.retical == null) {
+				if (this.retical == null) { 
 					this.setPreRetical(enemy.getPosition());
 				}
 				

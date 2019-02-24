@@ -22,7 +22,7 @@ public class TerrainRenderSystem {
 	
 	private TerrainShader shader;
 	
-	public TerrainShader getShaderPointer() {
+	public TerrainShader getShader() {
 		return shader;
 	}
 	

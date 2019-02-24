@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 public abstract class Camera {
 	
-	private static final float FOV = 70;
+	public static final float STD_FOV = 70;
 	
 	protected float pitch = 20;
 	protected float yaw;
@@ -52,10 +52,28 @@ public abstract class Camera {
 		this.roll = roll;
 	}
 	
-	public static Matrix4f createProjectionMatrix(float NEAR_PLANE, float FAR_PLANE) {
+	public static Matrix4f createProjectionMatrix(float NEAR_PLANE, float FAR_PLANE, float FOV) {
 		
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2))) * aspectRatio);
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = FAR_PLANE - NEAR_PLANE;
+
+		Matrix4f projecMat = new Matrix4f();
+		projecMat.m00 = x_scale;
+		projecMat.m11 = y_scale;
+		projecMat.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
+		projecMat.m23 = -1;
+		projecMat.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
+		projecMat.m33 = 0;
+		
+		return projecMat;
+	}
+	
+	public static Matrix4f createDistortedProjectionMatrix(float NEAR_PLANE, float FAR_PLANE) {
+		
+		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(179 / 2.f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
 

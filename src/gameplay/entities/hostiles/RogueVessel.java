@@ -65,8 +65,7 @@ public class RogueVessel extends Enemy {
 				super.getPosition().z + zed
 				
 				), 
-				-rots.x, rots.y, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
-				TM.explosionParticleSystem));
+				-rots.x, rots.y, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000));
 		
 		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 				
@@ -75,8 +74,7 @@ public class RogueVessel extends Enemy {
 				super.getPosition().z - zed
 				
 				), 
-				-rots.x, rot2, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000,
-				TM.explosionParticleSystem));
+				-rots.x, rot2, 0, 1.5f, 1.5f, 25, 500, this.currSpeed, 10000));
 		
 		//AudioEngine.playTempSrc(TM.disruptorsnd, 300, super.getPosition().x, super.getPosition().y, super.getPosition().z);
 		AudioEngine.playTempSrc(TM.disruptorsnd, 300, super.getPosition().x, super.getPosition().y, super.getPosition().z);

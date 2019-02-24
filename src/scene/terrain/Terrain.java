@@ -252,7 +252,7 @@ public class Terrain {
 		float heightU = getHeight(x, z + 1, image);
 		Vector3f normal = new Vector3f(heightL - heightR, 2f, heightD - heightU);
 		normal.normalise();
-		
+		 
 		return normal;
 		
 	}

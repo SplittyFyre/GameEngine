@@ -18,7 +18,7 @@ public class PlayerTrubbleDeck extends Player {
 				stardrive.getScale().x, null);
 		this.setScale(stardrive.getScale().x, stardrive.getScale().y, stardrive.getScale().z * 1.5f);
 		this.stardrive = stardrive;
-		this.customRotationAxis = true;
+		this.useCustomRotationAxis = true;
 	}
 
 	@Override

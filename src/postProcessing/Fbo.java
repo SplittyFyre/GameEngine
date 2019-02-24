@@ -59,7 +59,6 @@ public class Fbo {
 		GL11.glViewport(0, 0, width, height);
 	}
 
-	@SuppressWarnings("static-method")
 	public void unbindFrameBuffer() {
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());

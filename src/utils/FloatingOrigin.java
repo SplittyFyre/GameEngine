@@ -9,7 +9,7 @@ public class FloatingOrigin {
 	private static Player player;
 	
 	public static float gridLen;
-	private static float part;
+	private static float halfGrid;
 	
 	private static int gridX = 0;
 	private static int gridZ = 0;
@@ -17,7 +17,7 @@ public class FloatingOrigin {
 	public static void init(Player player, float gridSideLen) {
 		FloatingOrigin.player = player;
 		gridLen = gridSideLen;
-		part = gridLen / 2;
+		halfGrid = gridLen / 2;
 	}
 	
 	public static Vector3f update() {
@@ -25,25 +25,31 @@ public class FloatingOrigin {
 		float transX = 0;
 		float transZ = 0;
 		
-		if (player.getPosition().x > part) {
+		boolean changed = false;
+		
+		if (player.getPosition().x > halfGrid) {
 			transX = -gridLen;
 			gridX++;
+			changed = true;
 		}
-		else if (player.getPosition().x < -part) {
+		else if (player.getPosition().x < -halfGrid) {
 			transX = gridLen;
 			gridX--;
+			changed = true;
 		}
 		
-		if (player.getPosition().z > part) {
+		if (player.getPosition().z > halfGrid) {
 			transZ = -gridLen;
 			gridZ++;
+			changed = true;
 		}
-		else if (player.getPosition().z < -part) {
+		else if (player.getPosition().z < -halfGrid) {
 			transZ = gridLen;
 			gridZ--;
+			changed = true;
 		}
 		
-		return new Vector3f(transX, 0, transZ);
+		return changed ? new Vector3f(transX, 0, transZ) : null;
 		
 	}
 	

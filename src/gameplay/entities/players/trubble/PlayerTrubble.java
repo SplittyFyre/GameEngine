@@ -672,8 +672,8 @@ public class PlayerTrubble extends Player {
 					
 					);
 			
-			deck.customRotationAxis = false;
-			stern.customRotationAxis = false;
+			deck.useCustomRotationAxis = false;
+			stern.useCustomRotationAxis = false;
 			
 			timer += DisplayManager.getFrameTime();
 			
@@ -702,8 +702,8 @@ public class PlayerTrubble extends Player {
 				timer = 0;
 				sepseq_flag = false;
 				isSeperated = true;
-				deck.customRotationAxis = true;
-				stern.customRotationAxis = true;
+				deck.useCustomRotationAxis = true;
+				stern.useCustomRotationAxis = true;
 				halfway = false;
 			}
 			else if (timer >= SEP_TIME / 2) {
@@ -729,8 +729,8 @@ public class PlayerTrubble extends Player {
 					
 					);
 			
-			deck.customRotationAxis = false;
-			stern.customRotationAxis = false;
+			deck.useCustomRotationAxis = false;
+			stern.useCustomRotationAxis = false;
 			
 			timer += DisplayManager.getFrameTime();
 			
@@ -757,8 +757,8 @@ public class PlayerTrubble extends Player {
 				timer = 0;
 				re_sepseq_flag = false;
 				isSeperated = false;
-				deck.customRotationAxis = true;
-				stern.customRotationAxis = true;
+				deck.useCustomRotationAxis = true;
+				stern.useCustomRotationAxis = true;
 			}
 			
 		}
