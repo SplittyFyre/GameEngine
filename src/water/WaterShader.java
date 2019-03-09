@@ -59,12 +59,12 @@ public class WaterShader extends ShaderProgram {
 		super.loadInt(location_depthMap, 4);
 	}
 	
-	public void loadLight(Light light){
+	public void loadLight(Light light) {
 		super.loadVector(location_lightColour, light.getColour());
 		super.loadVector(location_lightPosition, light.getPosition());
 	}
 	
-	public void loadMoveFactor(float factor){
+	public void loadMoveFactor(float factor) {
 		super.loadFloat(location_moveFactor, factor);
 	}
 

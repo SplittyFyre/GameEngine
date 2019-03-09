@@ -11,16 +11,16 @@ import scene.entities.camera.Camera;
 import scene.terrain.Terrain;
 import water.WaterTile;
 
-public class Scene {
+public class ICScene {
 	
-	private List<Entity> entities = new ArrayList<Entity>();
-	private List<Terrain> terrains = new ArrayList<Terrain>();
-	private List<Light> lights = new ArrayList<Light>();
-	private List<WaterTile> waters = new ArrayList<WaterTile>();
+	protected List<Entity> entities = new ArrayList<Entity>();
+	protected List<Terrain> terrains = new ArrayList<Terrain>();
+	protected List<Light> lights = new ArrayList<Light>();
+	protected List<WaterTile> waters = new ArrayList<WaterTile>();
 	 
-	private float skyR = 0, skyG = 0, skyB = 0;
-	private Camera camera;
-	private Vector4f clipPlane = new Vector4f();
+	protected float skyR = 0, skyG = 0, skyB = 0;
+	protected Camera camera;
+	protected Vector4f clipPlane = new Vector4f();
 		
 	public Vector4f getClipPlanePointer() {
 		return clipPlane;

@@ -40,7 +40,7 @@ import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
 import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
-import scene.Scene;
+import scene.ICScene;
 import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.StaticEntity;
@@ -79,7 +79,7 @@ public class Main {
 		RenderEngine engine = RenderEngine.init();
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
-		//TERRAIN TEXTURE********************************************************************
+		//TERRAIN STUFF********************************************************************
 		
 		TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grassy2"));
 		TerrainTexture rTexture = new TerrainTexture(Loader.loadTexture("dirt"));
@@ -90,28 +90,16 @@ public class Main {
 		
 		TerrainTexture blendMap = new TerrainTexture(Loader.loadTexture("black"));
 		
-		//OTHER TERRAIN STUFF****************************************************************
 		
 		Terrain terrain = new Terrain(0, 0, 0, 4800, texturePack, blendMap);
-		//terrains.add(terrain);
-		
-		//FERNS******************************************************************************
-		
-		RawModel fernRaw = OBJParser.loadObjModel("fernModel");
-		ModelTexture fernTextureAtlas = new ModelTexture(Loader.loadTexture("fern"));
-		fernTextureAtlas.setNumRows(2);
-		TexturedModel fern = new TexturedModel(fernRaw, fernTextureAtlas);
-		
-		fern.getTexture().setUseFakeLighting(true);
-		fern.getTexture().setTransparent(true);
 		
 		//PLAYERS****************************************************************************
 		
 		RawModel playerRaw = OBJParser.loadObjModel("starshipsomeone's");
 		TexturedModel playerText = new TexturedModel(playerRaw, new ModelTexture(Loader.loadTexture("bullet")));
 		
-		RawModel apacheRaw = OBJParser.loadObjModel("apache");
-		TexturedModel apacheShip = new TexturedModel(apacheRaw, new ModelTexture(Loader.loadTexture("dartship")));
+		/*RawModel apacheRaw = OBJParser.loadObjModel("apache");
+		TexturedModel apacheShip = new TexturedModel(apacheRaw, new ModelTexture(Loader.loadTexture("dartship")));*/
 		
 		RawModel voyagerRaw = OBJParser.loadObjModel("warship_voyager_model");
 		//RawModel voyagerRaw = OBJParser.loadObjModel("voyager_test1");
@@ -123,58 +111,6 @@ public class Main {
 		
 		//voyagerShip.getTexture().setReflectivity(15);
 		//voyagerShip.getTexture().setShineDamper(5);
-		
-		//PINE TREES*************************************************************************
-		
-		RawModel pineRaw = OBJParser.loadObjModel("pine");
-		TexturedModel pineText = new TexturedModel(pineRaw, new ModelTexture(Loader.loadTexture("pine")));
-		
-		pineText.getTexture().setTransparent(true);
-		pineText.getTexture().setUseFakeLighting(true);
-		
-		//LAMPS******************************************************************************
-		
-		RawModel lampRaw = OBJParser.loadObjModel("lampModel");
-		TexturedModel lampText = new TexturedModel(lampRaw, new ModelTexture(Loader.loadTexture("lamp")));
-		
-		lampText.getTexture().setUseFakeLighting(true);
-		
-		//TORPEDOES**************************************************************************
-		
-		RawModel pretorpedo = OBJParser.loadObjModel("photon");
-		TexturedModel torpedo = new TexturedModel(pretorpedo, new ModelTexture(Loader.loadTexture("photon")));
-		TexturedModel specialTorpedo = new TexturedModel(pretorpedo, new ModelTexture(Loader.loadTexture("quantum")));
-		
-		torpedo.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
-		torpedo.getTexture().setBrightDamper(0);
-		specialTorpedo.getTexture().setUseFakeLighting(true);
-		specialTorpedo.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
-		specialTorpedo.getTexture().setBrightDamper(0);
-		
-		//BOLTS******************************************************************************
-		
-		RawModel prebolt = OBJParser.loadObjModel("bolt");
-		TexturedModel bolt = new TexturedModel(prebolt, new ModelTexture(Loader.loadTexture("bolt")));
-		bolt.getTexture().setUseFakeLighting(true);
-		
-		//PHASERS****************************************************************************
-		
-		RawModel prephaser = OBJParser.loadObjModel("bolt");
-		TexturedModel phaser = new TexturedModel(prephaser, new ModelTexture(Loader.loadTexture("orange")));
-		phaser.getTexture().setUseFakeLighting(true);
-		phaser.getTexture().setSpecularMap(Loader.loadTexture("allGlow"));
-		phaser.getTexture().setBrightDamper(2);
-		
-		//BULLETS****************************************************************************
-		
-		RawModel prebullet = OBJParser.loadObjModel("bullet");
-		TexturedModel bullet = new TexturedModel(prebullet, new ModelTexture(Loader.loadTexture("white")));
-		bullet.getTexture().setUseFakeLighting(true);
-		
-		//PLANETS****************************************************************************
-		
-		RawModel plane = OBJParser.loadObjModel("photon");
-		TexturedModel planet = new TexturedModel(plane, new ModelTexture(Loader.loadTexture("ponet")));
 		
 		//ENEMIES****************************************************************************
 		
@@ -188,7 +124,7 @@ public class Main {
 		//END TEXTURE SECTION****************************************************************
 		
 		
-		Scene scene = new Scene();
+		ICScene scene = new ICScene();
 		
 		
 		Random random = new Random();

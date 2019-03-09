@@ -14,7 +14,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import postProcessing.Fbo;
 import renderEngine.models.TexturedModel;
-import scene.Scene;
+import scene.ICScene;
 import scene.entities.Entity;
 import scene.entities.camera.Camera;
 import scene.entities.render.EntityRenderSystem;
@@ -43,7 +43,7 @@ public class MasterRenderSystem {
 		this.waterRenderer = new WaterRenderer(projectionMatrix);
 	}
 	
-	private void renderWithoutWater(Scene scene) {
+	private void renderWithoutWater(ICScene scene) {
 		float skyR = scene.getSkyR(), skyG = scene.getSkyG(), skyB = scene.getSkyB();
 		for (Entity entity : scene.getEntities())
 			processEntity(entity);
@@ -62,7 +62,7 @@ public class MasterRenderSystem {
 		entities.clear();
 	}
 	
-	public void renderMainPass(Scene scene, Fbo fbo) {
+	public void renderMainPass(ICScene scene, Fbo fbo) {
 		
 		Camera camera = scene.getCamera();
 		WaterFrameBuffers buffers = waterRenderer.getFBOs();
@@ -95,7 +95,7 @@ public class MasterRenderSystem {
 			fbo.unbindFrameBuffer();
 	}
 	
-	public void renderMiniMapPass(Scene scene) {
+	public void renderMiniMapPass(ICScene scene) {
 		float skyR = scene.getSkyR(), skyG = scene.getSkyG(), skyB = scene.getSkyB();
 		for (Entity entity : scene.getEntities())
 			processEntity(entity);
