@@ -94,19 +94,7 @@ public class RaysCast {
 		float x = (2.0f * mouseX) / Display.getWidth() - 1f;
 		float y = (2.0f * mouseY) / Display.getHeight() - 1f;
 		
-		return new Vector2f(x, y);
-	}
-	
-	public Vector2f burstFromScreen(Vector3f pos) {
-		
-		Vector4f vec = new Vector4f(pos.x, pos.y, pos.z, 1);
-		
-		vec = Matrix4f.transform(viewMatrix, vec, null);
-		vec = Matrix4f.transform(projectionMatrix, vec, null);
-		
-		// Vector2f 
-		
-		return null;
+		return new Vector2f(x, y);  
 	}
 	
 	//**********************************************************
@@ -139,11 +127,7 @@ public class RaysCast {
 	private boolean intersectionInRange(float start, float finish, Vector3f ray) {
 		Vector3f startPoint = getPointOnRay(ray, start);
 		Vector3f endPoint = getPointOnRay(ray, finish);
-		if (!isUnderGround(startPoint) && isUnderGround(endPoint)) {
-			return true;
-		} else {
-			return false;
-		}
+		return (!isUnderGround(startPoint) && isUnderGround(endPoint));
 	}
 
 	private boolean isUnderGround(Vector3f testPoint) {
@@ -152,11 +136,7 @@ public class RaysCast {
 		if (terrain != null) {
 			height = terrain.getTerrainHeight(testPoint.getX(), testPoint.getZ());
 		}
-		if (testPoint.y < height) {
-			return true;
-		} else {
-			return false;
-		}
+		return testPoint.y < height;
 	}
 
 	private Terrain getTerrain(float worldX, float worldZ) {
@@ -168,15 +148,7 @@ public class RaysCast {
 	}
 	
 	//**********************************************************
-	
-	private static float min(float x, float y) {
-		return ((x) < (y) ? (x) : (y));
-	}
-	
-	private static float max(float x, float y) {
-		return ((x) > (y) ? (x) : (y));
-	}
-	
+
 	public boolean penetrates(BoundingBox bb) {
 		
 		//float tmin = Float.NEGATIVE_INFINITY, tmax = Float.POSITIVE_INFINITY;

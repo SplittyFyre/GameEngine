@@ -63,13 +63,14 @@ public class AudioEngine {
 	}
 	
 	
-	
+	// Are these efficient?
 	public static void playTempSrc(int buffer, float vol) {
 		AudioSrc src = new AudioSrc();
 		autoKills.add(src);
 		src.play(buffer, vol);
 	}
 	
+	// alGenSources might be quite expensive
 	public static void playTempSrc(int buffer, float vol, float x, float y, float z) {
 		AudioSrc src = new AudioSrc();
 		src.setPosition(x, y, z);
@@ -85,12 +86,6 @@ public class AudioEngine {
 				el.delete(); // VERY IMPORTANT! otherwise sources just pile up
 			}
 		}
-		
-		//System.out.println(autoKills.size());
-		
-		//if (autoKills.size() > 100) {
-		//	autoKills.clear();
-		//}
 		
 	}
 

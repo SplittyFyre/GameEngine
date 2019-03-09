@@ -4,12 +4,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class BoundingBox {
 	
-	public float minX;
-	public float minY;
-	public float minZ;
-	public float maxX;
-	public float maxY;
-	public float maxZ;
+	public float minX, minY, minZ;
+	public float maxX, maxY, maxZ;
 	
 	public BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
 		

@@ -127,8 +127,7 @@ public class TM {
 	public static RawModel sm = OBJParser.loadObjModel("TRUBBLESternDriveobj");
 	public static TexturedModel stern_model = new TexturedModel(sm, new ModelTexture(Loader.loadTexture("trubblesternpic")));
 	
-	public static void init() {
-		
+	static {
 		main_model.getTexture().setSpecularMap(Loader.loadTexture("trubblestardriveglow"));
 		main_model.getTexture().setBrightDamper(3);
 		

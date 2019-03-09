@@ -76,7 +76,6 @@ public class Main {
 		AudioEngine.init();
 		
 		TextMaster.init();
-		TM.init();
 		RenderEngine engine = RenderEngine.init();
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
@@ -186,7 +185,6 @@ public class Main {
 		
 		//borgShip.getTexture().setShineDamper(50);
 		//borgShip.getTexture().setReflectivity(0);
-		
 		//END TEXTURE SECTION****************************************************************
 		
 		

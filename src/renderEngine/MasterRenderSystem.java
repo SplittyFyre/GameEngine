@@ -84,11 +84,15 @@ public class MasterRenderSystem {
 		buffers.unbindCurrentFrameBuffer();
 		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		
-		fbo.bindFrameBuffer();
+		if (fbo != null)
+			fbo.bindFrameBuffer();
+		
 		renderWithoutWater(scene);
 		waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0));
 		ParticleWatcher.renderParticles(camera);
-		fbo.unbindFrameBuffer();
+		
+		if (fbo != null)
+			fbo.unbindFrameBuffer();
 	}
 	
 	public void renderMiniMapPass(Scene scene) {
