@@ -11,12 +11,12 @@ import scene.entities.Light;
 import scene.entities.camera.Camera;
 import utils.SFMath;
 
-public class TerrainShader extends ShaderProgram{
+public class TerrainShader extends ShaderProgram {
 	
 	private static final int MAX_LIGHTS = 4;
 	
-	private static final String VERTEX_FILE = "src/scene/terrain/render/terrainVertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/scene/terrain/render/terrainFragmentShader.txt";
+	private static final String VERTEX_FILE = "src/scene/terrain/render/terrainVertexShader.glsl";
+	private static final String FRAGMENT_FILE = "src/scene/terrain/render/terrainFragmentShader.glsl";
 	
 	private int location_lightPosition[];
 	private int location_lightColour[];

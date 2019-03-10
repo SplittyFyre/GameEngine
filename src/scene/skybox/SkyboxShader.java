@@ -10,8 +10,8 @@ import utils.SFMath;
 
 public class SkyboxShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/scene/skybox/skyboxVertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/scene/skybox/skyboxFragmentShader.txt";
+	private static final String VERTEX_FILE = "src/scene/skybox/skyboxVertexShader.glsl";
+	private static final String FRAGMENT_FILE = "src/scene/skybox/skyboxFragmentShader.glsl";
 	
 	private static final float ROT_SPEED = 0;
 	

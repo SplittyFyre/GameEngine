@@ -6,8 +6,8 @@ import renderEngine.ShaderProgram;
 
 public class ParticleShader extends ShaderProgram {
 
-	private static final String VERTEX_FILE = "src/scene/particles/particleVShader.txt";
-	private static final String FRAGMENT_FILE = "src/scene/particles/particleFShader.txt";
+	private static final String VERTEX_FILE = "src/scene/particles/particleVertexShader.glsl";
+	private static final String FRAGMENT_FILE = "src/scene/particles/particleFragmentShader.glsl";
 
 	private int location_numRows;
 	private int location_projectionMatrix;

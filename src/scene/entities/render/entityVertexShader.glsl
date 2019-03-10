@@ -25,7 +25,7 @@ const float gradient = 5;
 
 uniform vec4 plane;
 
-void main(void){
+void main(void) {
 	
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0);
 	
