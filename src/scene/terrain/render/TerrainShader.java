@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import renderEngine.ShaderProgram;
+import scene.contexts.SkyContext;
 import scene.entities.Light;
 import scene.entities.camera.Camera;
 import utils.SFMath;
@@ -68,6 +69,9 @@ public class TerrainShader extends ShaderProgram {
 		location_lightColour = new int[MAX_LIGHTS];
 		location_lightPosition = new int[MAX_LIGHTS];
 		location_attenuation = new int[MAX_LIGHTS];
+		
+		addUniformVariable("density");
+		addUniformVariable("gradient");
 		
 		for (int i = 0; i < MAX_LIGHTS; i++) {
 			
@@ -134,8 +138,10 @@ public class TerrainShader extends ShaderProgram {
 		super.loadMatrix(location_projectionMatrix, projection);
 	}
 	
-	public void loadSkyColour(float r, float g, float b) {
-		super.loadVector(location_skyColour, new Vector3f(r, g, b));
+	public void loadSkyContext(SkyContext ctx) {
+		super.loadFloat(uniformLocationOf("density"), ctx.fogDensity);
+		super.loadFloat(uniformLocationOf("gradient"), ctx.fogGradient);
+		super.loadVector(location_skyColour, new Vector3f(ctx.skyR, ctx.skyG, ctx.skyB));
 	}
 	
 	public void loadClipPlane(Vector4f plane) {

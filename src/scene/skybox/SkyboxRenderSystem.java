@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
+import scene.contexts.SkyContext;
 import scene.entities.camera.Camera;
 
 public class SkyboxRenderSystem {
@@ -79,13 +80,13 @@ public class SkyboxRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(Camera camera, float r, float g, float b) {
-		//GL11.glEnable(GL11.GL_BLEND);
-		//L11.glBlendFunc(GL11.GL_ONE, GL11.GL_SRC_ALPHA);
+	public void render(Camera camera, SkyContext ctx) {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_SRC_ALPHA);
 		GL11.glDepthMask(false);
 		shader.start();
 		shader.loadViewMatrix(camera);
-		shader.loadFogColour(r, g, b);
+		shader.loadFogColour(ctx.skyR, ctx.skyG, ctx.skyB);
 		GL30.glBindVertexArray(cube.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		bindTextures();
@@ -94,9 +95,10 @@ public class SkyboxRenderSystem {
 		GL30.glBindVertexArray(0);
 		shader.stop();
 		GL11.glDepthMask(true);
-		//GL11.glDisable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
+	// GL_TEXTURE(%d) are consecutive
 	private void bindTextures() {
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, nightTexture);

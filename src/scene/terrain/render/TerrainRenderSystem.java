@@ -8,13 +8,11 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import renderEngine.MasterRenderSystem;
 import renderEngine.models.RawModel;
 import renderEngine.textures.TerrainTexturePack;
-import scene.entities.Light;
-import scene.entities.camera.Camera;
+import scene.ICScene;
 import scene.terrain.Terrain;
 import utils.SFMath;
 
@@ -34,8 +32,8 @@ public class TerrainRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(List<Terrain> terrains, float skyR, float skyG, float skyB, List<Light> lights, Camera camera, Vector4f clipPlane) {
-		prepare(skyR, skyG, skyB, lights, camera, clipPlane);
+	public void render(List<Terrain> terrains, ICScene scene) {
+		prepare(scene);
 		for (Terrain terrain : terrains) {
 			prepareTerrain(terrain);
 			loadModelMatrix(terrain);
@@ -53,12 +51,12 @@ public class TerrainRenderSystem {
 		shader.stop();
 	}
 	
-	private void prepare(float skyR, float skyG, float skyB, List<Light> lights, Camera camera, Vector4f clipPlane) {
+	private void prepare(ICScene scene) {
 		shader.start();
-		shader.loadClipPlane(clipPlane);
-		shader.loadSkyColour(skyR, skyG, skyB);
-		shader.loadLights(lights);
-		shader.loadViewMatrix(camera);
+		shader.loadClipPlane(scene.getClipPlanePointer());
+		shader.loadSkyContext(scene.skyCtx);
+		shader.loadLights(scene.getLights());
+		shader.loadViewMatrix(scene.getCamera());
 	}
 
 	private void prepareTerrain(Terrain terrain) {

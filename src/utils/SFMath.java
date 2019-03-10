@@ -104,6 +104,14 @@ public class SFMath {
 		return matrix;
 	}
 	
+	public static Matrix4f createTransformationMatrix(Vector2f translation, float scale) {
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		Matrix4f.translate(translation, matrix, matrix);
+		Matrix4f.scale(new Vector3f(scale, scale, 1f), matrix, matrix);
+		return matrix;
+	}
+	
 	public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, Vector3f scale) {
 		
 		Matrix4f matrix = new Matrix4f();

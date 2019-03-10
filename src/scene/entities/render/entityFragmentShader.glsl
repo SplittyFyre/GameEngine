@@ -16,15 +16,19 @@ uniform vec3 lightColour[4];
 uniform vec3 attenuation[4];
 uniform float shineDamper;
 uniform float reflectivity;
+
 uniform vec3 skyColour;
 
 uniform float brightDamper;
 
 uniform vec4 highlight;
 
-const float cellvl = 4;
+uniform float celllvl;
+uniform float useCellShading;
 
-void main(void){
+void main(void) {
+
+	float level;
 
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitVectorToCamera = normalize(toCameraVector);
@@ -32,16 +36,18 @@ void main(void){
 	vec3 totalDiffuse = vec3(0.0);
 	vec3 totalSpecular = vec3(0.0);
 	
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 4; i++) {
 	
 		float distance = length(toLightVector[i]);
 		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);
 		vec3 unitLightVector = normalize(toLightVector[i]);
-		float NDotL = dot(unitNormal,unitLightVector);
+		float NDotL = dot(unitNormal, unitLightVector);
 		float brightness = max(NDotL, 0.1);
 		
-		/*float level = floor(brightness * cellvl);
-		brightness = level / cellvl;*/
+		if (useCellShading > 0.5) {
+			level = floor(brightness * celllvl);
+			brightness = level / celllvl;
+		}
 		
 		vec3 lightDirection = -unitLightVector;
 		vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
@@ -49,8 +55,10 @@ void main(void){
 		specularFactor = max(specularFactor,0.0);
 		float dampedFactor = pow(specularFactor,shineDamper);
 		
-		/*level = floor(dampedFactor * cellvl);
-		dampedFactor = level / cellvl;*/
+		if (useCellShading > 0.5) {
+			level = floor(dampedFactor * celllvl);
+			dampedFactor = level / celllvl;
+		}
 		
 		totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attFactor;
 		totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i]) / attFactor;

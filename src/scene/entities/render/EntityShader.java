@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import renderEngine.ShaderProgram;
+import scene.contexts.SkyContext;
 import scene.entities.Light;
 import scene.entities.camera.Camera;
 import utils.SFMath;
@@ -71,6 +72,12 @@ public class EntityShader extends ShaderProgram{
 		location_plane = super.getUniformLocation("plane");
 		location_brightDamper = super.getUniformLocation("brightDamper");
 		location_highlight = super.getUniformLocation("highlight");
+		
+		addUniformVariable("density");
+		addUniformVariable("gradient");
+		
+		addUniformVariable("celllvl");
+		addUniformVariable("useCellShading");
 		
 		location_lightColour = new int[MAX_LIGHTS];
 		location_lightPosition = new int[MAX_LIGHTS];
@@ -156,8 +163,17 @@ public class EntityShader extends ShaderProgram{
 		//System.out.println("time for loadBoolean: " + (end - start));
 	}
 	
-	public void loadSkyColour(float r, float g, float b) {
-		super.loadVector(location_skyColour, new Vector3f(r, g, b));
+	public void loadSkyContext(SkyContext ctx) {
+		super.loadFloat(uniformLocationOf("density"), ctx.fogDensity);
+		super.loadFloat(uniformLocationOf("gradient"), ctx.fogGradient);
+		super.loadVector(location_skyColour, new Vector3f(ctx.skyR, ctx.skyG, ctx.skyB));
+	}
+	
+	public void loadCellShadingStatus(boolean useCellShading, float cellLevel) {
+		super.loadBoolean(uniformLocationOf("useCellShading"), useCellShading);
+		if (useCellShading) {
+			super.loadFloat(uniformLocationOf("celllvl"), cellLevel);
+		}
 	}
 	
 	public void loadHighlight(Vector4f colour) {

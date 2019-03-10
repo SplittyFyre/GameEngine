@@ -20,8 +20,8 @@ uniform float useFakeLight;
 uniform float numberOfRows;
 uniform vec2 offset;
 
-const float density = 0.000075;
-const float gradient = 5;
+uniform float density;
+uniform float gradient;
 
 uniform vec4 plane;
 
@@ -37,13 +37,13 @@ void main(void) {
 	
 	vec3 actualNormal = normal;
 	
-	if (useFakeLight > 0.5){
+	if (useFakeLight > 0.5) {
 		actualNormal = vec3(0.0, 1.0, 0.0);
 	}
 	
 	surfaceNormal = (transformationMatrix * vec4(actualNormal, 0.0)).xyz;
 	
-	for(int i = 0; i < 4; i++){
+	for(int i = 0; i < 4; i++) {
 		toLightVector[i] = lightPosition[i] - worldPosition.xyz;
 	}
 	toCameraVector = (inverse(viewMatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldPosition.xyz;

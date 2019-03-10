@@ -183,6 +183,9 @@ public class Loader {
 		
 	}
 	
+	/**
+	 * {"right", "left", "top", "bottom", "back", "front"}
+	 */
 	public static int loadCubeMap(String[] textureFiles) {
 		
 		int texID = GL11.glGenTextures();

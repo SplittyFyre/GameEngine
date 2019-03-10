@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector4f;
 
+import scene.contexts.SkyContext;
 import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.camera.Camera;
@@ -12,15 +13,29 @@ import scene.terrain.Terrain;
 import water.WaterTile;
 
 public class ICScene {
-	
+			
 	protected List<Entity> entities = new ArrayList<Entity>();
 	protected List<Terrain> terrains = new ArrayList<Terrain>();
 	protected List<Light> lights = new ArrayList<Light>();
 	protected List<WaterTile> waters = new ArrayList<WaterTile>();
 	 
-	protected float skyR = 0, skyG = 0, skyB = 0;
 	protected Camera camera;
 	protected Vector4f clipPlane = new Vector4f();
+	
+	public boolean useCellShading = false;
+	public float numCellLevels = 4.f;
+	
+	public SkyContext skyCtx;
+	
+	
+	
+	public ICScene() {
+		this.skyCtx = new SkyContext(0.000075f, 5.f, 0, 0, 0);
+	}
+	public ICScene(SkyContext skyCtx) {
+		this.skyCtx = skyCtx;
+	}
+	
 		
 	public Vector4f getClipPlanePointer() {
 		return clipPlane;
@@ -67,15 +82,15 @@ public class ICScene {
 	}
 
 	public float getSkyR() {
-		return skyR;
+		return this.skyCtx.skyR;
 	}
 
 	public float getSkyG() {
-		return skyG;
+		return this.skyCtx.skyG;
 	}
 
 	public float getSkyB() {
-		return skyB;
+		return this.skyCtx.skyB;
 	}
 	
 }

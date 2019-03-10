@@ -19,8 +19,8 @@ uniform vec3 lightPosition[4];
 
 uniform vec4 plane;
 
-const float density = 0.000075;
-const float gradient = 5;
+uniform float density;
+uniform float gradient;
 
 void main(void){
 

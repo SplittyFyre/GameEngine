@@ -9,15 +9,13 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import renderEngine.MasterRenderSystem;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
+import scene.ICScene;
 import scene.entities.Entity;
-import scene.entities.Light;
-import scene.entities.camera.Camera;
 import utils.SFMath;
 
 public class EntityRenderSystem {
@@ -35,9 +33,8 @@ public class EntityRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(Map<TexturedModel, List<Entity>> entities, 
-			float skyR, float skyG, float skyB, List<Light> lights, Camera camera, Vector4f clipPlane) { 
-		prepare(skyR, skyG, skyB, lights, camera, clipPlane);
+	public void render(Map<TexturedModel, List<Entity>> entities, ICScene scene) { 
+		prepare(scene);
 		for (TexturedModel model : entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
@@ -65,12 +62,15 @@ public class EntityRenderSystem {
 		shader.stop();
 	}
 	
-	private void prepare(float skyR, float skyG, float skyB, List<Light> lights, Camera camera, Vector4f clipPlane) {
+	private void prepare(ICScene scene) {
 		shader.start();
-		shader.loadClipPlane(clipPlane);
-		shader.loadSkyColour(skyR, skyG, skyB);
-		shader.loadLights(lights);
-		shader.loadViewMatrix(camera);
+		shader.loadClipPlane(scene.getClipPlanePointer());
+		shader.loadSkyContext(scene.skyCtx);
+		shader.loadLights(scene.getLights());
+		shader.loadViewMatrix(scene.getCamera());
+		
+		shader.loadCellShadingStatus(scene.useCellShading, scene.numCellLevels);
+		
 		shader.connectTextureUnits();
 	}
 	

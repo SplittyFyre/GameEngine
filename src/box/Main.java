@@ -45,6 +45,8 @@ import scene.entities.Entity;
 import scene.entities.Light;
 import scene.entities.StaticEntity;
 import scene.entities.camera.Camera;
+import scene.lensFlare.FlareManager;
+import scene.lensFlare.FlareTexture;
 import scene.particles.ParticleWatcher;
 import scene.terrain.Island;
 import scene.terrain.Terrain;
@@ -194,8 +196,8 @@ public class Main {
 		}
 		
 		RogueVessel rogue = new RogueVessel(TM.BOPModel, new Vector3f(0, 650, 100), 0, 0, 0, 7.5f, player);
-		enemies.add(rogue);
-		enemies.add(new RogueVessel(TM.BOPModel, new Vector3f(1000, 700, 200), 0, 0, 0, 7.5f, player));
+		//enemies.add(rogue);
+		//enemies.add(new RogueVessel(TM.BOPModel, new Vector3f(1000, 700, 200), 0, 0, 0, 7.5f, player));
 
 		Fbo fbo = new Fbo(Display.getWidth(), Display.getHeight());
 		Fbo output = new Fbo(Display.getWidth(), Display.getHeight(), Fbo.DEPTH_TEXTURE);
@@ -208,7 +210,7 @@ public class Main {
 		GUITexture viewsceen = new GUITexture(mmfx.getOutputTexture(), new Vector2f(0.75f, 0.7f), new Vector2f(0.3f, 0.3f), 180);
 		guis.add(viewsceen);
 		
-		GUIRenderer guiRenderer = new GUIRenderer();
+		GUIRenderer guiRenderer = new GUIRenderer(true);
 		
 		List<GUITexture> preguis = new ArrayList<GUITexture>();
 		
@@ -295,6 +297,24 @@ public class Main {
 		}*/
 		
 		scene.setEntityList(allEntities);
+		
+		
+		int ft1 = Loader.loadTexture("lensFlare/tex1");
+		int ft2 = Loader.loadTexture("lensFlare/tex2");
+		int ft3 = Loader.loadTexture("lensFlare/tex3");
+		int ft4 = Loader.loadTexture("lensFlare/tex4");
+		int ft5 = Loader.loadTexture("lensFlare/tex5");
+		int ft6 = Loader.loadTexture("lensFlare/tex6");
+		int ft7 = Loader.loadTexture("lensFlare/tex7");
+		int ft8 = Loader.loadTexture("lensFlare/tex8");
+		int ft9 = Loader.loadTexture("lensFlare/tex9");
+		
+		FlareManager lensFlare = new FlareManager(guiRenderer, 0.4f, 
+				new FlareTexture(ft6, 0.5f),
+                new FlareTexture(ft4, 0.23f), new FlareTexture(ft2, 0.1f), new FlareTexture(ft7, 0.05f), new FlareTexture(ft1, 0.02f),
+                new FlareTexture(ft3, 0.06f), new FlareTexture(ft9, 0.12f), new FlareTexture(ft5, 0.07f), new FlareTexture(ft1, 0.012f), new FlareTexture(ft7, 0.2f),
+                new FlareTexture(ft9, 0.1f), new FlareTexture(ft3, 0.07f), new FlareTexture(ft5, 0.3f), new FlareTexture(ft4, 0.4f),
+                new FlareTexture(ft8, 0.6f));
 		
 		while (!Display.isCloseRequested()) {
 			
@@ -422,6 +442,7 @@ public class Main {
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, output2);
 			PostProcessing.doPostProcessing(output.getColourTexture(), output2.getColourTexture());
 			guiRenderer.render(guis);
+			lensFlare.render(scene.getCamera(), sun.getPosition(), engine.getProjectionMatrix());
 			TextMaster.drawText();
 			AudioEngine.update();
 			DisplayManager.updateDisplay();//SFMath.xTranslation = new Vector3f(0, 0, 0);

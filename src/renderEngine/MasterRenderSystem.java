@@ -33,7 +33,6 @@ public class MasterRenderSystem {
 	private SkyboxRenderSystem skyboxRenderer;
 	private WaterRenderer waterRenderer;
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
-	private List<Terrain> terrains = new ArrayList<Terrain>();
 	
 	public MasterRenderSystem(Matrix4f projectionMatrix) {
 		enableFaceCulling();
@@ -44,21 +43,18 @@ public class MasterRenderSystem {
 	}
 	
 	private void renderWithoutWater(ICScene scene) {
-		float skyR = scene.getSkyR(), skyG = scene.getSkyG(), skyB = scene.getSkyB();
 		for (Entity entity : scene.getEntities())
 			processEntity(entity);
-		for (Terrain terrain : scene.getTerrains())
-			terrains.add(terrain);
+		List<Terrain> terrains = scene.getTerrains();
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		
-		skyboxRenderer.render(scene.getCamera(), skyR, skyG, skyB);
-		entityRenderer.render(entities, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
-		terrainRenderer.render(terrains, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
+		skyboxRenderer.render(scene.getCamera(), scene.skyCtx);
+		entityRenderer.render(entities, scene);
+		terrainRenderer.render(terrains, scene);
 		//FINISH***********************************************************
-		terrains.clear();
 		entities.clear();
 	}
 	
@@ -96,17 +92,7 @@ public class MasterRenderSystem {
 	}
 	
 	public void renderMiniMapPass(ICScene scene) {
-		float skyR = scene.getSkyR(), skyG = scene.getSkyG(), skyB = scene.getSkyB();
-		for (Entity entity : scene.getEntities())
-			processEntity(entity);
-		for (Terrain terrain : scene.getTerrains())
-			terrains.add(terrain);
-		prepare();
-		entityRenderer.render(entities, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
-		terrainRenderer.render(terrains, skyR, skyG, skyB, scene.getLights(), scene.getCamera(), scene.getClipPlanePointer());
-		//FINISH***********************************************************
-		terrains.clear();
-		entities.clear();
+
 	}
 	
 	public void cleanUp() {
