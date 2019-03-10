@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -19,6 +21,15 @@ public abstract class ShaderProgram {
 	private int programID;
 	private int vertexShaderID;
 	private int fragmentShaderID;
+	
+	protected Map<String, Integer> uniformLocationsHashMap = new HashMap<String, Integer>();
+	
+	protected void addUniformVariable(String varName) {
+		uniformLocationsHashMap.put(varName, GL20.glGetUniformLocation(programID, varName));
+	}
+	protected int uniformLocationOf(String varName) {
+		return uniformLocationsHashMap.get(varName);
+	}
 	
 	private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
 	

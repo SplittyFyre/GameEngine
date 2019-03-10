@@ -62,7 +62,9 @@ public class EntityShader extends ShaderProgram{
 		location_viewMatrix = super.getUniformLocation("viewMatrix");
 		location_shineDamper = super.getUniformLocation("shineDamper");
 		location_reflectivity = super.getUniformLocation("reflectivity");
-		location_useFakeLight = super.getUniformLocation("useFakeLight");
+		
+		super.addUniformVariable("useFakeLight");
+		
 		location_skyColour = super.getUniformLocation("skyColour");
 		location_numberOfRows = super.getUniformLocation("numberOfRows");
 		location_offset = super.getUniformLocation("offset");
@@ -148,7 +150,10 @@ public class EntityShader extends ShaderProgram{
 	}
 	
 	public void loadFakeLight(boolean fakeLight) {
-		super.loadBoolean(location_useFakeLight, fakeLight);
+		//long start = System.nanoTime();
+		super.loadBoolean(uniformLocationOf("useFakeLight"), fakeLight);
+		//long end = System.nanoTime();
+		//System.out.println("time for loadBoolean: " + (end - start));
 	}
 	
 	public void loadSkyColour(float r, float g, float b) {
