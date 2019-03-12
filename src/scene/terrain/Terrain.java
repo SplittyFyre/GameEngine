@@ -278,7 +278,7 @@ public class Terrain {
 		float heightR = getHeight(x + 1, z, generator);
 		float heightD = getHeight(x, z - 1, generator);
 		float heightU = getHeight(x, z + 1, generator);
-		Vector3f normal = new Vector3f(heightL - heightR, 2f, heightD - heightU);
+		Vector3f normal = new Vector3f(heightL - heightR, 2f * (this.size / (128f - 1f)), heightD - heightU);
 		normal.normalise();
 		
 		return normal;

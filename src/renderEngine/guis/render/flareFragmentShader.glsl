@@ -12,6 +12,6 @@ void main(void){
 
 	out_Color = texture(guiTexture, textureCoords);
 	
-	out_Color.a *= brightness;
+	out_Color.a *= brightness * 0.75f;
 
 }

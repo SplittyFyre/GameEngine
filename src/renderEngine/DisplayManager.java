@@ -44,7 +44,7 @@ public class DisplayManager {
 			Display.setResizable(true);
 			Display.create(new PixelFormat().withDepthBits(24), attributes);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
-			Display.setTitle("JTrek Game Engine");
+			Display.setTitle("Tesseract Engine  : Java");
 			
 			ByteBuffer[] icons = new ByteBuffer[ICON_PATHS.length];
 			

@@ -57,12 +57,16 @@ void main(void){
 		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);
 		vec3 unitLightVector = normalize(toLightVector[i]);
 		float nDotl = dot(unitNormal,unitLightVector);
-		float brightness = max(nDotl,0.2);
+		
+		float brightness = max(nDotl, 0.0);
+		
 		vec3 unitVectorToCamera = normalize(toCameraVector);
 		vec3 lightDirection = -unitLightVector;
 		vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
 		float specularFactor = dot(reflectedLightDirection, unitVectorToCamera);
-		specularFactor = max(specularFactor, 0.2);
+		
+		specularFactor = max(specularFactor, 0.0);
+		
 		float dampedFactor = pow(specularFactor,shineDamper);
 		
 		totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attFactor;

@@ -82,13 +82,13 @@ public class Main {
 		
 		//TERRAIN STUFF********************************************************************
 		
-		//TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grassy2"));
-		int backgroundTexture = (Loader.loadTexture("leaffall"));
+		int backgroundTexture = (Loader.loadTexture("grassy2"));
+		//int backgroundTexture = (Loader.loadTexture("leaffall"));
 		int rTexture = (Loader.loadTexture("dirt"));
 		int gTexture = (Loader.loadTexture("pinkFlowers"));
 		int bTexture = (Loader.loadTexture("path"));
 		
-		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 40);
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 450);
 		
 		int blendMap = (Loader.loadTexture("black"));
 		
@@ -131,8 +131,8 @@ public class Main {
 		
 		Random random = new Random();
 				
-		//Light sun = new Light(new Vector3f(200000, 400000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
-		Light sun = new Light(new Vector3f(20000, 200000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
+		Light sun = new Light(new Vector3f(200000, 200000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
+		//Light sun = new Light(new Vector3f(20000, 200000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
 		scene.getLights().add(sun);
 		
 		//entities.add(new StaticEntity(new TexturedModel(OBJParser.loadObjModel("photon"), new ModelTexture(Loader.loadTexture("image"))),

@@ -42,7 +42,7 @@ void main(void) {
 		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);
 		vec3 unitLightVector = normalize(toLightVector[i]);
 		float NDotL = dot(unitNormal, unitLightVector);
-		float brightness = max(NDotL, 0.1);
+		float brightness = max(NDotL, 0.0);
 		
 		if (useCellShading > 0.5) {
 			level = floor(brightness * celllvl);
@@ -52,7 +52,7 @@ void main(void) {
 		vec3 lightDirection = -unitLightVector;
 		vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
 		float specularFactor = dot(reflectedLightDirection , unitVectorToCamera);
-		specularFactor = max(specularFactor,0.0);
+		specularFactor = max(specularFactor, 0.0);
 		float dampedFactor = pow(specularFactor,shineDamper);
 		
 		if (useCellShading > 0.5) {
