@@ -73,6 +73,8 @@ public class TerrainShader extends ShaderProgram {
 		addUniformVariable("density");
 		addUniformVariable("gradient");
 		
+		addUniformVariable("tiling");
+		
 		for (int i = 0; i < MAX_LIGHTS; i++) {
 			
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
@@ -91,6 +93,10 @@ public class TerrainShader extends ShaderProgram {
 		super.loadInt(location_bTexture, 3);
 		super.loadInt(location_blendMap, 4);
 		
+	}
+	
+	public void loadTiling(float in) {
+		super.loadFloat(uniformLocationOf("tiling"), in);
 	}
 	
 	public void loadHeight(float height) {

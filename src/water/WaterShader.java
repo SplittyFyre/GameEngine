@@ -1,6 +1,7 @@
 package water;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.ShaderProgram;
 import scene.entities.Light;
@@ -49,6 +50,11 @@ public class WaterShader extends ShaderProgram {
 		location_lightPosition = getUniformLocation("lightPosition");
 		location_lightColour = getUniformLocation("lightColour");
 		location_depthMap = getUniformLocation("depthMap");
+		addUniformVariable("colourOffset");
+	}
+	
+	public void loadColourOffset(Vector3f colourOffset) {
+		super.loadVector(uniformLocationOf("colourOffset"), colourOffset);
 	}
 	
 	public void connectTextureUnits(){

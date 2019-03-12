@@ -2,31 +2,34 @@ package renderEngine.textures;
 
 public class TerrainTexturePack {
 	
-	private TerrainTexture backgroundTexture;
-	private TerrainTexture rTexture;
-	private TerrainTexture gTexture;
-	private TerrainTexture bTexture;
+	private int backgroundTexture;
+	private int rTexture;
+	private int gTexture;
+	private int bTexture;
+	private float tiling;
 	
-	public TerrainTexturePack(TerrainTexture backtext, TerrainTexture rtext, TerrainTexture gtext, TerrainTexture btext) {
-		
+	public TerrainTexturePack(int backtext, int rtext, int gtext, int btext, float tiling) {		
 		this.backgroundTexture = backtext;
 		this.rTexture = rtext;
 		this.gTexture = gtext;
 		this.bTexture = btext;
-		
+		this.tiling = tiling;	
 	}
 	
-	public TerrainTexture getBackgroundTexture() {
+	public int getBackgroundTexture() {
 		return backgroundTexture;
 	}
-	public TerrainTexture getrTexture() {
+	public int getrTexture() {
 		return rTexture;
 	}
-	public TerrainTexture getgTexture() {
+	public int getgTexture() {
 		return gTexture;
 	}
-	public TerrainTexture getbTexture() {
+	public int getbTexture() {
 		return bTexture;
+	}
+	public float getTiling() {
+		return tiling;
 	}
 
 }

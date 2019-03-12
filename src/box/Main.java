@@ -38,7 +38,6 @@ import renderEngine.guis.render.GUIRenderer;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
-import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
 import scene.ICScene;
 import scene.entities.Entity;
@@ -83,17 +82,18 @@ public class Main {
 		
 		//TERRAIN STUFF********************************************************************
 		
-		TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grassy2"));
-		TerrainTexture rTexture = new TerrainTexture(Loader.loadTexture("dirt"));
-		TerrainTexture gTexture = new TerrainTexture(Loader.loadTexture("pinkFlowers"));
-		TerrainTexture bTexture = new TerrainTexture(Loader.loadTexture("path"));
+		//TerrainTexture backgroundTexture = new TerrainTexture(Loader.loadTexture("grassy2"));
+		int backgroundTexture = (Loader.loadTexture("leaffall"));
+		int rTexture = (Loader.loadTexture("dirt"));
+		int gTexture = (Loader.loadTexture("pinkFlowers"));
+		int bTexture = (Loader.loadTexture("path"));
 		
-		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 40);
 		
-		TerrainTexture blendMap = new TerrainTexture(Loader.loadTexture("black"));
+		int blendMap = (Loader.loadTexture("black"));
 		
 		
-		Terrain terrain = new Terrain(0, 0, 0, 4800, texturePack, blendMap);
+		//Terrain terrain = new Terrain(0, 0, 0, 4800, texturePack, blendMap);
 		
 		//PLAYERS****************************************************************************
 		
@@ -131,8 +131,8 @@ public class Main {
 		
 		Random random = new Random();
 				
-		Light sun = new Light(new Vector3f(200000, 400000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
-		//Light sun = new Light(new Vector3f(0, 40000, 0), new Vector3f(2.5f, 2.5f, 2.5f));
+		//Light sun = new Light(new Vector3f(200000, 400000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
+		Light sun = new Light(new Vector3f(20000, 200000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
 		scene.getLights().add(sun);
 		
 		//entities.add(new StaticEntity(new TexturedModel(OBJParser.loadObjModel("photon"), new ModelTexture(Loader.loadTexture("image"))),
@@ -174,7 +174,7 @@ public class Main {
 		
 		Camera camera = new PlayerCamera(player);
 		scene.setCamera(camera);
-		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), terrain);
+		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), null);
 		
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 		
@@ -312,7 +312,7 @@ public class Main {
 		FlareManager lensFlare = new FlareManager(guiRenderer, 0.4f, 
 				new FlareTexture(ft6, 0.5f),
                 new FlareTexture(ft4, 0.23f), new FlareTexture(ft2, 0.1f), new FlareTexture(ft7, 0.05f), new FlareTexture(ft1, 0.02f),
-                new FlareTexture(ft3, 0.06f), new FlareTexture(ft9, 0.12f), new FlareTexture(ft5, 0.07f), new FlareTexture(ft1, 0.012f), new FlareTexture(ft7, 0.2f),
+                new FlareTexture(ft3, 0.06f), new FlareTexture(ft9, 0.12f), new FlareTexture(ft6, 0.07f), new FlareTexture(ft1, 0.012f), new FlareTexture(ft7, 0.2f),
                 new FlareTexture(ft9, 0.1f), new FlareTexture(ft3, 0.07f), new FlareTexture(ft5, 0.3f), new FlareTexture(ft4, 0.4f),
                 new FlareTexture(ft8, 0.6f));
 		
@@ -435,14 +435,15 @@ public class Main {
 			
 			checkDamageToEnemies();
 			engine.renderScene(scene, fbo);
+
 			CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
 			
 			
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, output);
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, output2);
 			PostProcessing.doPostProcessing(output.getColourTexture(), output2.getColourTexture());
-			guiRenderer.render(guis);
 			lensFlare.render(scene.getCamera(), sun.getPosition(), engine.getProjectionMatrix());
+			guiRenderer.render(guis);
 			TextMaster.drawText();
 			AudioEngine.update();
 			DisplayManager.updateDisplay();//SFMath.xTranslation = new Vector3f(0, 0, 0);

@@ -60,6 +60,7 @@ public class WaterRenderer {
 					new Vector3f(tile.getX(), tile.getHeight(), tile.getZ()), 0, 0, 0,
 					tile.size);
 			shader.loadModelMatrix(modelMatrix);
+			shader.loadColourOffset(tile.getColourOffset());
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, quad.getVertexCount());
 		}
 		unbind();

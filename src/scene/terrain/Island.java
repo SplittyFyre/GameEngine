@@ -11,7 +11,6 @@ import renderEngine.Loader;
 import renderEngine.models.RawModel;
 import renderEngine.models.TexturedModel;
 import renderEngine.textures.ModelTexture;
-import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
 import scene.entities.Entity;
 import scene.entities.StaticEntity;
@@ -26,7 +25,7 @@ public class Island {
 	
 	private float size;
 	
-	public Island(TerrainTexturePack texturePack, TerrainTexture blendMap,
+	public Island(TerrainTexturePack texturePack, int blendMap,
 			List<Terrain> terrains, List<WaterTile> waters, List<Entity> entities, float x, float y, float z, float size) {
 		terrain = new Terrain(x, y, z, size, texturePack, blendMap);
 		terrains.add(terrain);
@@ -75,7 +74,7 @@ public class Island {
 		
 	}
 	
-	public Island(TerrainTexturePack texturePack, TerrainTexture blendMap,
+	public Island(TerrainTexturePack texturePack, int blendMap,
 			List<Terrain> terrains, List<WaterTile> waters, List<Entity> entities, float x, float y, float z, float size, String heightMap, float maxHeight) {
 		terrain = new Terrain(x, y, z, size, texturePack, blendMap, heightMap, maxHeight);
 		terrains.add(terrain);
@@ -141,17 +140,17 @@ public class Island {
 	}
 
 	//CURR
-	public Island(TerrainTexturePack texturePack, TerrainTexture blendMap, 
+	public Island(TerrainTexturePack texturePack, int blendMap, 
 			List<Terrain> terrains, List<WaterTile> waters, List<Entity> entities, float x, float y, float z, float size, int seed) {
 		
 		this.position = new Vector3f(x, y, z);
 		
-		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
-		terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
+		terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
+		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
 		
 		terrains.add(terrain);
 		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
-		water = new WaterTile(x, z, y, size / 2);
+		water = new WaterTile(x, z, y, size / 2, new Vector3f(0.0f, 0.3f, 0.4f));
 		waters.add(water);
 				
 		RawModel fernRaw = OBJParser.loadObjModel("fernModel");

@@ -21,6 +21,8 @@ const float waveStrength = 0.01;
 const float shineDamper = 10.0;
 const float reflectivity = 0.5;
 
+uniform vec3 colourOffset;
+
 void main(void) {
 
 	vec2 ndc = (clipSpace.xy / clipSpace.w) / 2.0 + 0.5;
@@ -73,7 +75,7 @@ void main(void) {
 	out_Color = mix(out_Color, vec4(0.0, 0.3, 0.5, 1.0), 0.2) + vec4(specularHighlights, 0.0);
 	out_Color.a = clamp(waterDepth / 5.0, 0.0, 1.0);
 		
-	out_Color.gb += 0.4; out_Color.g -= 0.1;
+	out_Color.xyz += colourOffset.xyz;
 	
 	out_BrightColor = vec4(0);
 }

@@ -35,9 +35,7 @@ public class PostProcessing {
 		vBlur = new VerticalBlur(Display.getWidth() / 2, Display.getHeight() / 2);
 		hBlur2 = new HorizontalBlur(Display.getWidth() / 8, Display.getHeight() / 8);
 		vBlur2 = new VerticalBlur(Display.getWidth() / 8, Display.getHeight() / 8);
-		//hBlur3 = new HorizontalBlur(Display.getWidth() / 32, Display.getHeight() / 32);
-		//vBlur3 = new VerticalBlur(Display.getWidth() / 32, Display.getHeight() / 32);
-		brightFilter = new BrightFilter(Display.getWidth() / 2, Display.getHeight() / 2);
+ 		brightFilter = new BrightFilter(Display.getWidth() / 2, Display.getHeight() / 2);
 		combiner = new CombineFilter(Display.getWidth(), Display.getHeight());
 	}
 	

@@ -27,13 +27,15 @@ uniform float height;
 
 in float vtxheight;
 
+uniform float tiling;
+
 void main(void){
 
 	vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
 	
 	float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
 	
-	vec2 tiledCoords = pass_textureCoordinates * 450;
+	vec2 tiledCoords = pass_textureCoordinates * tiling;
 	
 	vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
 	vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
@@ -60,7 +62,7 @@ void main(void){
 		vec3 lightDirection = -unitLightVector;
 		vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
 		float specularFactor = dot(reflectedLightDirection, unitVectorToCamera);
-		specularFactor = max(specularFactor,0.0);
+		specularFactor = max(specularFactor, 0.2);
 		float dampedFactor = pow(specularFactor,shineDamper);
 		
 		totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attFactor;

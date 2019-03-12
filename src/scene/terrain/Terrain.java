@@ -10,7 +10,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.Loader;
 import renderEngine.models.RawModel;
-import renderEngine.textures.TerrainTexture;
 import renderEngine.textures.TerrainTexturePack;
 import utils.SFMath;
 
@@ -23,7 +22,7 @@ public class Terrain {
 	private float z;
 	private RawModel model;
 	private TerrainTexturePack texturePack;
-	private TerrainTexture blendMap;
+	private int blendMap;
 	private float size;
 	
 	public boolean base = false;
@@ -32,7 +31,7 @@ public class Terrain {
 	
 	float[][] heights;
 	
-	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, TerrainTexture blendMap, String heightMap, float maxHeight) {
+	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, String heightMap, float maxHeight) {
 		this.size = size;
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
@@ -42,7 +41,7 @@ public class Terrain {
 		this.model = generateTerrain(heightMap, maxHeight);
 	}
 	
-	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, TerrainTexture blendMap) {
+	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap) {
 		this.size = size;
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
@@ -52,7 +51,7 @@ public class Terrain {
 		this.model = generateTerrain(128);
 	}
 	
-	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, TerrainTexture blendMap, int seed) {
+	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, int seed) {
 		this.size = size;
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
@@ -64,7 +63,7 @@ public class Terrain {
 		this.model = generateTerrain(128);
 	}
 	
-	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, TerrainTexture blendMap, boolean base) {
+	public Terrain(float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, boolean base) {
 		this.size = size;
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
@@ -95,7 +94,7 @@ public class Terrain {
 		return texturePack;
 	}
 
-	public TerrainTexture getBlendMap() {
+	public int getBlendMap() {
 		return blendMap;
 	}
 
