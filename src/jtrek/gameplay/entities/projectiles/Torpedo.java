@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.audio.AudioEngine;
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.particles.ParticleSystem;
+import engine.scene.particles.systems.SimpleParticleSystem;
 import engine.utils.SFMath;
 import jtrek.box.TM;
 
@@ -23,7 +23,7 @@ public class Torpedo extends Projectile {
 	public static final float WSCALE = 2;
 	public static final float ZSCALE = 5;
 	
-	private ParticleSystem sys = null;
+	private SimpleParticleSystem sys = null;
 	
 	@Override
 	public boolean isDead() {
@@ -36,7 +36,7 @@ public class Torpedo extends Projectile {
 	}
 	
 	public Torpedo(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, 
-			float scaleX, float scaleY, float scaleZ, float damage, float dx, float dy, float dz, ParticleSystem sysin) {
+			float scaleX, float scaleY, float scaleZ, float damage, float dx, float dy, float dz, SimpleParticleSystem sysin) {
 		super(model, position, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, damage, dx, dy, dz);
 		this.sys = sysin;
 	}

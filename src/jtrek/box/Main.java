@@ -21,7 +21,7 @@ import engine.postProcessing.Fbo;
 import engine.postProcessing.PostProcessing;
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.Loader;
-import engine.renderEngine.RenderEngine;
+import engine.renderEngine.TRRenderEngine;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.render.GUIRenderer;
 import engine.renderEngine.models.RawModel;
@@ -40,7 +40,7 @@ import engine.scene.terrain.Island;
 import engine.scene.terrain.Terrain;
 import engine.utils.FloatingOrigin;
 import engine.utils.RaysCast;
-import engine.water.WaterTile;
+import engine.water.dudv.DUDVWaterTile;
 import jtrek.collision.CollisionManager;
 import jtrek.gameplay.entities.PlayerCamera;
 import jtrek.gameplay.entities.hostiles.BorgVessel;
@@ -77,7 +77,11 @@ public class Main {
 		AudioEngine.init();
 		
 		TextMaster.init();
-		RenderEngine engine = RenderEngine.init();
+		TRRenderEngine engine = TRRenderEngine.init(
+				TRRenderEngine.RENDER_ENTITIES_BIT | 
+				TRRenderEngine.RENDER_TERRAIN_BIT | 
+				TRRenderEngine.RENDER_SKYBOX_BIT | 
+				TRRenderEngine.RENDER_DUDVWATER_BIT);
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
 		//TERRAIN STUFF********************************************************************
@@ -131,7 +135,8 @@ public class Main {
 		
 		Random random = new Random();
 				
-		Light sun = new Light(new Vector3f(200000, 200000, 200000), new Vector3f(2.5f, 2.5f, 2.5f));
+		float f = 2.5f;
+		Light sun = new Light(new Vector3f(200000, 200000, 200000), new Vector3f(f, f, f));
 		//Light sun = new Light(new Vector3f(20000, 200000, 20000), new Vector3f(2.5f, 2.5f, 2.5f));
 		scene.getLights().add(sun);
 		
@@ -148,6 +153,18 @@ public class Main {
 		
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
+		RawModel helibody = OBJParser.loadObjModelWProperTexSeams("onlyheli");
+		RawModel rotor = OBJParser.loadObjModelWProperTexSeams("rotor");
+		ModelTexture mt = new ModelTexture(Loader.loadTexture("helipng"));
+		mt.setReflectivity(1);
+		mt.setShineDamper(15);
+		TexturedModel done = new TexturedModel(helibody, mt);
+		TexturedModel two = new TexturedModel(rotor, mt);
+		
+		StaticEntity mpen = new StaticEntity(two, new Vector3f(0, 0, 0), 0, 0, 0, 100);
+		
+		entities.add(mpen);
+		
 		Player player = null;
 		
 		int p = 0;
@@ -155,7 +172,7 @@ public class Main {
 		switch (p) {
 		
 		case 0:
-			player = new PlayerVoyager(voyagerShip, new Vector3f(0, 0, 0), 0, 0, 0, 10, guis);
+			player = new PlayerVoyager(done, new Vector3f(0, 0, 0), 0, 0, 0, 100, guis);
 			entities.add(player);
 			break;
 			
@@ -169,7 +186,7 @@ public class Main {
 			((PlayerTrubble) player).add(entities);
 		
 		}
-		
+				
 		//OTHER UTILS************************************************************************
 		
 		Camera camera = new PlayerCamera(player);
@@ -180,7 +197,7 @@ public class Main {
 		
   		
 		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 10000, 1750093151);
-
+		
 		entities.add(new StaticEntity(playerText, new Vector3f(-2500, 750, 2900), 0, 45, 0, 20));
 		
 		//ADDING RANDOM STUFF (PLACE HOLDER?)*************************************************
@@ -317,7 +334,8 @@ public class Main {
                 new FlareTexture(ft8, 0.6f));
 		
 		while (!Display.isCloseRequested()) {
-			
+			mpen.rotate(0, -600 * DisplayManager.getFrameTime(), 0);
+			mpen.setPosition(player.getPosition());
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
@@ -370,7 +388,7 @@ public class Main {
 					el.addVec(trans);
 				}
 				
-				for (WaterTile el : scene.getWaters()) {
+				for (DUDVWaterTile el : scene.getWaters()) {
 					el.addVec(trans);
 				}
 				

@@ -13,7 +13,7 @@ public class HorizontalBlurShader extends ShaderProgram {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 
-	protected void loadTargetWidth(float width){
+	protected void loadTargetWidth(float width) {
 		super.loadFloat(location_targetWidth, width);
 	}
 	

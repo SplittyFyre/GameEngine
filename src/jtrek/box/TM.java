@@ -15,8 +15,8 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.scene.particles.ParticleSystem;
 import engine.scene.particles.ParticleTexture;
+import engine.scene.particles.systems.SimpleParticleSystem;
 
 public class TM {
 	
@@ -55,28 +55,28 @@ public class TM {
 	public static TexturedModel BOPModel = new TexturedModel(preBOPModel, new ModelTexture(Loader.loadTexture("try")));
 	
 	private static ParticleTexture tex1 = new ParticleTexture(Loader.loadTexture("plasma"), 1);
-	public static ParticleSystem warpParticleSystem = new ParticleSystem(tex1, 200, 30, 0, 20, 10);
+	public static SimpleParticleSystem warpParticleSystem = new SimpleParticleSystem(tex1, 200, 30, 0, 20, 10);
 	//texture, pps, speed, gravity, lifelength, scale
 	
 	private static ParticleTexture tex2 = new ParticleTexture(Loader.loadTexture("fire"), 8);
-	public static ParticleSystem burnParticleSystem = new ParticleSystem(tex2, 250, 21, 20, 0.5f, 14);
-	public static ParticleSystem smlexplosionParticleSystem = new ParticleSystem(tex2, 250, 21, 0, 1, 50);
-	public static ParticleSystem explosionParticleSystem = new ParticleSystem(tex2, 250, 21, 0, 1, 150);
-	public static ParticleSystem bigexplosionParticleSystem = new ParticleSystem(tex2, 250, 21, 0, 1, 350);
+	public static SimpleParticleSystem burnParticleSystem = new SimpleParticleSystem(tex2, 250, 21, 20, 0.5f, 14);
+	public static SimpleParticleSystem smlexplosionParticleSystem = new SimpleParticleSystem(tex2, 250, 21, 0, 1, 50);
+	public static SimpleParticleSystem explosionParticleSystem = new SimpleParticleSystem(tex2, 250, 21, 0, 1, 150);
+	public static SimpleParticleSystem bigexplosionParticleSystem = new SimpleParticleSystem(tex2, 250, 21, 0, 1, 350);
 	private static ParticleTexture tex3 = new ParticleTexture(Loader.loadTexture("greenfire"), 8);
-	public static ParticleSystem borgExplosionSystem = new ParticleSystem(tex3, 250, 21, 0, 4, 5000);
+	public static SimpleParticleSystem borgExplosionSystem = new SimpleParticleSystem(tex3, 250, 21, 0, 4, 5000);
 	
 	private static ParticleTexture tex4 = new ParticleTexture(Loader.loadTexture("shieldBlue"), 1);
-	public static ParticleSystem blueShieldSystem = new ParticleSystem(tex4, 1000, 125, 0, 0.5f, 20);
+	public static SimpleParticleSystem blueShieldSystem = new SimpleParticleSystem(tex4, 1000, 125, 0, 0.5f, 20);
 	
 	private static ParticleTexture tex5 = new ParticleTexture(Loader.loadTexture("shieldRed"), 1);
-	public static ParticleSystem redShieldSystem = new ParticleSystem(tex5, 2500, 150, 0, 0.5f, 20);
+	public static SimpleParticleSystem redShieldSystem = new SimpleParticleSystem(tex5, 2500, 150, 0, 0.5f, 20);
 	
 	private static ParticleTexture tex6 = new ParticleTexture(Loader.loadTexture("shieldGreen"), 1);
-	public static ParticleSystem greenShieldSystem = new ParticleSystem(tex6, 2000, 300, 0, 0.5f, 35);
+	public static SimpleParticleSystem greenShieldSystem = new SimpleParticleSystem(tex6, 2000, 300, 0, 0.5f, 35);
 	
 	
-	public static ParticleSystem blueShieldSystemBig = new ParticleSystem(tex4, 10000, 300, 0, 0.5f, 25);
+	public static SimpleParticleSystem blueShieldSystemBig = new SimpleParticleSystem(tex4, 10000, 300, 0, 0.5f, 25);
 	
 	public static FontType font = new FontType(Loader.loadTexture("segoeUI"), "segoeUI");
 	

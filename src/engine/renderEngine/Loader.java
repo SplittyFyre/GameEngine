@@ -29,9 +29,9 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
+import engine.collision.BoundingBox;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.textures.TextureData;
-import jtrek.collision.BoundingBox;
 
 public class Loader {
 	

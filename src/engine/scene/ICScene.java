@@ -10,14 +10,14 @@ import engine.scene.entities.Entity;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.Camera;
 import engine.scene.terrain.Terrain;
-import engine.water.WaterTile;
+import engine.water.dudv.DUDVWaterTile;
 
 public class ICScene {
 			
 	protected List<Entity> entities = new ArrayList<Entity>();
 	protected List<Terrain> terrains = new ArrayList<Terrain>();
 	protected List<Light> lights = new ArrayList<Light>();
-	protected List<WaterTile> waters = new ArrayList<WaterTile>();
+	protected List<DUDVWaterTile> waters = new ArrayList<DUDVWaterTile>();
 	 
 	protected Camera camera;
 	protected Vector4f clipPlane = new Vector4f();
@@ -73,7 +73,7 @@ public class ICScene {
 		return lights;
 	}
 	
-	public List<WaterTile> getWaters() {
+	public List<DUDVWaterTile> getWaters() {
 		return waters;
 	}
 	

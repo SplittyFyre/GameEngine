@@ -40,7 +40,7 @@ public class TerrainRenderSystem {
 			shader.loadBase(terrain.base);
 			shader.loadHeight(terrain.getY());
 			if (terrain.base) {
-				MasterRenderSystem.enableFaceCulling();
+				MasterRenderSystem.enableFaceCulling(); 
 				GL11.glCullFace(GL11.GL_FRONT);
 			}
 			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(),
@@ -57,6 +57,7 @@ public class TerrainRenderSystem {
 		shader.loadSkyContext(scene.skyCtx);
 		shader.loadLights(scene.getLights());
 		shader.loadViewMatrix(scene.getCamera());
+		shader.loadShineVariables(1, 0);
 	}
 
 	private void prepareTerrain(Terrain terrain) {
@@ -66,7 +67,6 @@ public class TerrainRenderSystem {
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		bindTextures(terrain);
-		shader.loadShineVariables(1, 0);
 		shader.loadTiling(terrain.getTexturePack().getTiling());
 	}
 

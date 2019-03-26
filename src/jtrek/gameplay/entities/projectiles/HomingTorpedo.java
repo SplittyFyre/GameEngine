@@ -6,8 +6,8 @@ import engine.renderEngine.DisplayManager;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.entities.Entity;
 import engine.scene.particles.Particle;
-import engine.scene.particles.ParticleSystem;
 import engine.scene.particles.ParticleTexture;
+import engine.scene.particles.systems.SimpleParticleSystem;
 import engine.utils.SFMath;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.players.Player;
@@ -29,7 +29,7 @@ public class HomingTorpedo extends Projectile {
 	
 	private Runnable col = null;
 	
-	private ParticleSystem sys = null;
+	private SimpleParticleSystem sys = null;
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
 			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ) {
@@ -43,7 +43,7 @@ public class HomingTorpedo extends Projectile {
 	}
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
-			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ, ParticleSystem sysin) {
+			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ, SimpleParticleSystem sysin) {
 		super(model, position, 0, 0, 0, scaleX, scaleY, scaleZ, damage, 0, 0, 0);
 		this.speed = speed;
 		this.target = target;

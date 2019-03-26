@@ -13,7 +13,7 @@ public class VerticalBlurShader extends ShaderProgram{
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
 	
-	protected void loadTargetHeight(float height){
+	protected void loadTargetHeight(float height) {
 		super.loadFloat(location_targetHeight, height);
 	}
 

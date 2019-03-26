@@ -13,6 +13,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.audio.AudioEngine;
 import engine.audio.AudioSrc;
+import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
 import engine.objStuff.OBJParser;
 import engine.renderEngine.DisplayManager;
@@ -32,7 +33,6 @@ import engine.utils.RaysCast;
 import engine.utils.SFMath;
 import jtrek.box.Main;
 import jtrek.box.TM;
-import jtrek.collision.BoundingBox;
 import jtrek.gameplay.entities.PlayerCamera;
 import jtrek.gameplay.entities.entityUtils.ModelSys;
 import jtrek.gameplay.entities.entityUtils.StatusText;

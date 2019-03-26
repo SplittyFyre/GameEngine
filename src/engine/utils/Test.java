@@ -4,10 +4,11 @@ public class Test {
 	
 	public static void main(String[] args) {
 
-		float f = 22.542069f;
+		int bit = 2;
 		
-		System.out.println(SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, 67.5f, f));
-		System.out.println(SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, 67.5f, -f));
+		if ((bit & 2) != 0) {
+			System.out.println("put");
+		}
 		
 		
 		System.exit(0);

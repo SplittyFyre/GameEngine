@@ -3,8 +3,8 @@ package engine.scene.entities;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engine.collision.BoundingBox;
 import engine.renderEngine.models.TexturedModel;
-import jtrek.collision.BoundingBox;
 
 public abstract class Entity {
 

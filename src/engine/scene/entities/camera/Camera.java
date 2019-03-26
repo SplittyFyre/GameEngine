@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 public abstract class Camera {
 	
-	public static final float STD_FOV = 70;
+	public static final float STD_FOV = 50;
 	
 	protected float pitch = 20;
 	protected float yaw;
@@ -55,7 +55,7 @@ public abstract class Camera {
 	public static Matrix4f createProjectionMatrix(float NEAR_PLANE, float FAR_PLANE, float FOV) {
 		
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2))) * aspectRatio);
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
 

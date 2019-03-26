@@ -22,8 +22,6 @@ public class PostProcessing {
 	private static VerticalBlur vBlur;
 	private static HorizontalBlur hBlur2;
 	private static VerticalBlur vBlur2;
-	//private static HorizontalBlur hBlur3;
-	//private static VerticalBlur vBlur3;
 	private static BrightFilter brightFilter;
 	private static CombineFilter combiner;
 
@@ -45,8 +43,6 @@ public class PostProcessing {
 		vBlur.render(hBlur.getOutputTexture());
 		hBlur2.render(vBlur.getOutputTexture());
 		vBlur2.render(hBlur2.getOutputTexture());
-		//hBlur3.render(vBlur2.getOutputTexture());
-		//vBlur3.render(hBlur3.getOutputTexture());
 		combiner.render(colourTexture, vBlur2.getOutputTexture());
 		contrastMod.render(combiner.getOutputTexture());
 		end();

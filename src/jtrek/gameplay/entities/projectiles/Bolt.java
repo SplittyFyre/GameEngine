@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.particles.ParticleSystem;
+import engine.scene.particles.systems.SimpleParticleSystem;
 import engine.utils.SFMath;
 import jtrek.box.TM;
 
@@ -19,7 +19,7 @@ public class Bolt extends Projectile {
 	public static final float WSCALE = 1.5f;
 	public static final float ZSCALE = 32;
 	
-	private ParticleSystem sys = null;
+	private SimpleParticleSystem sys = null;
 	
 	@Override
 	public boolean isDead() {
@@ -57,7 +57,7 @@ public class Bolt extends Projectile {
 	}
 	
 	public Bolt(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ
-			, float damage, float movCoff, int speed, ParticleSystem sys) {
+			, float damage, float movCoff, int speed, SimpleParticleSystem sys) {
 		super(model, position, rotX, rotY, rotZ, 0, damage);
 		this.moveCoff = movCoff < 0 ? 0 : movCoff;
 		this.SPEED = speed;

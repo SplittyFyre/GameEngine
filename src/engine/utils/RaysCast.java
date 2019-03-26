@@ -7,9 +7,9 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engine.collision.BoundingBox;
 import engine.scene.entities.camera.Camera;
 import engine.scene.terrain.Terrain;
-import jtrek.collision.BoundingBox;
 
 public class RaysCast {
 

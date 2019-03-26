@@ -20,32 +20,45 @@ import engine.scene.entities.camera.Camera;
 import engine.scene.entities.render.EntityRenderSystem;
 import engine.scene.particles.ParticleWatcher;
 import engine.scene.skybox.SkyboxRenderSystem;
-import engine.scene.terrain.Terrain;
 import engine.scene.terrain.render.TerrainRenderSystem;
-import engine.water.WaterFrameBuffers;
-import engine.water.WaterRenderer;
-import engine.water.WaterTile;
+import engine.water.dudv.DUDVWaterRenderer;
+import engine.water.dudv.DUDVWaterTile;
+import engine.water.dudv.WaterFrameBuffers;
 
 public class MasterRenderSystem {
+	
+	private static final int RENDER_ENTITIES_BIT = 1;
+	private static final int RENDER_TERRAIN_BIT = 2;
+	private static final int RENDER_SKYBOX_BIT = 4;
+	private static final int RENDER_DUDVWATER_BIT = 8;
+	private final int renderSupportMask;
 	
 	private EntityRenderSystem entityRenderer;
 	private TerrainRenderSystem terrainRenderer;
 	private SkyboxRenderSystem skyboxRenderer;
-	private WaterRenderer waterRenderer;
+	private DUDVWaterRenderer waterRenderer;
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	
-	public MasterRenderSystem(Matrix4f projectionMatrix) {
+	private boolean isRFAvailable(int mask) {
+		return (renderSupportMask & mask) != 0;
+	}
+	
+	public MasterRenderSystem(int renderSupportMask, Matrix4f projectionMatrix) {
+		this.renderSupportMask = renderSupportMask;
 		enableFaceCulling();
-		this.entityRenderer = new EntityRenderSystem(projectionMatrix);
-		this.terrainRenderer = new TerrainRenderSystem(projectionMatrix);
-		this.skyboxRenderer = new SkyboxRenderSystem(projectionMatrix);
-		this.waterRenderer = new WaterRenderer(projectionMatrix);
+		if (isRFAvailable(RENDER_ENTITIES_BIT))
+			this.entityRenderer = new EntityRenderSystem(projectionMatrix);
+		if (isRFAvailable(RENDER_TERRAIN_BIT))
+			this.terrainRenderer = new TerrainRenderSystem(projectionMatrix);
+		if (isRFAvailable(RENDER_SKYBOX_BIT))
+			this.skyboxRenderer = new SkyboxRenderSystem(projectionMatrix);
+		if (isRFAvailable(RENDER_DUDVWATER_BIT))
+			this.waterRenderer = new DUDVWaterRenderer(projectionMatrix);
 	}
 	
 	private void renderWithoutWater(ICScene scene) {
 		for (Entity entity : scene.getEntities())
 			processEntity(entity);
-		List<Terrain> terrains = scene.getTerrains();
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
@@ -53,7 +66,7 @@ public class MasterRenderSystem {
 		
 		skyboxRenderer.render(scene.getCamera(), scene.skyCtx);
 		entityRenderer.render(entities, scene);
-		terrainRenderer.render(terrains, scene);
+		terrainRenderer.render(scene.getTerrains(), scene);
 		//FINISH***********************************************************
 		entities.clear();
 	}
@@ -61,30 +74,37 @@ public class MasterRenderSystem {
 	public void renderMainPass(ICScene scene, Fbo fbo) {
 		
 		Camera camera = scene.getCamera();
-		WaterFrameBuffers buffers = waterRenderer.getFBOs();
-		WaterTile water = scene.getWaters().get(0);
+		
+		if (scene.getWaters().size() != 0) {
+			WaterFrameBuffers buffers = waterRenderer.getFBOs();
+			DUDVWaterTile water = scene.getWaters().get(0);
 
-		GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-		scene.setClipPlanePointer(new Vector4f(0, -1, 0, 15));
-		buffers.bindReflectionFrameBuffer();
-		float distance = 2 * (camera.getPosition().y - water.getHeight());
-		camera.getPosition().y -= distance;
-		camera.invertPitch();
-		scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
-		renderWithoutWater(scene);
-		camera.getPosition().y += distance;
-		camera.invertPitch();
-		buffers.bindRefractionFrameBuffer();
-		scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.5f));
-		renderWithoutWater(scene);
-		buffers.unbindCurrentFrameBuffer();
-		GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
+			scene.setClipPlanePointer(new Vector4f(0, -1, 0, 15));
+			buffers.bindReflectionFrameBuffer();
+			float distance = 2 * (camera.getPosition().y - water.getHeight());
+			camera.getPosition().y -= distance;
+			camera.invertPitch();
+			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
+			renderWithoutWater(scene);
+			camera.getPosition().y += distance;
+			camera.invertPitch();
+			buffers.bindRefractionFrameBuffer();
+			scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.5f));
+			renderWithoutWater(scene);
+			buffers.unbindCurrentFrameBuffer();
+			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+		}	
 		
 		if (fbo != null)
 			fbo.bindFrameBuffer();
 		
 		renderWithoutWater(scene);
-		waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0));
+		
+		if (scene.getWaters().size() != 0) {
+			waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0));
+		}
+		
 		ParticleWatcher.renderParticles(camera);
 		
 		if (fbo != null)

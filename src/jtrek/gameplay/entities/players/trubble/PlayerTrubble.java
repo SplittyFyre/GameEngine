@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.audio.AudioEngine;
+import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.Loader;
@@ -21,7 +22,6 @@ import engine.scene.particles.ParticleTexture;
 import engine.utils.RaysCast;
 import engine.utils.SFMath;
 import jtrek.box.TM;
-import jtrek.collision.BoundingBox;
 import jtrek.gameplay.entities.hostiles.BorgVessel;
 import jtrek.gameplay.entities.hostiles.Enemy;
 import jtrek.gameplay.entities.players.Player;

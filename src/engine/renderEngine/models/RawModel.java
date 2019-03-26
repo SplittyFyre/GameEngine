@@ -1,6 +1,6 @@
 package engine.renderEngine.models;
 
-import jtrek.collision.BoundingBox;
+import engine.collision.BoundingBox;
 
 public class RawModel {
 	
