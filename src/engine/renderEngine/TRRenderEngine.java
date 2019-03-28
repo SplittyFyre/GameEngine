@@ -3,7 +3,7 @@ package engine.renderEngine;
 import org.lwjgl.util.vector.Matrix4f;
 
 import engine.postProcessing.Fbo;
-import engine.scene.ICScene;
+import engine.scene.TRScene;
 import engine.scene.entities.camera.Camera;
 
 public class TRRenderEngine {
@@ -23,11 +23,11 @@ public class TRRenderEngine {
 		this.renderer = renderer;
 	}
 	
-	public void renderScene(ICScene scene, Fbo fbo) {
+	public void renderScene(TRScene scene, Fbo fbo) {
 		renderer.renderMainPass(scene, fbo);
 	}
 	
-	public void renderMiniMapScene(ICScene scene) {
+	public void renderMiniMapScene(TRScene scene) {
 		//renderer.setProjectionMatrix(permenantLargeMatrix);
 		renderer.renderMiniMapPass(scene);
 		//renderer.setProjectionMatrix(permenantNormalMatrix);

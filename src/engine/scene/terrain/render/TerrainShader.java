@@ -74,6 +74,11 @@ public class TerrainShader extends ShaderProgram {
 		addUniformVariable("gradient");
 		
 		addUniformVariable("tiling");
+		addUniformVariable("ambientLightLvl");
+		
+		addUniformVariable("useAltitudeVarying");
+		addUniformVariable("vecCaps");
+		addUniformVariable("maxheight");
 		
 		for (int i = 0; i < MAX_LIGHTS; i++) {
 			
@@ -93,6 +98,22 @@ public class TerrainShader extends ShaderProgram {
 		super.loadInt(location_bTexture, 3);
 		super.loadInt(location_blendMap, 4);
 		
+	}
+	
+	public void loadUseAltitudeVarying(boolean b) {
+		super.loadBoolean(uniformLocationOf("useAltitudeVarying"), b);
+	}
+	
+	public void loadHeightTextureCaps(float c1, float c2, float c3) {
+		super.loadVector(uniformLocationOf("vecCaps"), c1, c2, c3);
+	}
+	
+	public void loadMaxHeight(float h) {
+		super.loadFloat(uniformLocationOf("maxheight"), h);
+	}
+	
+	public void loadAmbientLight(float lvl) {
+		super.loadFloat(uniformLocationOf("ambientLightLvl"), lvl);
 	}
 	
 	public void loadTiling(float in) {

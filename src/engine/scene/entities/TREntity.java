@@ -1,12 +1,11 @@
 package engine.scene.entities;
 
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.collision.BoundingBox;
 import engine.renderEngine.models.TexturedModel;
 
-public abstract class Entity {
+public abstract class TREntity {
 
 	private TexturedModel model;
 	private Vector3f position;
@@ -17,29 +16,17 @@ public abstract class Entity {
 	
 	public float bbyoffset = 0;
 	
-	public Entity matpremul = null;
+	public TREntity parentTransform = null;
+	public boolean useParentTransform = false;
 	
 	public boolean useCustomRotationAxis = false;
-	public boolean ignoreRY = false;
-	public Vector3f customOrigin = null;
-	
-	public Vector4f highlight = null;
-	
-	public boolean translucent = false;
-	
-	public Vector4f getHighlight() {
-		return highlight;
-	}
-
-	public void setHighlight(Vector4f highlight) {
-		this.highlight = highlight;
-	}
+	public Vector3f customRotationAxis = null;
 
 	private int textureIndex = 0;
 	
 	public abstract void respondToCollision();
 	
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+	public TREntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
@@ -52,7 +39,7 @@ public abstract class Entity {
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 	}
 	
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) {
+	public TREntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) {
 		
 		this.model = model;
 		this.position = position;
@@ -66,7 +53,7 @@ public abstract class Entity {
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 	}
 	
-	public Entity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+	public TREntity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		
 		this.model = model;
 		this.position = position;

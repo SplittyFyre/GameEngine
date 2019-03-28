@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.objStuff.OBJParser;
 import engine.renderEngine.DisplayManager;
@@ -62,7 +61,7 @@ public class BorgVessel extends Enemy {
 		//WARNING: EXPERIMENTAL
 		float dist = SFMath.distance(player.getPlayerPos(), super.getPosition());
 		
-		float coeff = (dist / (3200 * DisplayManager.getFrameTime())) * 1.8f;
+		float coeff = (dist / (3200 * DisplayManager.getFrameDeltaTime())) * 1.8f;
 		coeff = 0;
 		
 		Vector3f vec = SFMath.rotateToFaceVector(super.getPosition(), Vector3f.add(new Vector3f(player.getPlayerPos().x, player.getPlayerPos().y, player.getPlayerPos().z),
@@ -76,8 +75,8 @@ public class BorgVessel extends Enemy {
 		
 		//super.move(movX, movY, movZ);
 		super.rotate(0, 0.15f, 0);
-		this.counter += DisplayManager.getFrameTime();
-		this.counter1 += DisplayManager.getFrameTime();
+		this.counter += DisplayManager.getFrameDeltaTime();
+		this.counter1 += DisplayManager.getFrameDeltaTime();
 		
 		if (dist <= 10000) {
 			Vector3f torpmv = SFMath.moveToVector(player.getPlayerPos(), 
@@ -110,7 +109,7 @@ public class BorgVessel extends Enemy {
 			}
 			
 			if (beaming) {
-				beamcounter += DisplayManager.getFrameTime();
+				beamcounter += DisplayManager.getFrameDeltaTime();
 
 				if (beamcounter > 1) {
 					beaming = false;
@@ -122,7 +121,7 @@ public class BorgVessel extends Enemy {
 						1.5f, 1.5f, 15, 40, 0));
 			}
 			else {
-				beamcounter += DisplayManager.getFrameTime();
+				beamcounter += DisplayManager.getFrameDeltaTime();
 				if (beamcounter >= 3) {
 					beaming = true;
 					beamcounter = 0;
@@ -182,12 +181,6 @@ public class BorgVessel extends Enemy {
 			this.setDead();
 	}
 	
-	public void setTargeted() {
-		this.setHighlight(new Vector4f(1, 0, 0, 0.5f));
-	}
-	
-	public void dropTarget() {
-		this.setHighlight(null);
-	}
+
 
 }

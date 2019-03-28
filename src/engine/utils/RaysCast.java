@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import engine.collision.BoundingBox;
 import engine.scene.entities.camera.Camera;
-import engine.scene.terrain.Terrain;
+import engine.scene.terrain.TRTerrain;
 
 public class RaysCast {
 
@@ -22,10 +22,10 @@ public class RaysCast {
 	private Matrix4f viewMatrix;
 	private Camera camera;
 	
-	private Terrain terrain;
+	private TRTerrain terrain;
 	private Vector3f currentTerrainPoint;
 
-	public RaysCast(Camera cam, Matrix4f projection, Terrain terrain) {
+	public RaysCast(Camera cam, Matrix4f projection, TRTerrain terrain) {
 		camera = cam;
 		projectionMatrix = projection;
 		viewMatrix = SFMath.createViewMatrix(camera);
@@ -110,7 +110,7 @@ public class RaysCast {
 		float half = start + ((finish - start) / 2f);
 		if (count >= RECURSION_COUNT) {
 			Vector3f endPoint = getPointOnRay(ray, half);
-			Terrain terrain = getTerrain(endPoint.getX(), endPoint.getZ());
+			TRTerrain terrain = getTerrain(endPoint.getX(), endPoint.getZ());
 			if (terrain != null) {
 				return endPoint;
 			} else {
@@ -131,7 +131,7 @@ public class RaysCast {
 	}
 
 	private boolean isUnderGround(Vector3f testPoint) {
-		Terrain terrain = getTerrain(testPoint.getX(), testPoint.getZ());
+		TRTerrain terrain = getTerrain(testPoint.getX(), testPoint.getZ());
 		float height = 0;
 		if (terrain != null) {
 			height = terrain.getTerrainHeight(testPoint.getX(), testPoint.getZ());
@@ -139,7 +139,7 @@ public class RaysCast {
 		return testPoint.y < height;
 	}
 
-	private Terrain getTerrain(float worldX, float worldZ) {
+	private TRTerrain getTerrain(float worldX, float worldZ) {
 		return terrain;
 	}
 	

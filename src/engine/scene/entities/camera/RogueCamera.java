@@ -23,10 +23,10 @@ public class RogueCamera extends Camera {
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			yaw -= 90f * DisplayManager.getFrameTime();
+			yaw -= 90f * DisplayManager.getFrameDeltaTime();
 		}
 		else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			yaw += 90f * DisplayManager.getFrameTime();
+			yaw += 90f * DisplayManager.getFrameDeltaTime();
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -36,10 +36,10 @@ public class RogueCamera extends Camera {
 			up = -UPSPEED;
 		}
 		
-		float distanceMoved = mov * DisplayManager.getFrameTime();
+		float distanceMoved = mov * DisplayManager.getFrameDeltaTime();
 		
 		float dx = (float) (distanceMoved * Math.sin(Math.toRadians(180 - yaw)));
-		float dy = up * DisplayManager.getFrameTime();
+		float dy = up * DisplayManager.getFrameDeltaTime();
 		float dz = (float) (distanceMoved * Math.cos(Math.toRadians(180 - yaw)));
 		
 		position.x += dx;

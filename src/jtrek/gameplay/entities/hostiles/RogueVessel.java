@@ -111,8 +111,8 @@ public class RogueVessel extends Enemy {
 			super.setRotY(rot.y);
 			
 			if (dist < 3750) {
-				stagetimer += DisplayManager.getFrameTime();
-				guntimer += DisplayManager.getFrameTime();
+				stagetimer += DisplayManager.getFrameDeltaTime();
+				guntimer += DisplayManager.getFrameDeltaTime();
 				
 				if (guntimer > 0.1f) {
 					fireGuns();
@@ -124,15 +124,15 @@ public class RogueVessel extends Enemy {
 			
 		case SWINGING:
 			currSpeed = 2500;
-			stagetimer += DisplayManager.getFrameTime();
+			stagetimer += DisplayManager.getFrameDeltaTime();
 
 			if (avoidtimer < 0.5f) {
 				flagUp = true;
-				avoidtimer += DisplayManager.getFrameTime();
+				avoidtimer += DisplayManager.getFrameDeltaTime();
 			}
 			else if (avoidtimer < 0.75f) {
 				flagDown = true;
-				avoidtimer += DisplayManager.getFrameTime();
+				avoidtimer += DisplayManager.getFrameDeltaTime();
 			}
 			
 			if (dist > 5000 || stagetimer > 10) {
@@ -158,7 +158,7 @@ public class RogueVessel extends Enemy {
 				if (hasswung < neededswing) {
 					flagRight = odd;
 					flagLeft = !odd;
-					hasswung += TURN_SPEED * DisplayManager.getFrameTime();
+					hasswung += TURN_SPEED * DisplayManager.getFrameDeltaTime();
 				}
 				else {
 					allowInitSwing = true;
@@ -182,25 +182,25 @@ public class RogueVessel extends Enemy {
 			flagLeft = false;
 			this.currentTurnSpeed = TURN_SPEED;
 			if (this.getRotZ() > -45)
-				super.rotate(0, 0, -60 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, -60 * DisplayManager.getFrameDeltaTime());
 		}
 		else if (flagRight) { 
 			flagRight = false;
 			this.currentTurnSpeed = -TURN_SPEED;
 			if (this.getRotZ() < 45)
-				super.rotate(0, 0, 60 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, 60 * DisplayManager.getFrameDeltaTime());
 		}
 		else {											
 			this.currentTurnSpeed = 0;
 			
 			if (this.getRotZ() < 0) {
-				super.rotate(0, 0, 70 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, 70 * DisplayManager.getFrameDeltaTime());
 				
 				if (this.getRotZ() > 0)
 					super.setRotZ(0);
 			}
 			else if (this.getRotZ() > 0) {
-				super.rotate(0, 0, -70 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, -70 * DisplayManager.getFrameDeltaTime());
 				
 				if (this.getRotZ() < 0)
 					super.setRotZ(0);
@@ -213,10 +213,10 @@ public class RogueVessel extends Enemy {
 			flagUp = false;
 			
 			if (super.getRotX() > -UPWARDS_ROT_CAP)
-				super.rotate(-UP_ROT_SPEED * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(-UP_ROT_SPEED * DisplayManager.getFrameDeltaTime(), 0, 0);
 			
 			if (super.getRotX() > 0) {
-				super.rotate(-60 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(-60 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() < 0)
 					super.setRotX(0);
@@ -228,10 +228,10 @@ public class RogueVessel extends Enemy {
 			flagDown = false;
 			
 			if (super.getRotX() < UPWARDS_ROT_CAP)
-				super.rotate(UP_ROT_SPEED * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(UP_ROT_SPEED * DisplayManager.getFrameDeltaTime(), 0, 0);
 			
 			if (super.getRotX() < 0) {
-				super.rotate(60 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(60 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() > 0)
 					super.setRotX(0);
@@ -239,13 +239,13 @@ public class RogueVessel extends Enemy {
 		}	
 		else {
 			if (super.getRotX() < 0) {
-				super.rotate(30 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(30 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() > 0)
 					super.setRotX(0);
 			}
 			else if (super.getRotX() > 0) {
-				super.rotate(-30 * DisplayManager.getFrameTime(), 0, 0);
+				super.rotate(-30 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() < 0)
 					super.setRotX(0);
@@ -256,13 +256,13 @@ public class RogueVessel extends Enemy {
 	
 	private void move() {
 		calculateRotations();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameTime(), 0);
+		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);
 		
 		if (currSpeed == 0) {
 			return;
 		}
 		
-		float distanceMoved = currSpeed * DisplayManager.getFrameTime();
+		float distanceMoved = currSpeed * DisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		

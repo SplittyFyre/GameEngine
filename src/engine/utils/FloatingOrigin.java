@@ -2,11 +2,11 @@ package engine.utils;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 
 public class FloatingOrigin {
 	
-	private static Entity player;
+	private static TREntity player;
 	
 	public static float gridLen;
 	private static float halfGrid;
@@ -14,7 +14,7 @@ public class FloatingOrigin {
 	private static int gridX = 0;
 	private static int gridZ = 0;
 
-	public static void init(Entity player, float gridSideLen) {
+	public static void init(TREntity player, float gridSideLen) {
 		FloatingOrigin.player = player;
 		gridLen = gridSideLen;
 		halfGrid = gridLen / 2;

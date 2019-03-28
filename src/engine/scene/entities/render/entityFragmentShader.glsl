@@ -11,7 +11,7 @@ layout (location = 1) out vec4 outBrightColour;
 
 uniform sampler2D modelTexture;
 uniform sampler2D specularMap;
-uniform float usesSpecularMap;
+uniform bool usesSpecularMap;
 uniform vec3 lightColour[4];
 uniform vec3 attenuation[4];
 uniform float shineDamper;
@@ -21,10 +21,10 @@ uniform vec3 skyColour;
 
 uniform float brightDamper;
 
-uniform vec4 highlight;
-
 uniform float celllvl;
-uniform float useCellShading;
+uniform bool useCellShading;
+
+uniform float ambientLightLvl;
 
 void main(void) {
 
@@ -44,7 +44,7 @@ void main(void) {
 		float NDotL = dot(unitNormal, unitLightVector);
 		float brightness = max(NDotL, 0.0);
 		
-		if (useCellShading > 0.5) {
+		if (useCellShading) {
 			level = floor(brightness * celllvl);
 			brightness = level / celllvl;
 		}
@@ -54,8 +54,8 @@ void main(void) {
 		float specularFactor = dot(reflectedLightDirection , unitVectorToCamera);
 		specularFactor = max(specularFactor, 0.0);
 		float dampedFactor = pow(specularFactor,shineDamper);
-		
-		if (useCellShading > 0.5) {
+		 
+		if (useCellShading) {
 			level = floor(dampedFactor * celllvl);
 			dampedFactor = level / celllvl;
 		}
@@ -64,7 +64,7 @@ void main(void) {
 		totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i]) / attFactor;
 	}
 	
-	totalDiffuse = max(totalDiffuse, 0.1);
+	totalDiffuse = max(totalDiffuse, ambientLightLvl);
 	
 	vec4 textureColour = texture(modelTexture, pass_textureCoordinates);
 	
@@ -74,7 +74,7 @@ void main(void) {
 	
 	outBrightColour = vec4(0.0);
 	
-	if (usesSpecularMap > 0.5) {
+	if (usesSpecularMap) {
 		vec4 mapInfo = texture(specularMap, pass_textureCoordinates);
 		totalSpecular *= mapInfo.r;
 		if (mapInfo.g > 0.5) {
@@ -86,7 +86,6 @@ void main(void) {
 
 	outColour = vec4(totalDiffuse, 1.0) * textureColour + vec4(totalSpecular, 1.0);
 	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
-	outColour += highlight;
 	
 	//be sure to change name
 	outBrightColour *= brightDamper;

@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import engine.scene.entities.camera.Camera;
 import engine.utils.RaysCast;
 import engine.utils.SFMath;
@@ -22,7 +22,7 @@ import jtrek.gameplay.entities.entityUtils.StatusText;
 import jtrek.gameplay.entities.hostiles.Enemy;
 import jtrek.gameplay.entities.projectiles.Projectile;
 
-public abstract class Player extends Entity implements ITakeDamage {
+public abstract class Player extends TREntity implements ITakeDamage {
 	
 	public abstract void update(RaysCast caster);
 	public abstract void choreCollisions(List<Enemy> enemies, RaysCast caster);

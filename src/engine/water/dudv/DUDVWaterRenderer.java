@@ -69,7 +69,7 @@ public class DUDVWaterRenderer {
 	private void prepareRender(Camera camera, Light sun){
 		shader.start();
 		shader.loadViewMatrix(camera);
-		moveFactor += WAVE_SPEED * DisplayManager.getFrameTime();
+		moveFactor += WAVE_SPEED * DisplayManager.getFrameDeltaTime();
 		moveFactor %= 1;
 		shader.loadMoveFactor(moveFactor);
 		shader.loadLight(sun);

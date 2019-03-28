@@ -14,8 +14,8 @@ import engine.renderEngine.MasterRenderSystem;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.scene.ICScene;
-import engine.scene.entities.Entity;
+import engine.scene.TRScene;
+import engine.scene.entities.TREntity;
 import engine.utils.SFMath;
 
 public class EntityRenderSystem {
@@ -33,11 +33,11 @@ public class EntityRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(Map<TexturedModel, List<Entity>> entities, ICScene scene) { 
+	public void render(Map<TexturedModel, List<TREntity>> entities, TRScene scene) { 
 		prepare(scene);
 		for (TexturedModel model : entities.keySet()) {
 			prepareTexturedModel(model);
-			List<Entity> batch = entities.get(model);
+			List<TREntity> batch = entities.get(model);
 			
 			/*
 			 * Here, we have all of the entities, each with the same model, why not render instanced here?
@@ -46,13 +46,13 @@ public class EntityRenderSystem {
 			 * Either: instanced for EVERYTHING, no instanced, either-or, XOR, monostable XD
 			 * */
 			
-			for (Entity entity : batch) {
+			for (TREntity entity : batch) {
 				prepareInstance(entity);
-				if (entity.translucent) {
+				/*if (entity.translucent) {
 					GL11.glEnable(GL11.GL_BLEND);
 					GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_COLOR, GL11.GL_ONE);
 					//GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_COLOR, GL11.GL_ONE_MINUS_SRC_ALPHA);
-				}
+				}*/
 				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(),
 						GL11.GL_UNSIGNED_INT, 0);
 				GL11.glDisable(GL11.GL_BLEND);
@@ -62,12 +62,13 @@ public class EntityRenderSystem {
 		shader.stop();
 	}
 	
-	private void prepare(ICScene scene) {
+	private void prepare(TRScene scene) {
 		shader.start();
 		shader.loadClipPlane(scene.getClipPlanePointer());
 		shader.loadSkyContext(scene.skyCtx);
 		shader.loadLights(scene.getLights());
 		shader.loadViewMatrix(scene.getCamera());
+		shader.loadAmbientLight(scene.getAmbientLight());
 		
 		shader.loadCellShadingStatus(scene.useCellShading, scene.numCellLevels);
 		
@@ -107,28 +108,35 @@ public class EntityRenderSystem {
 		GL30.glBindVertexArray(0);
 	}
 
-	private void prepareInstance(Entity entity) {
+	private void prepareInstance(TREntity entity) {
 		
 		Matrix4f transformationMatrix;
 		
-		if (entity.useCustomRotationAxis && entity.customOrigin != null) {
-			if (entity.ignoreRY) {
-				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customOrigin,
+		if (entity.useCustomRotationAxis && entity.customRotationAxis != null) {
+			/*if (entity.ignoreRY) {
+				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customRotationAxis,
 						entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale(), true);
 			}
 			else {
-				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customOrigin,
+				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customRotationAxis,
 						entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());	
-			}
+			}*/
+			transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customRotationAxis,
+					entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		}
 		else {
 			transformationMatrix = SFMath.createTransformationMatrix(entity.getPosition(),
 					entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		}
 		
+		if (entity.useParentTransform) {
+			Matrix4f.mul(SFMath.createTransformationMatrix(entity.parentTransform.getPosition(),
+					entity.parentTransform.getRotX(), entity.parentTransform.getRotY(), entity.parentTransform.getRotZ(), entity.parentTransform.getScale()),
+					transformationMatrix, transformationMatrix);
+		}
+		
 		shader.loadTransformationMatrix(transformationMatrix);
 		shader.loadOffset(entity.getTextureXOffset(), entity.getTextureYOffset());
-		shader.loadHighlight(entity.getHighlight());
 	
 		/*Vector4f mins = new Vector4f(entity.getStaticBoundingBox().minX, 
 									 entity.getStaticBoundingBox().minY,

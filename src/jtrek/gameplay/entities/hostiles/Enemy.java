@@ -3,10 +3,10 @@ package jtrek.gameplay.entities.hostiles;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import jtrek.gameplay.entities.entityUtils.ITakeDamage;
 
-public abstract class Enemy extends Entity implements ITakeDamage {
+public abstract class Enemy extends TREntity implements ITakeDamage {
 	
 	public Enemy(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		super(model, position, rotX, rotY, rotZ, scale);

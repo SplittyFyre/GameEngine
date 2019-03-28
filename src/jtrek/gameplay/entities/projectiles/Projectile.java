@@ -3,9 +3,9 @@ package jtrek.gameplay.entities.projectiles;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 
-public abstract class Projectile extends Entity {
+public abstract class Projectile extends TREntity {
 	
 	protected float dx, dy, dz;
 	protected boolean isDead = false;

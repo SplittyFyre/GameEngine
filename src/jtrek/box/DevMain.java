@@ -9,7 +9,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.TRRenderEngine;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.scene.ICScene;
+import engine.scene.TRScene;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.camera.RogueCamera;
 import engine.scene.particles.ParticleWatcher;
@@ -27,7 +27,7 @@ public class DevMain {
 				TRRenderEngine.RENDER_DUDVWATER_BIT);
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
-		ICScene scene = new ICScene();
+		TRScene scene = new TRScene();
 		
 		TexturedModel model = new TexturedModel(OBJParser.loadObjModel("dragon"), new ModelTexture(Loader.loadTexture("white")));
 		

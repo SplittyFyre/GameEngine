@@ -1,4 +1,4 @@
-package engine.scene.terrain;
+package jtrek.gameplay;
 
 import java.util.List;
 import java.util.Random;
@@ -11,14 +11,15 @@ import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
 import engine.renderEngine.textures.TerrainTexturePack;
-import engine.scene.entities.Entity;
 import engine.scene.entities.StaticEntity;
+import engine.scene.entities.TREntity;
+import engine.scene.terrain.TRTerrain;
 import engine.water.dudv.DUDVWaterTile;
 import jtrek.box.TM;
 
 public class Island {
 	
-	private Terrain terrain;
+	private TRTerrain terrain;
 	private DUDVWaterTile water;
 	
 	private Vector3f position;
@@ -26,10 +27,9 @@ public class Island {
 	private float size;
 	
 	public Island(TerrainTexturePack texturePack, int blendMap,
-			List<Terrain> terrains, List<DUDVWaterTile> waters, List<Entity> entities, float x, float y, float z, float size) {
-		terrain = new Terrain(x, y, z, size, texturePack, blendMap);
+			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size) {
+		terrain = new TRTerrain(128, x, y, z, size, texturePack, blendMap, 575);
 		terrains.add(terrain);
-		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
 		water = new DUDVWaterTile(x, z, y, size / 2);
 		waters.add(water);
 		
@@ -75,10 +75,9 @@ public class Island {
 	}
 	
 	public Island(TerrainTexturePack texturePack, int blendMap,
-			List<Terrain> terrains, List<DUDVWaterTile> waters, List<Entity> entities, float x, float y, float z, float size, String heightMap, float maxHeight) {
-		terrain = new Terrain(x, y, z, size, texturePack, blendMap, heightMap, maxHeight);
+			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size, String heightMap, float maxHeight) {
+		terrain = new TRTerrain(x, y, z, size, texturePack, blendMap, heightMap, maxHeight);
 		terrains.add(terrain);
-		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
 		water = new DUDVWaterTile(x, z, y, size / 2);
 		waters.add(water);
 		
@@ -123,7 +122,7 @@ public class Island {
 		
 	}
 	
-	public Terrain getTerrain() {
+	public TRTerrain getTerrain() {
 		return terrain;
 	}
 
@@ -141,15 +140,14 @@ public class Island {
 
 	//CURR
 	public Island(TerrainTexturePack texturePack, int blendMap, 
-			List<Terrain> terrains, List<DUDVWaterTile> waters, List<Entity> entities, float x, float y, float z, float size, int seed) {
+			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size, int seed) {
 		
 		this.position = new Vector3f(x, y, z);
 		
-		terrain = new Terrain(x, y, z, size, texturePack, blendMap, seed);
+		terrain = new TRTerrain(128, x, y, z, size, texturePack, blendMap, seed, 575);
 		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
 		
 		terrains.add(terrain);
-		terrains.add(new Terrain(x, y, z, size, texturePack, blendMap, true));
 		water = new DUDVWaterTile(x, z, y, size / 2, new Vector3f(0.0f, 0.3f, 0.4f));
 		waters.add(water);
 				

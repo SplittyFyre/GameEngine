@@ -25,7 +25,7 @@ import engine.renderEngine.guis.SFAbstractButton;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.utils.FloatingOrigin;
@@ -1012,7 +1012,7 @@ public class PlayerVoyager extends Player {
 		fireAllWeapons(caster);
 		updateGUIS();
 		
-		energyCounter += DisplayManager.getFrameTime();
+		energyCounter += DisplayManager.getFrameDeltaTime();
 		
 		if (energyCounter > 1 && ENERGY < MAX_ENERGY) {
 			if (ENERGY < MAX_ENERGY * 0.9) {
@@ -1060,8 +1060,8 @@ public class PlayerVoyager extends Player {
 	
 	private void move() {
 		checkInputs();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameTime(), 0);	
-		float distanceMoved = currentSpeed * DisplayManager.getFrameTime();
+		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);	
+		float distanceMoved = currentSpeed * DisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
@@ -1163,25 +1163,25 @@ public class PlayerVoyager extends Player {
 			flagLeft = false;
 			this.currentTurnSpeed = TURN_SPEED;
 			if (this.getRotZ() > -45)
-				super.rotate(0, 0, -60 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, -60 * DisplayManager.getFrameDeltaTime());
 		}
 		else if (Keyboard.isKeyDown(Keyboard.KEY_D) || flagRight) { 
 			flagRight = false;
 			this.currentTurnSpeed = -TURN_SPEED;
 			if (this.getRotZ() < 45)
-				super.rotate(0, 0, 60 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, 60 * DisplayManager.getFrameDeltaTime());
 		}
 		else {											
 			this.currentTurnSpeed = 0;
 			
 			if (this.getRotZ() < 0) {
-				super.rotate(0, 0, 70 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, 70 * DisplayManager.getFrameDeltaTime());
 				
 				if (this.getRotZ() > 0)
 					super.setRotZ(0);
 			}
 			else if (this.getRotZ() > 0) {
-				super.rotate(0, 0, -70 * DisplayManager.getFrameTime());
+				super.rotate(0, 0, -70 * DisplayManager.getFrameDeltaTime());
 				
 				if (this.getRotZ() < 0)
 					super.setRotZ(0);
@@ -1197,10 +1197,10 @@ public class PlayerVoyager extends Player {
 				flagUp = false;
 				
 				if (super.getRotX() > -UPWARDS_ROT_CAP)
-					super.rotate(-20 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(-20 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() > 0) {
-					super.rotate(-60 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(-60 * DisplayManager.getFrameDeltaTime(), 0, 0);
 					
 					if (super.getRotX() < 0)
 						super.setRotX(0);
@@ -1212,10 +1212,10 @@ public class PlayerVoyager extends Player {
 				flagDown = false;
 				
 				if (super.getRotX() < UPWARDS_ROT_CAP)
-					super.rotate(20 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(20 * DisplayManager.getFrameDeltaTime(), 0, 0);
 				
 				if (super.getRotX() < 0) {
-					super.rotate(60 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(60 * DisplayManager.getFrameDeltaTime(), 0, 0);
 					
 					if (super.getRotX() > 0)
 						super.setRotX(0);
@@ -1223,13 +1223,13 @@ public class PlayerVoyager extends Player {
 			}
 			else if (!Keyboard.isKeyDown(Keyboard.KEY_C)) {
 				if (super.getRotX() < 0) {
-					super.rotate(30 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(30 * DisplayManager.getFrameDeltaTime(), 0, 0);
 					
 					if (super.getRotX() > 0)
 						super.setRotX(0);
 				}
 				else if (super.getRotX() > 0) {
-					super.rotate(-30 * DisplayManager.getFrameTime(), 0, 0);
+					super.rotate(-30 * DisplayManager.getFrameDeltaTime(), 0, 0);
 					
 					if (super.getRotX() < 0)
 						super.setRotX(0);
@@ -1297,7 +1297,7 @@ public class PlayerVoyager extends Player {
 		
 		if (ENERGY > 0) {
 		
-			leftPhaserTimer += DisplayManager.getFrameTime();
+			leftPhaserTimer += DisplayManager.getFrameDeltaTime();
 			
 			if (leftPhaserTimer > 0.03f) {		
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(4, 22.375f, 23.7f + distMoved)),
@@ -1314,7 +1314,7 @@ public class PlayerVoyager extends Player {
 		
 		if (ENERGY > 0) {
 			
-			centerPhaserTimer += DisplayManager.getFrameTime();
+			centerPhaserTimer += DisplayManager.getFrameDeltaTime();
 			
 			if (centerPhaserTimer > 0.03f) {
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-0.75f, 20.9f, 37.7f + distMoved)),
@@ -1331,7 +1331,7 @@ public class PlayerVoyager extends Player {
 		
 		if (ENERGY > 0) {
 			
-			rightPhaserTimer += DisplayManager.getFrameTime();
+			rightPhaserTimer += DisplayManager.getFrameDeltaTime();
 			
 			if (rightPhaserTimer > 0.03f) {
 				projectiles.add(Bolt.phaser(ModelSys.pos(super.tmat, new Vector3f(-5, 22.375f, 23.7f + distMoved)),
@@ -1348,7 +1348,7 @@ public class PlayerVoyager extends Player {
 		
 		if (ENERGY >= 3) {
 			
-			mainPhaserTimer += DisplayManager.getFrameTime();
+			mainPhaserTimer += DisplayManager.getFrameDeltaTime();
 			
 			if (mainPhaserTimer > 0.03f) {
 				
@@ -1581,10 +1581,10 @@ public class PlayerVoyager extends Player {
 				counterS = 10;
 				flag = false;
 			}
-			counterS -= DisplayManager.getFrameTime();
+			counterS -= DisplayManager.getFrameDeltaTime();
 		}
 		
-		counter -= DisplayManager.getFrameTime();
+		counter -= DisplayManager.getFrameDeltaTime();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
 			fireBackPortArrays(0);
@@ -1614,7 +1614,7 @@ public class PlayerVoyager extends Player {
 		
 		if (flag2) {
 			
-			float toRot = TURN_SPEED * DisplayManager.getFrameTime();
+			float toRot = TURN_SPEED * DisplayManager.getFrameDeltaTime();
 			
 			if (register < Math.abs(alpha)) {
 				super.rotate(0, toRot * Math.signum(alpha), 0);
@@ -1752,7 +1752,7 @@ public class PlayerVoyager extends Player {
 		
 		Vector3f vec = SFMath.moveToVector(target, super.getPosition(), 3500);
 		
-		turretTimer += DisplayManager.getFrameTime();
+		turretTimer += DisplayManager.getFrameDeltaTime();
 		
 		switch (turretFunc) {
 		
@@ -1886,7 +1886,7 @@ public class PlayerVoyager extends Player {
 				
 			}
 			
-			for (Entity projectile : this.getProjectiles()) {
+			for (TREntity projectile : this.getProjectiles()) {
 				
 				BoundingBox bb2 = projectile.getBoundingBox();
 				

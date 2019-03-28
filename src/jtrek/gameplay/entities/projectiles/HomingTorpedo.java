@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.scene.particles.systems.SimpleParticleSystem;
@@ -15,7 +15,7 @@ import jtrek.gameplay.entities.players.Player;
 public class HomingTorpedo extends Projectile {
 
 	private float speed;
-	private Entity target;
+	private TREntity target;
 	
 	private float timer = 0;
 	private float lifelength = 10;
@@ -32,7 +32,7 @@ public class HomingTorpedo extends Projectile {
 	private SimpleParticleSystem sys = null;
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
-			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ) {
+			float damage, float speed, float lifelength, TREntity target, float arcX, float arcY, float arcZ) {
 		super(model, position, 0, 0, 0, scaleX, scaleY, scaleZ, damage, 0, 0, 0);
 		this.speed = speed;
 		this.target = target;
@@ -43,7 +43,7 @@ public class HomingTorpedo extends Projectile {
 	}
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
-			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ, SimpleParticleSystem sysin) {
+			float damage, float speed, float lifelength, TREntity target, float arcX, float arcY, float arcZ, SimpleParticleSystem sysin) {
 		super(model, position, 0, 0, 0, scaleX, scaleY, scaleZ, damage, 0, 0, 0);
 		this.speed = speed;
 		this.target = target;
@@ -55,7 +55,7 @@ public class HomingTorpedo extends Projectile {
 	}
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
-			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ, 
+			float damage, float speed, float lifelength, TREntity target, float arcX, float arcY, float arcZ, 
 			ParticleTexture trailTexture, float particleLife, float particleScale) {
 		super(model, position, 0, 0, 0, scaleX, scaleY, scaleZ, damage, 0, 0, 0);
 		this.speed = speed;
@@ -73,7 +73,7 @@ public class HomingTorpedo extends Projectile {
 	}
 	
 	public HomingTorpedo(TexturedModel model, Vector3f position, float scaleX, float scaleY, float scaleZ,
-			float damage, float speed, float lifelength, Entity target, float arcX, float arcY, float arcZ, 
+			float damage, float speed, float lifelength, TREntity target, float arcX, float arcY, float arcZ, 
 			ParticleTexture trailTexture, float particleLife, float particleScale, Runnable col) {
 		super(model, position, 0, 0, 0, scaleX, scaleY, scaleZ, damage, 0, 0, 0);
 		this.speed = speed;
@@ -97,8 +97,8 @@ public class HomingTorpedo extends Projectile {
 		if (target == null) {
 			this.respondToCollision();
 		}
-		timer += DisplayManager.getFrameTime();
-		float dtmove = DisplayManager.getFrameTime() * this.speed;
+		timer += DisplayManager.getFrameDeltaTime();
+		float dtmove = DisplayManager.getFrameDeltaTime() * this.speed;
 		if (target != null) {
 			if (target instanceof Player)
 				tracing = SFMath.rotateToFaceVector(this.getPosition(), ((Player) target).getPlayerPos());	
@@ -130,11 +130,11 @@ public class HomingTorpedo extends Projectile {
 			this.respondToCollision();
 	}
 	
-	public void setTarget(Entity arg) {
+	public void setTarget(TREntity arg) {
 		this.target = arg;
 	}
 	
-	public Entity getTarget() {
+	public TREntity getTarget() {
 		return this.target;
 	}
 

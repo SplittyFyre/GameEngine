@@ -16,7 +16,7 @@ import engine.renderEngine.DisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.utils.RaysCast;
@@ -217,7 +217,7 @@ public class PlayerTrubble extends Player {
 		initGUIS();
 	}
 	
-	public void add(List<Entity> entities) {
+	public void add(List<TREntity> entities) {
 		entities.add(deck);
 		entities.add(this);
 		entities.add(stern);
@@ -302,8 +302,8 @@ public class PlayerTrubble extends Player {
 	
 	private void move() {
 		checkInputs();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameTime(), 0);	
-		float distanceMoved = currentSpeed * DisplayManager.getFrameTime();
+		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);	
+		float distanceMoved = currentSpeed * DisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
@@ -329,8 +329,8 @@ public class PlayerTrubble extends Player {
 				
 				case SIDE_BY_SIDE:
 					
-					deck.customOrigin = null;
-					stern.customOrigin = null;
+					//deck.customOrigin = null;
+					//stern.customOrigin = null;
 					
 					deck.setPosition(new Vector3f(
 								
@@ -352,8 +352,8 @@ public class PlayerTrubble extends Player {
 					
 				case ATTACK_WING: 
 					
-					deck.customOrigin = new Vector3f(super.getPosition());
-					stern.customOrigin = new Vector3f(super.getPosition());
+					//deck.customOrigin = new Vector3f(super.getPosition());
+					//stern.customOrigin = new Vector3f(super.getPosition());
 					
 					deck.setPosition(new Vector3f(
 							
@@ -395,8 +395,8 @@ public class PlayerTrubble extends Player {
 				
 				System.out.println(volumeCenter);*/
 				
-				deck.customOrigin = super.getPosition();
-				stern.customOrigin = super.getPosition();
+				//deck.customOrigin = super.getPosition();
+				//stern.customOrigin = super.getPosition();
 				
 				
 				deck.setPosition(new Vector3f(
@@ -538,7 +538,7 @@ public class PlayerTrubble extends Player {
 		
 		if (flagr) {
 			
-			float toRot = TURN_SPEED * DisplayManager.getFrameTime();
+			float toRot = TURN_SPEED * DisplayManager.getFrameDeltaTime();
 			
 			if (register < Math.abs(alpha)) {
 				super.rotate(0, toRot * Math.signum(alpha), 0);
@@ -675,13 +675,13 @@ public class PlayerTrubble extends Player {
 			deck.useCustomRotationAxis = false;
 			stern.useCustomRotationAxis = false;
 			
-			timer += DisplayManager.getFrameTime();
+			timer += DisplayManager.getFrameDeltaTime();
 			
 			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
 			
 			//float dtmove = DisplayManager.getFrameTime() * (700 + this.currentSpeed);
 
-			float dtmove = (1 / ((SEP_TIME) / DisplayManager.getFrameTime())) * dists + this.currentSpeed * DisplayManager.getFrameTime();
+			float dtmove = (1 / ((SEP_TIME) / DisplayManager.getFrameDeltaTime())) * dists + this.currentSpeed * DisplayManager.getFrameDeltaTime();
 			
 			float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			float homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -732,11 +732,11 @@ public class PlayerTrubble extends Player {
 			deck.useCustomRotationAxis = false;
 			stern.useCustomRotationAxis = false;
 			
-			timer += DisplayManager.getFrameTime();
+			timer += DisplayManager.getFrameDeltaTime();
 			
 			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
 			
-			float dtmove = DisplayManager.getFrameTime() * (275 + this.currentSpeed);
+			float dtmove = DisplayManager.getFrameDeltaTime() * (275 + this.currentSpeed);
 			
 			float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			float homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -768,7 +768,7 @@ public class PlayerTrubble extends Player {
 	public void fireAllWeapons(RaysCast caster) {
 		
 		if (phaserCannonTimer <= 0.1f) {
-			phaserCannonTimer += DisplayManager.getFrameTime();	
+			phaserCannonTimer += DisplayManager.getFrameDeltaTime();	
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
@@ -906,7 +906,7 @@ public class PlayerTrubble extends Player {
 	
 	private void fireGatlingPhaserCannons() {
 		
-		gatlingPCannonTimer += DisplayManager.getFrameTime();
+		gatlingPCannonTimer += DisplayManager.getFrameDeltaTime();
 		
 		if (gatlingPCannonTimer > 1) {
 		
@@ -1106,7 +1106,7 @@ public class PlayerTrubble extends Player {
 				
 			}
 			
-			for (Entity projectile : this.getProjectiles()) {
+			for (TREntity projectile : this.getProjectiles()) {
 				
 				BoundingBox bb2 = projectile.getBoundingBox();
 				

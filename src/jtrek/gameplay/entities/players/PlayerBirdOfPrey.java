@@ -18,7 +18,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.entities.Entity;
+import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.utils.RaysCast;
@@ -217,8 +217,8 @@ public class PlayerBirdOfPrey extends Player {
 
 	private void move() {
 		checkInputs();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameTime(), 0);	
-		float distanceMoved = currentSpeed * DisplayManager.getFrameTime();
+		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);	
+		float distanceMoved = currentSpeed * DisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
@@ -335,7 +335,7 @@ public class PlayerBirdOfPrey extends Player {
 	
 	private void fireAllWeapons() {
 		
-		mainGunTimer += DisplayManager.getFrameTime();
+		mainGunTimer += DisplayManager.getFrameDeltaTime();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P) || (Mouse.isGrabbed() && Mouse.isButtonDown(0))) {
 			
@@ -406,14 +406,12 @@ public class PlayerBirdOfPrey extends Player {
 					lclsrc.play(AudioEngine.loadSound("decloaking"), 150);
 					//this.getModel().setTexture(TM.BOPModel.getTexture());
 					
-					translucent = false;
 					
 				}
 				else {
 					cloaked = true;
 					lclsrc.play(AudioEngine.loadSound("cloaking"), 150);
 					//this.getModel().setTexture(new ModelTexture(Loader.loadTexture("tryalpha")));
-					translucent = true;
 					
 				}
 				
@@ -484,7 +482,7 @@ public class PlayerBirdOfPrey extends Player {
 				
 			}
 			
-			for (Entity projectile : this.getProjectiles()) {
+			for (TREntity projectile : this.getProjectiles()) {
 				
 				BoundingBox bb2 = projectile.getBoundingBox();
 				

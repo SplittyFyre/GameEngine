@@ -6,14 +6,14 @@ out vec4 out_Color;
 
 uniform sampler2D guiTexture;
 
-uniform float flagAlpha;
+uniform bool flagAlpha;
 uniform float custAlpha;
 
 void main(void){
 
 	out_Color = texture(guiTexture, textureCoords);
 	
-	if (flagAlpha > 0.5) {
+	if (flagAlpha) {
 		out_Color.a = custAlpha;
 	}
 

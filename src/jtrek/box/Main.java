@@ -28,20 +28,21 @@ import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
 import engine.renderEngine.textures.TerrainTexturePack;
-import engine.scene.ICScene;
-import engine.scene.entities.Entity;
+import engine.scene.TRScene;
 import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
+import engine.scene.entities.TREntity;
 import engine.scene.entities.camera.Camera;
 import engine.scene.lensFlare.FlareManager;
 import engine.scene.lensFlare.FlareTexture;
 import engine.scene.particles.ParticleWatcher;
-import engine.scene.terrain.Island;
-import engine.scene.terrain.Terrain;
+import engine.scene.skybox.TRSkybox;
+import engine.scene.terrain.TRTerrain;
 import engine.utils.FloatingOrigin;
 import engine.utils.RaysCast;
 import engine.water.dudv.DUDVWaterTile;
 import jtrek.collision.CollisionManager;
+import jtrek.gameplay.Island;
 import jtrek.gameplay.entities.PlayerCamera;
 import jtrek.gameplay.entities.hostiles.BorgVessel;
 import jtrek.gameplay.entities.hostiles.Enemy;
@@ -55,10 +56,10 @@ import jtrek.gameplay.minimap.MinimapFX;
 
 public class Main {
 	
-	private static List<Entity> entities = new ArrayList<Entity>();
+	private static List<TREntity> entities = new ArrayList<TREntity>();
 	public static List<Projectile> foeprojectiles = new ArrayList<Projectile>();
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
-	private static List<Entity> allEntities = new ArrayList<Entity>();
+	private static List<TREntity> allEntities = new ArrayList<TREntity>();
 	
 	private static boolean gamePaused = false;
 	
@@ -93,6 +94,7 @@ public class Main {
 		int bTexture = (Loader.loadTexture("path"));
 		
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 450);
+		texturePack.useAsAltitudeBasedTextures = true;
 		
 		int blendMap = (Loader.loadTexture("black"));
 		
@@ -125,12 +127,12 @@ public class Main {
 		borgShip.getTexture().setSpecularMap(Loader.loadTexture("borge_glowMap"));
 		borgShip.getTexture().setBrightDamper(2);
 		
-		//borgShip.getTexture().setShineDamper(50);
+		//borgShip.getTexture().setShineDamper(50)
 		//borgShip.getTexture().setReflectivity(0);
 		//END TEXTURE SECTION****************************************************************
 		
 		
-		ICScene scene = new ICScene();
+		TRScene scene = new TRScene();
 		
 		
 		Random random = new Random();
@@ -153,17 +155,20 @@ public class Main {
 		
 		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
-		RawModel helibody = OBJParser.loadObjModelWProperTexSeams("onlyheli");
+		RawModel helibody = OBJParser.loadObjModelWProperTexSeams("onlyheli2");
 		RawModel rotor = OBJParser.loadObjModelWProperTexSeams("rotor");
 		ModelTexture mt = new ModelTexture(Loader.loadTexture("helipng"));
 		mt.setReflectivity(1);
 		mt.setShineDamper(15);
 		TexturedModel done = new TexturedModel(helibody, mt);
 		TexturedModel two = new TexturedModel(rotor, mt);
+		TexturedModel three = new TexturedModel(OBJParser.loadObjModelWProperTexSeams("backrotor"), mt);
 		
-		StaticEntity mpen = new StaticEntity(two, new Vector3f(0, 0, 0), 0, 0, 0, 100);
+		StaticEntity spinny = new StaticEntity(two, new Vector3f(0, 0, 0), 0, 0, 0, 1);
+		StaticEntity bal = new StaticEntity(three, new Vector3f(0.335f, 1.28f, -4.72f), 0, 0, 0, 1);
 		
-		entities.add(mpen);
+		entities.add(spinny);
+		entities.add(bal);
 		
 		Player player = null;
 		
@@ -276,7 +281,7 @@ public class Main {
 		while ((src.isPlaying()) &! Display.isCloseRequested() &! Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 
 			//CAN CLAMP (Math.min(time, cap)) THIS INCASE WARM-UP GUARD FAILS
-			float time = DisplayManager.getFrameTime();
+			float time = DisplayManager.getFrameDeltaTime();
 			timer += time;
 			timer2 += time;
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -333,9 +338,20 @@ public class Main {
                 new FlareTexture(ft9, 0.1f), new FlareTexture(ft3, 0.07f), new FlareTexture(ft5, 0.3f), new FlareTexture(ft4, 0.4f),
                 new FlareTexture(ft8, 0.6f));
 		
+		spinny.useParentTransform = true;
+		spinny.parentTransform = player;
+		
+		bal.useParentTransform = true;
+		bal.parentTransform = player;
+		
+		
+		TRSkybox skybox = new TRSkybox(100000);
+		skybox.setTexture1(TRSkybox.locateSkyboxTextures("high"));
+		scene.setSkybox(skybox);
+		
 		while (!Display.isCloseRequested()) {
-			mpen.rotate(0, -600 * DisplayManager.getFrameTime(), 0);
-			mpen.setPosition(player.getPosition());
+			spinny.rotate(0, -6000 * DisplayManager.getFrameDeltaTime(), 0);
+			bal.rotate(600 * DisplayManager.getFrameDeltaTime(), 0, 0);
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
@@ -344,8 +360,8 @@ public class Main {
 			
 			//fout.write(String.format("player update:        %d\n", System.nanoTime() - start));
 			
-			camera.move(); 
-			caster.update();
+			camera.move();
+			caster.update(); 
 			
 			//fout.write(String.format("camera update:        %d\n", System.nanoTime() - start));
 			
@@ -380,11 +396,11 @@ public class Main {
 			Vector3f trans = FloatingOrigin.update();
 			
 			if (trans != null) {
-				for (Entity el : allEntities) {
+				for (TREntity el : allEntities) {
 					Vector3f.add(el.getPosition(), trans, el.getPosition());
 				}
 				
-				for (Terrain el : scene.getTerrains()) {
+				for (TRTerrain el : scene.getTerrains()) {
 					el.addVec(trans);
 				}
 				

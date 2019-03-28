@@ -247,7 +247,7 @@ public class SFMath {
 	
 	public static Vector3f moveToVector(Vector3f a, Vector3f b, float speed) {
 		
-		float f = DisplayManager.getFrameTime() * speed;
+		float f = DisplayManager.getFrameDeltaTime() * speed;
 		Vector3f d = Vector3f.sub(a, b, null);
 		if (d.length() != 0)
 			d.normalise();

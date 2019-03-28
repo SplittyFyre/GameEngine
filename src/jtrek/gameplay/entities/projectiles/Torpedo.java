@@ -59,7 +59,7 @@ public class Torpedo extends Projectile {
 
 	@Override
 	public void update() {
-		elapsedTime += DisplayManager.getFrameTime();
+		elapsedTime += DisplayManager.getFrameDeltaTime();
 		super.move(dx, dy, dz);
 		super.rotate(30f, 18f, -12.6f);
 		if (elapsedTime > lifeLength) 
@@ -136,7 +136,7 @@ public class Torpedo extends Projectile {
 	public static Torpedo photonTorpedo(Vector3f position, float speed, 
 			float magSide, float magHeight, float magFront, float rotY, float rotX) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
 		
@@ -165,7 +165,7 @@ public class Torpedo extends Projectile {
 	
 	public static Torpedo photonTorpedo(float speed, float rotY, float rotX, Vector3f position) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
 		
@@ -182,7 +182,7 @@ public class Torpedo extends Projectile {
 	
 	public static Torpedo quantumTorpedo(float speed, float rotY, float rotX, Vector3f position) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.quantumsnd, 100, position.x, position.y, position.z);
 		
@@ -200,7 +200,7 @@ public class Torpedo extends Projectile {
 	public static Torpedo photonTorpedo(float damage, Vector3f position, float speed, 
 			float magSide, float magHeight, float magFront, float rotY, float rotX) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
 		
@@ -230,7 +230,7 @@ public class Torpedo extends Projectile {
 	public static Torpedo klingonTorpedo(Vector3f position, float speed, 
 			float magSide, float magHeight, float magFront, float rotY, float rotX) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.photonsnd, 100, position.x, position.y, position.z);
 		
@@ -260,7 +260,7 @@ public class Torpedo extends Projectile {
 	public static Torpedo quantumTorpedo(Vector3f position, float speed, 
 			float magSide, float magHeight, float magFront, float rotY, float rotX) {
 		
-		float move = DisplayManager.getFrameTime() * speed;
+		float move = DisplayManager.getFrameDeltaTime() * speed;
 		
 		AudioEngine.playTempSrc(TM.quantumsnd, 100, position.x, position.y, position.z);
 		

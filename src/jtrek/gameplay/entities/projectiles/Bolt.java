@@ -68,7 +68,7 @@ public class Bolt extends Projectile {
 	@Override
 	public void update() {
 		
-		float distanceMoved = (SPEED + this.moveCoff) * DisplayManager.getFrameTime();
+		float distanceMoved = (SPEED + this.moveCoff) * DisplayManager.getFrameDeltaTime();
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
 		//distanceMoved -= Math.abs(dy);
@@ -82,7 +82,7 @@ public class Bolt extends Projectile {
 		dy += mcY;
 		dz += mcZ;
 		super.move(dx, -dy, dz);
-		elapsedTime += DisplayManager.getFrameTime();
+		elapsedTime += DisplayManager.getFrameDeltaTime();
 		if (elapsedTime > 5f)
 			super.isDead = true;
 		

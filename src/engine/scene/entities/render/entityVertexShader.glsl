@@ -15,7 +15,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec3 lightPosition[4];
 
-uniform float useFakeLight;
+uniform bool useFakeLight;
 
 uniform float numberOfRows;
 uniform vec2 offset;
@@ -37,7 +37,7 @@ void main(void) {
 	
 	vec3 actualNormal = normal;
 	
-	if (useFakeLight > 0.5) {
+	if (useFakeLight) {
 		actualNormal = vec3(0.0, 1.0, 0.0);
 	}
 	

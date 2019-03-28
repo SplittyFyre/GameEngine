@@ -21,13 +21,19 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
 
-uniform float base;
+uniform bool base;
 
 uniform float height;
 
 in float vtxheight;
 
 uniform float tiling;
+
+uniform float ambientLightLvl;
+
+uniform bool useAltitudeVarying;
+uniform vec3 vecCaps;
+uniform float maxheight;
 
 void main(void){
 
@@ -37,14 +43,44 @@ void main(void){
 	
 	vec2 tiledCoords = pass_textureCoordinates * tiling;
 	
-	vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
-	vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
-	vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
-	vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
+	// samples needed in any condition
+	vec4 backgroundSample = texture(backgroundTexture, tiledCoords);
+	vec4 rSample = texture(rTexture, tiledCoords);
+	vec4 gSample = texture(gTexture, tiledCoords);
+	vec4 bSample = texture(bTexture, tiledCoords);
 	
-	vec4 totalColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+	vec4 totalColour;
+	
+	bool freak = false;
+	
+	if (useAltitudeVarying) { // use altitude cap thing
+	
+		if (vtxheight > vecCaps.z * maxheight) {
+			totalColour = bSample;
+		}
+		else if (vtxheight > vecCaps.y * maxheight) {
+			freak = true;
+			totalColour = gSample;
+		}
+		else if (vtxheight > vecCaps.x * maxheight) {
+			totalColour = rSample;
+		}
+		else {
+			totalColour = backgroundSample; 
+		}
+	
+	}
+	else { // use blendMap
+	
+		vec4 backgroundTextureColour = backgroundSample * backTextureAmount;
+		vec4 rTextureColour = rSample * blendMapColour.r;
+		vec4 gTextureColour = gSample * blendMapColour.g;
+		vec4 bTextureColour = bSample * blendMapColour.b;
+	
+		totalColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+	}
 
-	totalColour = mix(totalColour, texture(rTexture, tiledCoords), clamp(-((vtxheight + 10 - height) / (10 - -10)), 0, 1));
+	//totalColour = mix(totalColour, texture(rTexture, tiledCoords), clamp(-((vtxheight + 10 - height) / (10 - -10)), 0, 1));
 
 	vec3 unitNormal = normalize(surfaceNormal);
 	
@@ -74,11 +110,7 @@ void main(void){
 	
 	}
 	
-	totalDiffuse = max(totalDiffuse, 0.2);
-	
-	if (base > 0.5f) {
-		totalDiffuse /= vec3(2);
-	}
+	totalDiffuse = max(totalDiffuse, ambientLightLvl);
 	
 	out_Color = vec4(totalDiffuse,1.0) * totalColour + vec4(totalSpecular,1.0);
 	out_Color = mix(vec4(skyColour,1.0),out_Color, visibility);

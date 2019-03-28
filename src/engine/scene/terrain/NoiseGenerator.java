@@ -4,59 +4,30 @@ import java.util.Random;
 
 public class NoiseGenerator {
 	
-	private static final float AMPLITUDE = 575f;
+	private final float amplitude;
 	
 	private Random random = new Random();
 	private int seed;
-	private boolean base = false;
-	
-	public NoiseGenerator(boolean base) {
-		this.seed = random.nextInt(Integer.MAX_VALUE);
-		this.base = base;
-		System.out.println("Terrain Generator seeded with: " + seed + " with base " + base);
-	}
-	
-	public NoiseGenerator() {
+
+	public NoiseGenerator(float amplitude) {
+		this.amplitude = amplitude;
 		this.seed = random.nextInt(Integer.MAX_VALUE);
 		System.out.println("Terrain Generator seeded with: " + seed);
 	}
 	
-	public NoiseGenerator(int seed) {
+	public NoiseGenerator(int seed, float amplitude) {
+		this.amplitude = amplitude;
 		this.seed = seed;
 		System.out.println("Terrain Generator custom seed: " + seed);
 	}
 	
-	public float generateHeight(int x, int z) {
-		
+	public float generateHeight(int x, int z) {	
 		float total;
-		
-		if (base) {
-			
-			if ((x == 0 || x == 31) || (z == 0 || z == 31)) {
-				return 0;	
-			}
-			else {
-				return -600;
-			}
-			
-		}
-		else {
-			total = getInterpolatedNoise(x / 8f, z / 8f ) * AMPLITUDE;
-			total += getInterpolatedNoise(x / 4f, z / 4f ) * AMPLITUDE / 3;
-			total += getInterpolatedNoise(x / 2f, z / 2f ) * AMPLITUDE / 9;	
-		}
-		
-		if ((x == 0 || x == 127) || (z == 0 || z == 127)) {
-			if (total < 0) {
-				return 5;
-			}
-			else {
-				return 0;
-			}
-			
-		}
-		
-		return total + 20;
+		total = getInterpolatedNoise(x / 8f, z / 8f ) * amplitude;
+		total += getInterpolatedNoise(x / 4f, z / 4f ) * amplitude / 3;
+		total += getInterpolatedNoise(x / 2f, z / 2f ) * amplitude / 9;	
+	
+		return total;
 	}
 	
 	private float getInterpolatedNoise(float x, float z) {

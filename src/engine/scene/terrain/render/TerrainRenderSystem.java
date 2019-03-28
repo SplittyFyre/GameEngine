@@ -9,11 +9,10 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.MasterRenderSystem;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.textures.TerrainTexturePack;
-import engine.scene.ICScene;
-import engine.scene.terrain.Terrain;
+import engine.scene.TRScene;
+import engine.scene.terrain.TRTerrain;
 import engine.utils.SFMath;
 
 public class TerrainRenderSystem {
@@ -32,35 +31,29 @@ public class TerrainRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(List<Terrain> terrains, ICScene scene) {
+	public void render(List<TRTerrain> terrains, TRScene scene) {
 		prepare(scene);
-		for (Terrain terrain : terrains) {
+		for (TRTerrain terrain : terrains) {
 			prepareTerrain(terrain);
 			loadModelMatrix(terrain);
-			shader.loadBase(terrain.base);
-			shader.loadHeight(terrain.getY());
-			if (terrain.base) {
-				MasterRenderSystem.enableFaceCulling(); 
-				GL11.glCullFace(GL11.GL_FRONT);
-			}
 			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(),
 					GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
-			MasterRenderSystem.disableFaceCulling();
 		}
 		shader.stop();
 	}
 	
-	private void prepare(ICScene scene) {
+	private void prepare(TRScene scene) {
 		shader.start();
 		shader.loadClipPlane(scene.getClipPlanePointer());
 		shader.loadSkyContext(scene.skyCtx);
 		shader.loadLights(scene.getLights());
 		shader.loadViewMatrix(scene.getCamera());
 		shader.loadShineVariables(1, 0);
+		shader.loadAmbientLight(scene.getAmbientLight());
 	}
 
-	private void prepareTerrain(Terrain terrain) {
+	private void prepareTerrain(TRTerrain terrain) {
 		RawModel rawModel = terrain.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -68,9 +61,13 @@ public class TerrainRenderSystem {
 		GL20.glEnableVertexAttribArray(2);
 		bindTextures(terrain);
 		shader.loadTiling(terrain.getTexturePack().getTiling());
+		TerrainTexturePack pack = terrain.getTexturePack();
+		shader.loadUseAltitudeVarying(pack.useAsAltitudeBasedTextures);
+		shader.loadHeightTextureCaps(pack.cap1, pack.cap2, pack.cap3);
+		shader.loadMaxHeight(terrain.getMaxHeight());
 	}
 
-	private void bindTextures(Terrain terrain) {
+	private void bindTextures(TRTerrain terrain) {
 		
 		TerrainTexturePack texturePack = terrain.getTexturePack();	
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -97,7 +94,7 @@ public class TerrainRenderSystem {
 		GL30.glBindVertexArray(0);
 	}
 
-	private void loadModelMatrix(Terrain terrain) {
+	private void loadModelMatrix(TRTerrain terrain) {
 		Matrix4f transformationMatrix = SFMath.createTransformationMatrix(
 				new Vector3f(terrain.getX(), terrain.getY(), terrain.getZ()), 0, 0, 0, 1);
 		shader.loadTransformationMatrix(transformationMatrix);

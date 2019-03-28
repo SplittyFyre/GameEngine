@@ -14,8 +14,8 @@ import org.lwjgl.util.vector.Vector4f;
 
 import engine.postProcessing.Fbo;
 import engine.renderEngine.models.TexturedModel;
-import engine.scene.ICScene;
-import engine.scene.entities.Entity;
+import engine.scene.TRScene;
+import engine.scene.entities.TREntity;
 import engine.scene.entities.camera.Camera;
 import engine.scene.entities.render.EntityRenderSystem;
 import engine.scene.particles.ParticleWatcher;
@@ -37,7 +37,7 @@ public class MasterRenderSystem {
 	private TerrainRenderSystem terrainRenderer;
 	private SkyboxRenderSystem skyboxRenderer;
 	private DUDVWaterRenderer waterRenderer;
-	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
+	private Map<TexturedModel, List<TREntity>> entities = new HashMap<TexturedModel, List<TREntity>>();
 	
 	private boolean isRFAvailable(int mask) {
 		return (renderSupportMask & mask) != 0;
@@ -56,22 +56,22 @@ public class MasterRenderSystem {
 			this.waterRenderer = new DUDVWaterRenderer(projectionMatrix);
 	}
 	
-	private void renderWithoutWater(ICScene scene) {
-		for (Entity entity : scene.getEntities())
+	private void renderWithoutWater(TRScene scene) {
+		for (TREntity entity : scene.getEntities())
 			processEntity(entity);
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		
-		skyboxRenderer.render(scene.getCamera(), scene.skyCtx);
+		skyboxRenderer.render(scene);
 		entityRenderer.render(entities, scene);
 		terrainRenderer.render(scene.getTerrains(), scene);
 		//FINISH***********************************************************
 		entities.clear();
 	}
 	
-	public void renderMainPass(ICScene scene, Fbo fbo) {
+	public void renderMainPass(TRScene scene, Fbo fbo) {
 		
 		Camera camera = scene.getCamera();
 		
@@ -111,7 +111,7 @@ public class MasterRenderSystem {
 			fbo.unbindFrameBuffer();
 	}
 	
-	public void renderMiniMapPass(ICScene scene) {
+	public void renderMiniMapPass(TRScene scene) {
 
 	}
 	
@@ -129,14 +129,14 @@ public class MasterRenderSystem {
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 	}
 	
-	public void processEntity(Entity entity) {
+	public void processEntity(TREntity entity) {
 		TexturedModel entityModel = entity.getModel();
-		List<Entity> batch = entities.get(entityModel);
+		List<TREntity> batch = entities.get(entityModel);
 		if (batch != null) {
 			batch.add(entity);
 		}
 		else {
-			List<Entity> newBatch = new ArrayList<Entity>();
+			List<TREntity> newBatch = new ArrayList<TREntity>();
 			newBatch.add(entity);
 			entities.put(entityModel, newBatch);		
 		}

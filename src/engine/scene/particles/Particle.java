@@ -101,7 +101,7 @@ public class Particle {
 	
 	protected boolean update() {
 		Vector3f change = new Vector3f(velocity);
-		change.scale(DisplayManager.getFrameTime());
+		change.scale(DisplayManager.getFrameDeltaTime());
 		
 		if (this.trace != null) {
 			Vector3f.add(change, ttlChange, ttlChange);
@@ -112,7 +112,7 @@ public class Particle {
 		}
 		
 		updateTextureCoordsInfo();
-		elapsedTime += DisplayManager.getFrameTime();
+		elapsedTime += DisplayManager.getFrameDeltaTime();
 		
 		return elapsedTime < lifeLength;
 	}

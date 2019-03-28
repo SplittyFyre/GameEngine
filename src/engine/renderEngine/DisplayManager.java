@@ -85,7 +85,7 @@ public class DisplayManager {
 		
 	}
 	
-	public static float getFrameTime() {
+	public static float getFrameDeltaTime() {
 		return delta;
 	}
 	

@@ -79,6 +79,8 @@ public class EntityShader extends ShaderProgram{
 		addUniformVariable("celllvl");
 		addUniformVariable("useCellShading");
 		
+		addUniformVariable("ambientLightLvl");
+		
 		location_lightColour = new int[MAX_LIGHTS];
 		location_lightPosition = new int[MAX_LIGHTS];
 		location_attenuation = new int[MAX_LIGHTS];
@@ -91,6 +93,10 @@ public class EntityShader extends ShaderProgram{
 			
 		}
 		
+	}
+	
+	public void loadAmbientLight(float lvl) {
+		super.loadFloat(uniformLocationOf("ambientLightLvl"), lvl);
 	}
 	
 	public void connectTextureUnits() {
@@ -174,10 +180,6 @@ public class EntityShader extends ShaderProgram{
 		if (useCellShading) {
 			super.loadFloat(uniformLocationOf("celllvl"), cellLevel);
 		}
-	}
-	
-	public void loadHighlight(Vector4f colour) {
-		super.load4dVector(location_highlight, colour != null ? colour : new Vector4f(0, 0, 0, 0));
 	}
 
 }
