@@ -21,12 +21,12 @@ public class NoiseGenerator {
 		System.out.println("Terrain Generator custom seed: " + seed);
 	}
 	
-	public float generateHeight(int x, int z) {	
+	public float generateHeight(int x, int z) {
 		float total;
-		total = getInterpolatedNoise(x / 8f, z / 8f ) * amplitude;
-		total += getInterpolatedNoise(x / 4f, z / 4f ) * amplitude / 3;
-		total += getInterpolatedNoise(x / 2f, z / 2f ) * amplitude / 9;	
-	
+		total = getInterpolatedNoise(x / 8f, z / 8f) * amplitude;
+		total += getInterpolatedNoise(x / 4f, z / 4f) * amplitude / 3f;
+		total += getInterpolatedNoise(x / 2f, z / 2f) * amplitude / 9f;	
+		System.out.println(amplitude);
 		return total;
 	}
 	

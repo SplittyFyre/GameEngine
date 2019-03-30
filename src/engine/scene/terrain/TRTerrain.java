@@ -184,9 +184,7 @@ public class TRTerrain {
 	}
 		
 	private RawModel generateTerrain(String heightMap, float maxHeight) {
-		
-		this.maxHeight = maxHeight;
-		
+				
 		BufferedImage image = null;
 		
 		try {
@@ -196,36 +194,49 @@ public class TRTerrain {
 			e.printStackTrace();
 		}
 		
+		float actualHighest = -9999999999999f;
+		
 		this.vertexCnt = image.getHeight();
-		heights = new float[vertexCnt][vertexCnt];
-		int count = vertexCnt * vertexCnt;
+		int vtxcnt = this.vertexCnt;
+		
+		heights = new float[vtxcnt][vtxcnt];
+		int count = vtxcnt * vtxcnt;
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
-		float[] textureCoords = new float[count*2];
-		int[] indices = new int[6*(vertexCnt-1)*(vertexCnt-1)];
+		float[] textureCoords = new float[count * 2];
+		int[] indices = new int[6 * (vtxcnt - 1) * (vtxcnt - 1)];
 		int vertexPointer = 0;
-		for(int i=0;i<vertexCnt;i++){
-			for(int j=0;j<vertexCnt;j++){
-				vertices[vertexPointer*3] = j/(vertexCnt - 1) * this.size;
-				float height = getHeight(j, i, image);
+		
+		for(int i = 0; i < vtxcnt; i++) {
+			
+			for(int j = 0; j < vtxcnt; j++) {
+				
+				vertices[vertexPointer * 3] = j / ((float) vtxcnt - 1) * this.size;
+				float height = getHeight(j, i, image, maxHeight);
+				if (height > actualHighest) {
+					actualHighest = height;
+				}
 				heights[j][i] = height;
-				vertices[vertexPointer*3+1] = height;
-				vertices[vertexPointer*3+2] = i/(vertexCnt - 1) * this.size;
-				Vector3f normal = calculateNormal(j, i, image);
-				normals[vertexPointer*3] = normal.x;
-				normals[vertexPointer*3+1] = normal.y;
-				normals[vertexPointer*3+2] = normal.z;
-				textureCoords[vertexPointer*2] = j/(vertexCnt - 1);
-				textureCoords[vertexPointer*2+1] = i/(vertexCnt - 1);
+				vertices[vertexPointer * 3 + 1] = height;
+				vertices[vertexPointer * 3 + 2] = i / ((float) vtxcnt - 1) * this.size;
+				Vector3f normal = calculateNormal(j, i, image, maxHeight);
+				normals[vertexPointer * 3] = normal.x;
+				normals[vertexPointer * 3 + 1] = normal.y;
+				normals[vertexPointer * 3 + 2] = normal.z;
+				textureCoords[vertexPointer * 2] = j / ((float) vtxcnt - 1);
+				textureCoords[vertexPointer * 2 + 1] = i / ((float) vtxcnt - 1);
 				vertexPointer++;
 			}
 		}
 		int pointer = 0;
-		for(int gz=0;gz<vertexCnt-1;gz++){
-			for(int gx=0;gx<vertexCnt-1;gx++){
-				int topLeft = (gz*vertexCnt)+gx;
+		
+		for(int gz = 0; gz < vtxcnt - 1; gz++) {
+			
+			for(int gx = 0; gx < vtxcnt - 1; gx++) {
+				
+				int topLeft = (gz * vtxcnt) + gx;
 				int topRight = topLeft + 1;
-				int bottomLeft = ((gz+1)*vertexCnt)+gx;
+				int bottomLeft = ((gz + 1) * vtxcnt) + gx;
 				int bottomRight = bottomLeft + 1;
 				indices[pointer++] = topLeft;
 				indices[pointer++] = bottomLeft;
@@ -235,15 +246,18 @@ public class TRTerrain {
 				indices[pointer++] = bottomRight;
 			}
 		}
+		
+		this.maxHeight = actualHighest;
+		
 		return Loader.loadToVAO(vertices, textureCoords, normals, indices);
 	}
 	
-	private Vector3f calculateNormal(int x, int z, BufferedImage image) {
+	private Vector3f calculateNormal(int x, int z, BufferedImage image, float maxHeight) {
 		
-		float heightL = getHeight(x - 1, z, image);
-		float heightR = getHeight(x + 1, z, image);
-		float heightD = getHeight(x, z - 1, image);
-		float heightU = getHeight(x, z + 1, image);
+		float heightL = getHeight(x - 1, z, image, maxHeight);
+		float heightR = getHeight(x + 1, z, image, maxHeight);
+		float heightD = getHeight(x, z - 1, image, maxHeight);
+		float heightU = getHeight(x, z + 1, image, maxHeight);
 		Vector3f normal = new Vector3f(heightL - heightR, 2f, heightD - heightU);
 		normal.normalise();
 		 
@@ -251,7 +265,7 @@ public class TRTerrain {
 		
 	}
 	
-	private float getHeight(int x, int z, BufferedImage image) {
+	private float getHeight(int x, int z, BufferedImage image, float maxHeight) {
 		
 		if (x < 0 || x >= image.getHeight() || z < 0 || z >= image.getHeight()) {
 			return 0;

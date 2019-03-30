@@ -145,7 +145,7 @@ public class Island {
 		this.position = new Vector3f(x, y, z);
 		
 		terrain = new TRTerrain(128, x, y, z, size, texturePack, blendMap, seed, 575);
-		//terrain = new Terrain(x, y, z, size, texturePack, blendMap, "heightmap", 2000);
+		//terrain = new TRTerrain(x, y, z, size, texturePack, blendMap, "smartmap", 2000);
 		
 		terrains.add(terrain);
 		water = new DUDVWaterTile(x, z, y, size / 2, new Vector3f(0.0f, 0.3f, 0.4f));
@@ -167,7 +167,7 @@ public class Island {
 		
 		float sz = size / 2;
 		
-		for (int i = 0; i < 4000; i++) {
+		for (int i = 0; i < 80000; i++) {
 			
 			//if (i % 2 == 0) {
 				float x1 = TM.rng.nextFloat() * 2 * sz + (x - sz);
