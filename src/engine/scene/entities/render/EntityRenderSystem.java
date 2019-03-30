@@ -41,18 +41,11 @@ public class EntityRenderSystem {
 			
 			/*
 			 * Here, we have all of the entities, each with the same model, why not render instanced here?
-			 * Maybe?
-			 * Perhaps if there are only 1 or 2 entities here then it would be inefficient
-			 * Either: instanced for EVERYTHING, no instanced, either-or, XOR, monostable XD
 			 * */
 			
 			for (TREntity entity : batch) {
 				prepareInstance(entity);
-				/*if (entity.translucent) {
-					GL11.glEnable(GL11.GL_BLEND);
-					GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_COLOR, GL11.GL_ONE);
-					//GL11.glBlendFunc(GL11.GL_ONE_MINUS_SRC_COLOR, GL11.GL_ONE_MINUS_SRC_ALPHA);
-				}*/
+
 				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(),
 						GL11.GL_UNSIGNED_INT, 0);
 				GL11.glDisable(GL11.GL_BLEND);
@@ -69,6 +62,7 @@ public class EntityRenderSystem {
 		shader.loadLights(scene.getLights());
 		shader.loadViewMatrix(scene.getCamera());
 		shader.loadAmbientLight(scene.getAmbientLight());
+		shader.loadLightsInUse(scene.getLights().size());
 		
 		shader.loadCellShadingStatus(scene.useCellShading, scene.numCellLevels);
 		

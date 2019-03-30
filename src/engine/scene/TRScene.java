@@ -14,6 +14,8 @@ import engine.scene.terrain.TRTerrain;
 import engine.water.dudv.DUDVWaterTile;
 
 public class TRScene {
+	
+	public static final int MAX_LIGHTS = 4;
 			
 	protected List<TREntity> entities = new ArrayList<TREntity>();
 	protected List<TRTerrain> terrains = new ArrayList<TRTerrain>();
@@ -72,6 +74,15 @@ public class TRScene {
 	
 	public void setLightList(List<Light> l) {
 		lights = (l);
+	}
+	
+	public void addLight(Light light) {
+		if (lights.size() > MAX_LIGHTS) {
+			throw new RuntimeException("caution: more than " + MAX_LIGHTS + " lights in scene");
+		}
+		else {
+			lights.add(light);
+		}
 	}
 	
 	public void setCamera(Camera c) {

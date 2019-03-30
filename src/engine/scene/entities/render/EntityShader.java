@@ -8,15 +8,14 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.renderEngine.ShaderProgram;
+import engine.scene.TRScene;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.Camera;
 import engine.utils.SFMath;
 
 public class EntityShader extends ShaderProgram{
-	
-	private static final int MAX_LIGHTS = 4;
-	
+		
 	private static final String VERTEX_FILE = "src/engine/scene/entities/render/entityVertexShader.glsl";
 	private static final String FRAGMENT_FILE = "src/engine/scene/entities/render/entityFragmentShader.glsl";
 	
@@ -80,12 +79,13 @@ public class EntityShader extends ShaderProgram{
 		addUniformVariable("useCellShading");
 		
 		addUniformVariable("ambientLightLvl");
+		addUniformVariable("lightsInUse");
 		
-		location_lightColour = new int[MAX_LIGHTS];
-		location_lightPosition = new int[MAX_LIGHTS];
-		location_attenuation = new int[MAX_LIGHTS];
+		location_lightColour = new int[TRScene.MAX_LIGHTS];
+		location_lightPosition = new int[TRScene.MAX_LIGHTS];
+		location_attenuation = new int[TRScene.MAX_LIGHTS];
 		
-		for (int i = 0; i < MAX_LIGHTS; i++) {
+		for (int i = 0; i < TRScene.MAX_LIGHTS; i++) {
 			
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
@@ -93,6 +93,10 @@ public class EntityShader extends ShaderProgram{
 			
 		}
 		
+	}
+	
+	public void loadLightsInUse(int lightsInUse) {
+		super.loadInt(uniformLocationOf("lightsInUse"), lightsInUse);
 	}
 	
 	public void loadAmbientLight(float lvl) {
@@ -133,27 +137,15 @@ public class EntityShader extends ShaderProgram{
 		super.loadMatrix(location_transformationMatrix, matrix);
 	}
 	
-	public void loadLights(List<Light> lights){
-		
-		for (int i = 0; i < MAX_LIGHTS; i++) {
-			
-			if (i < lights.size()) {
-				super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
-				super.loadVector(location_lightColour[i], lights.get(i).getColour());
-				super.loadVector(location_attenuation[i], lights.get(i).getAttenuation());
-
-			}
-			else {
-				super.loadVector(location_lightPosition[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_lightColour[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_attenuation[i], new Vector3f(1, 0, 0));
-			}
-			
+	public void loadLights(List<Light> lights){	
+		for (int i = 0; i < lights.size(); i++) {	
+			super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
+			super.loadVector(location_lightColour[i], lights.get(i).getColour());
+			super.loadVector(location_attenuation[i], lights.get(i).getAttenuation());
 		}
-		
 	}
 	
-	public void loadViewMatrix(Camera camera){
+	public void loadViewMatrix(Camera camera) {
 		Matrix4f viewMatrix = SFMath.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix);
 	}

@@ -14,8 +14,8 @@ public class GUITexture implements IGUI {
 	private float rotation;
 	private boolean flipped = false;
 	
-	public boolean flagAlpha = false;
-	public float custAlpha = 0;
+	public boolean useCustomAlpha = false;
+	public float customAlpha = 0;
 	
 	public GUITexture(int textureID, Vector2f position, Vector2f scale) {
 		this.textureID = textureID;

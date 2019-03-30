@@ -14,6 +14,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.renderEngine.Loader;
+import engine.renderEngine.MasterRenderSystem;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.models.RawModel;
 import engine.scene.lensFlare.FlareTexture;
@@ -39,6 +40,7 @@ public class GUIRenderer {
 	}
 	
 	public void render(List<GUITexture> guis) {
+		MasterRenderSystem.disableFaceCulling();
 		shader.start();
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -47,8 +49,8 @@ public class GUIRenderer {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		for (GUITexture texture : guis) {
 			
-			shader.loadAlphaFlag(texture.flagAlpha);
-			shader.loadCustomAlpha(texture.custAlpha);
+			shader.loadAlphaFlag(texture.useCustomAlpha);
+			shader.loadCustomAlpha(texture.customAlpha);
 			
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
@@ -61,6 +63,7 @@ public class GUIRenderer {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
+		MasterRenderSystem.enableFaceCulling();
 	}
 	
 	public void renderFlareMode(FlareTexture[] textures, float brightness) throws InvalidActivityException {

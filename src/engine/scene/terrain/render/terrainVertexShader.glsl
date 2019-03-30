@@ -22,6 +22,8 @@ uniform vec4 plane;
 uniform float density;
 uniform float gradient;
 
+uniform int lightsInUse;
+
 void main(void){
 
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0);
@@ -36,7 +38,7 @@ void main(void){
 	
 	surfaceNormal = (transformationMatrix * vec4(normal, 0.0)).xyz;
 	
-	for(int i=0;i<4;i++){
+	for(int i = 0; i < lightsInUse; i++){
 		toLightVector[i] = lightPosition[i] - worldPosition.xyz;
 	}
 	

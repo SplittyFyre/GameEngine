@@ -19,7 +19,7 @@ public class DUDVWaterShader extends ShaderProgram {
 	private int location_reflectionTexture;
 	private int location_refractionTexture;
 	private int location_dudvMap;
-	private int location_moveFactor;
+	private int location_movedFactor;
 	private int location_cameraPosition;
 	private int location_normalMap;
 	private int location_lightPosition;
@@ -43,13 +43,34 @@ public class DUDVWaterShader extends ShaderProgram {
 		location_reflectionTexture = getUniformLocation("reflectionTexture");
 		location_refractionTexture = getUniformLocation("refractionTexture");
 		location_dudvMap = getUniformLocation("dudvMap");
-		location_moveFactor = getUniformLocation("moveFactor");
+		location_movedFactor = getUniformLocation("movedFactor");
 		location_cameraPosition = getUniformLocation("cameraPosition");
 		location_normalMap = getUniformLocation("normalMap");
 		location_lightPosition = getUniformLocation("lightPosition");
 		location_lightColour = getUniformLocation("lightColour");
 		location_depthMap = getUniformLocation("depthMap");
 		addUniformVariable("colourOffset");
+		
+		addUniformVariable("waveIntensity");
+		addUniformVariable("shineDamper");
+		addUniformVariable("reflectivity");
+		
+		addUniformVariable("nearPlane");
+		addUniformVariable("farPlane");
+	}
+	
+	public void loadWaveIntensity(float wi) {
+		super.loadFloat(uniformLocationOf("waveIntensity"), wi);
+	}
+	
+	public void loadShineVariables(DUDVWaterTile tile) {
+		super.loadFloat(uniformLocationOf("shineDamper"), tile.getShineDamper());
+		super.loadFloat(uniformLocationOf("reflectivity"), tile.getReflectivity());
+	}
+	
+	public void loadFrustumPlanes(float near, float far) {
+		super.loadFloat(getUniformLocation("nearPlane"), near);
+		super.loadFloat(getUniformLocation("farPlane"), far);
 	}
 	
 	public void loadColourOffset(Vector3f colourOffset) {
@@ -69,8 +90,8 @@ public class DUDVWaterShader extends ShaderProgram {
 		super.loadVector(location_lightPosition, light.getPosition());
 	}
 	
-	public void loadMoveFactor(float factor) {
-		super.loadFloat(location_moveFactor, factor);
+	public void loadMovedFactor(float factor) {
+		super.loadFloat(location_movedFactor, factor);
 	}
 
 	public void loadProjectionMatrix(Matrix4f projection) {

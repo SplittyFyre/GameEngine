@@ -35,6 +35,8 @@ uniform bool useAltitudeVarying;
 uniform vec3 vecCaps;
 uniform float maxheight;
 
+uniform int lightsInUse;
+
 void main(void){
 
 	vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
@@ -87,7 +89,7 @@ void main(void){
 	vec3 totalDiffuse = vec3(0.0);
 	vec3 totalSpecular = vec3(0.0);
 	
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < lightsInUse; i++){
 		
 		float distance = length(toLightVector[i]);
 		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);

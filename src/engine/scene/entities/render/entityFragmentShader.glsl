@@ -1,8 +1,10 @@
 #version 330 core
 
+#define MAX_LIGHTS 4
+
 in vec2 pass_textureCoordinates;
 in vec3 surfaceNormal;
-in vec3 toLightVector[4];
+in vec3 toLightVector[MAX_LIGHTS];
 in vec3 toCameraVector;
 in float visibility;
 
@@ -12,8 +14,8 @@ layout (location = 1) out vec4 outBrightColour;
 uniform sampler2D modelTexture;
 uniform sampler2D specularMap;
 uniform bool usesSpecularMap;
-uniform vec3 lightColour[4];
-uniform vec3 attenuation[4];
+uniform vec3 lightColour[MAX_LIGHTS];
+uniform vec3 attenuation[MAX_LIGHTS];
 uniform float shineDamper;
 uniform float reflectivity;
 
@@ -26,6 +28,8 @@ uniform bool useCellShading;
 
 uniform float ambientLightLvl;
 
+uniform int lightsInUse;
+
 void main(void) {
 
 	float level;
@@ -36,7 +40,7 @@ void main(void) {
 	vec3 totalDiffuse = vec3(0.0);
 	vec3 totalSpecular = vec3(0.0);
 	
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < lightsInUse; i++) {
 	
 		float distance = length(toLightVector[i]);
 		float attFactor = attenuation[i].x + (attenuation[i].y * distance) + (attenuation[i].z * distance * distance);

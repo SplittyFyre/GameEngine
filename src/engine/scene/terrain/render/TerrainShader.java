@@ -7,15 +7,14 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.renderEngine.ShaderProgram;
+import engine.scene.TRScene;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.Camera;
 import engine.utils.SFMath;
 
 public class TerrainShader extends ShaderProgram {
-	
-	private static final int MAX_LIGHTS = 4;
-	
+		
 	private static final String VERTEX_FILE = "src/engine/scene/terrain/render/terrainVertexShader.glsl";
 	private static final String FRAGMENT_FILE = "src/engine/scene/terrain/render/terrainFragmentShader.glsl";
 	
@@ -66,9 +65,9 @@ public class TerrainShader extends ShaderProgram {
 		location_base = super.getUniformLocation("base");
 		location_height = super.getUniformLocation("height");
 		
-		location_lightColour = new int[MAX_LIGHTS];
-		location_lightPosition = new int[MAX_LIGHTS];
-		location_attenuation = new int[MAX_LIGHTS];
+		location_lightColour = new int[TRScene.MAX_LIGHTS];
+		location_lightPosition = new int[TRScene.MAX_LIGHTS];
+		location_attenuation = new int[TRScene.MAX_LIGHTS];
 		
 		addUniformVariable("density");
 		addUniformVariable("gradient");
@@ -80,24 +79,26 @@ public class TerrainShader extends ShaderProgram {
 		addUniformVariable("vecCaps");
 		addUniformVariable("maxheight");
 		
-		for (int i = 0; i < MAX_LIGHTS; i++) {
-			
+		addUniformVariable("lightsInUse");
+		
+		for (int i = 0; i < TRScene.MAX_LIGHTS; i++) {
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
 			location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
-			
 		}
 		
 	}
 	
+	public void loadLightsInUse(int lightsInUse) {
+		super.loadInt(uniformLocationOf("lightsInUse"), lightsInUse);
+	}
+	
 	public void connectTextureUnits() {
-		
 		super.loadInt(location_backgroundTexture, 0);
 		super.loadInt(location_rTexture, 1);
 		super.loadInt(location_gTexture, 2);
 		super.loadInt(location_bTexture, 3);
-		super.loadInt(location_blendMap, 4);
-		
+		super.loadInt(location_blendMap, 4);	
 	}
 	
 	public void loadUseAltitudeVarying(boolean b) {
@@ -139,19 +140,10 @@ public class TerrainShader extends ShaderProgram {
 	
 	public void loadLights(List<Light> lights){
 		
-		for (int i = 0; i < MAX_LIGHTS; i++) {
-			
-			if (i < lights.size()) {
-				super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
-				super.loadVector(location_lightColour[i], lights.get(i).getColour());
-				super.loadVector(location_attenuation[i], lights.get(i).getAttenuation());
-			}
-			else {
-				super.loadVector(location_lightPosition[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_lightColour[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_attenuation[i], new Vector3f(1, 0, 0));
-			}
-			
+		for (int i = 0; i < lights.size(); i++) {
+			super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
+			super.loadVector(location_lightColour[i], lights.get(i).getColour());
+			super.loadVector(location_attenuation[i], lights.get(i).getAttenuation());	
 		}
 		
 	}

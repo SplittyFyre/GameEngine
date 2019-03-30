@@ -85,12 +85,12 @@ public class MasterRenderSystem {
 			float distance = 2 * (camera.getPosition().y - water.getHeight());
 			camera.getPosition().y -= distance;
 			camera.invertPitch();
-			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
+			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.07f));
 			renderWithoutWater(scene);
 			camera.getPosition().y += distance;
 			camera.invertPitch();
 			buffers.bindRefractionFrameBuffer();
-			scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.5f));
+			scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.07f));
 			renderWithoutWater(scene);
 			buffers.unbindCurrentFrameBuffer();
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);

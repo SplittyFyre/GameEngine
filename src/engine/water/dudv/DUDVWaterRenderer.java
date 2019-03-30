@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.scene.entities.Light;
@@ -21,7 +20,6 @@ public class DUDVWaterRenderer {
 	private static final String DUDV_MAP = "waterDUDV";
 	//private static final String DUDV_MAP = "dudv";
 	private static final String NORMAL_MAP = "normal";
-	private static final float WAVE_SPEED = 0.03f;
 
 	private RawModel quad;
 	private DUDVWaterShader shader;
@@ -34,9 +32,7 @@ public class DUDVWaterRenderer {
 	public WaterFrameBuffers getFBOs() {
 		return fbos;
 	}
-	
-	private float moveFactor = 0;
-	
+		
 	private int dudvTexture;
 	private int normalMap;
 
@@ -56,11 +52,18 @@ public class DUDVWaterRenderer {
 		prepareRender(camera, sun);	
 		for (DUDVWaterTile tile : water) {
 			tile.update();
+			shader.loadMovedFactor(tile.updateMovedFactor());
 			Matrix4f modelMatrix = SFMath.createTransformationMatrix(
 					new Vector3f(tile.getX(), tile.getHeight(), tile.getZ()), 0, 0, 0,
 					tile.size);
 			shader.loadModelMatrix(modelMatrix);
 			shader.loadColourOffset(tile.getColourOffset());
+			
+			shader.loadWaveIntensity(tile.getWaveIntensity());
+			shader.loadShineVariables(tile);
+			//shader.loadFrustumPlanes(TRRenderEngine.nearPlaneInUse, TRRenderEngine.farPlaneInUse);
+			shader.loadFrustumPlanes(2.5f, 5000f);
+			
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, quad.getVertexCount());
 		}
 		unbind();
@@ -69,9 +72,6 @@ public class DUDVWaterRenderer {
 	private void prepareRender(Camera camera, Light sun){
 		shader.start();
 		shader.loadViewMatrix(camera);
-		moveFactor += WAVE_SPEED * DisplayManager.getFrameDeltaTime();
-		moveFactor %= 1;
-		shader.loadMoveFactor(moveFactor);
 		shader.loadLight(sun);
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);

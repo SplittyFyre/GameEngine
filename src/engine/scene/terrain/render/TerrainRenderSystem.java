@@ -51,6 +51,7 @@ public class TerrainRenderSystem {
 		shader.loadViewMatrix(scene.getCamera());
 		shader.loadShineVariables(1, 0);
 		shader.loadAmbientLight(scene.getAmbientLight());
+		shader.loadLightsInUse(scene.getLights().size());
 	}
 
 	private void prepareTerrain(TRTerrain terrain) {

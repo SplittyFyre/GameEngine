@@ -259,8 +259,8 @@ public class Main {
 		preguis.add(txtcover);
 		
 		GUITexture icon = new GUITexture(Loader.loadTexture("slice"), new Vector2f(-0.05f, 0.13f), TM.sqrgui(0.24f));
-		icon.flagAlpha = true;
-		icon.custAlpha = 0;
+		icon.useCustomAlpha = true;
+		icon.customAlpha = 0;
 		preguis.add(icon);
 		
 		AudioSrc src = new AudioSrc();
@@ -288,8 +288,8 @@ public class Main {
 			GL11.glClearColor(0, 0, 0, 1);
 			guiRenderer.render(preguis);
 			
-			if (timer2 > 0.01f && icon.custAlpha < 1f) {
-				icon.custAlpha += 0.5f * time;
+			if (timer2 > 0.01f && icon.customAlpha < 1f) {
+				icon.customAlpha += 0.5f * time;
 				timer2 = 0;
 			}
 			

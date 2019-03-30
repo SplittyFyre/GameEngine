@@ -19,6 +19,9 @@ public class TRRenderEngine {
 	
 	private static final Matrix4f distortedProjectionMatrix = Camera.createDistortedProjectionMatrix(1, 200000);
 	
+	public static float nearPlaneInUse = 1;
+	public static float farPlaneInUse = 200000;
+	
 	private TRRenderEngine(MasterRenderSystem renderer) {
 		this.renderer = renderer;
 	}
