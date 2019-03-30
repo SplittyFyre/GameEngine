@@ -167,7 +167,7 @@ public class Island {
 		
 		float sz = size / 2;
 		
-		for (int i = 0; i < 80000; i++) {
+		for (int i = 0; i < 4000; i++) {
 			
 			//if (i % 2 == 0) {
 				float x1 = TM.rng.nextFloat() * 2 * sz + (x - sz);

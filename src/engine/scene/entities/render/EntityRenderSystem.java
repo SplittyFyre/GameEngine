@@ -22,6 +22,8 @@ public class EntityRenderSystem {
 	
 	private EntityShader shader;
 	
+	private int instanceVBO;
+	
 	public EntityShader getShader() {
 		return shader;
 	}
