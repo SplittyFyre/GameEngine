@@ -145,12 +145,12 @@ public class Island {
 		this.position = new Vector3f(x, y, z);
 		
 		//terrain = new TRTerrain(128, x, y, z, size, texturePack, blendMap, seed, 575);
-		terrain = new TRTerrain(x, y, z, size, texturePack, blendMap, "crop1w", 7000);
+		terrain = new TRTerrain(x, y, z, size, texturePack, blendMap, "crop1", 20000);
 		
 		terrains.add(terrain);
-		water = new DUDVWaterTile(x, z, y, size / 2);
+		water = new DUDVWaterTile(x, z, y - 5000, size / 2);
 		waters.add(water);
-				
+				 
 		RawModel fernRaw = OBJParser.loadObjModel("fernModel");
 		ModelTexture fernTextureAtlas = new ModelTexture(Loader.loadTexture("fern"));
 		fernTextureAtlas.setNumRows(2);

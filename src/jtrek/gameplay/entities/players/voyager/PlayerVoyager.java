@@ -667,7 +667,7 @@ public class PlayerVoyager extends Player {
 	
 	private static final float MAX_WARP_FACTOR = 9.975f;
 	
-	private static final float FULL_IMPULSE_SPEED = 3000;
+	private static final float FULL_IMPULSE_SPEED = 50000;
 	private static final float BOOST_SPEED = 5000;
 	
 	private static final float WARP_SPEED = 214000;

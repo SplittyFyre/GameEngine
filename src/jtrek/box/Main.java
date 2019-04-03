@@ -210,7 +210,7 @@ public class Main {
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 		
   		
-		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 100000, 1750093151);
+		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 500000, 1750093151);
 		
 		entities.add(new StaticEntity(playerText, new Vector3f(-2500, 750, 2900), 0, 45, 0, 20));
 		
@@ -357,6 +357,8 @@ public class Main {
 		TRSkybox skybox = new TRSkybox(100000);
 		skybox.setTexture1(TRSkybox.locateSkyboxTextures("s"));
 		scene.setSkybox(skybox);
+		
+		scene.skyCtx.fogDensity = 0;
 		
 		while (!Display.isCloseRequested()) { 
 			spinny.rotate(0, -6000 * DisplayManager.getFrameDeltaTime(), 0);
