@@ -14,40 +14,34 @@ public class TRRenderEngine {
 	public static final int RENDER_DUDVWATER_BIT = 8;
 	
 	private MasterRenderSystem renderer;
-	private static Matrix4f passMatrix;
-	private static final Matrix4f permenantNormalMatrix = Camera.createProjectionMatrix(1, 200000, Camera.STD_FOV);
 	
-	private static final Matrix4f distortedProjectionMatrix = Camera.createDistortedProjectionMatrix(1, 200000);
+	private final float nearPlane, farPlane;
 	
-	public static float nearPlaneInUse = 1;
-	public static float farPlaneInUse = 200000;
+	//private static final Matrix4f permenantNormalMatrix = Camera.createProjectionMatrix(1, 200000, Camera.STD_FOV);
+	private final Matrix4f projectionMatrix;
+		
+	public static float nearPlaneInUse;
+	public static float farPlaneInUse;
 	
-	private TRRenderEngine(MasterRenderSystem renderer) {
-		this.renderer = renderer;
+	public TRRenderEngine(int renderAvailableMasks, float nearPlane, float farPlane) {
+		this.nearPlane = nearPlane;
+		this.farPlane = farPlane;
+		this.projectionMatrix = Camera.createProjectionMatrix(nearPlane, farPlane, Camera.STD_FOV);
+		this.renderer = new MasterRenderSystem(renderAvailableMasks, projectionMatrix);
 	}
 	
 	public void renderScene(TRScene scene, Fbo fbo) {
+		nearPlaneInUse = nearPlane;
+		farPlaneInUse = farPlane;
 		renderer.renderMainPass(scene, fbo);
-	}
-	
-	public void renderMiniMapScene(TRScene scene) {
-		//renderer.setProjectionMatrix(permenantLargeMatrix);
-		renderer.renderMiniMapPass(scene);
-		//renderer.setProjectionMatrix(permenantNormalMatrix);
 	}
 	
 	public void cleanUp() {
 		renderer.cleanUp();
 	}
 	
-	public static TRRenderEngine init(int renderAvailableMasks) {
-		passMatrix = permenantNormalMatrix;
-		MasterRenderSystem renderer = new MasterRenderSystem(renderAvailableMasks, passMatrix);
-		return new TRRenderEngine(renderer);
-	}
-	
 	public Matrix4f getProjectionMatrix() {
-		return passMatrix;
+		return projectionMatrix;
 	}
 
 }

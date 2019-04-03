@@ -72,17 +72,26 @@ public class Main {
 		viewScreenMode = param;
 	}
 	
+	static Runnable runnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			System.out.println("we ran");
+		}
+	};
+	
 	public static void main(String[] args) throws IOException {
 		
-		DisplayManager.createDisplay();
+		DisplayManager.createDisplay(runnable);
 		AudioEngine.init();
 		
 		TextMaster.init();
-		TRRenderEngine engine = TRRenderEngine.init(
+		TRRenderEngine engine = new TRRenderEngine(
 				TRRenderEngine.RENDER_ENTITIES_BIT | 
 				TRRenderEngine.RENDER_TERRAIN_BIT | 
 				TRRenderEngine.RENDER_SKYBOX_BIT | 
-				TRRenderEngine.RENDER_DUDVWATER_BIT);
+				TRRenderEngine.RENDER_DUDVWATER_BIT,
+				1, 200000);
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
 		//TERRAIN STUFF********************************************************************
@@ -201,7 +210,7 @@ public class Main {
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 		
   		
-		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 10000, 1750093151);
+		Island home = new Island(texturePack, blendMap, scene.getTerrains(), scene.getWaters(), entities, 0, 0, /*30000*/0, 100000, 1750093151);
 		
 		entities.add(new StaticEntity(playerText, new Vector3f(-2500, 750, 2900), 0, 45, 0, 20));
 		
@@ -346,10 +355,10 @@ public class Main {
 		
 		
 		TRSkybox skybox = new TRSkybox(100000);
-		skybox.setTexture1(TRSkybox.locateSkyboxTextures("high"));
+		skybox.setTexture1(TRSkybox.locateSkyboxTextures("s"));
 		scene.setSkybox(skybox);
 		
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested()) { 
 			spinny.rotate(0, -6000 * DisplayManager.getFrameDeltaTime(), 0);
 			bal.rotate(600 * DisplayManager.getFrameDeltaTime(), 0, 0);
 			//long start = System.nanoTime();
@@ -452,7 +461,6 @@ public class Main {
 			//STOP THIS!!!
 			
 			minimap.bindFrameBuffer();
-			engine.renderMiniMapScene(scene);
 			//waterRenderer.render(waters, camera, sun);
 			//ParticleWatcher.renderParticles(camera);
 			minimap.unbindFrameBuffer();

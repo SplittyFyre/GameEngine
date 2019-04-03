@@ -26,7 +26,6 @@ public class NoiseGenerator {
 		total = getInterpolatedNoise(x / 8f, z / 8f) * amplitude;
 		total += getInterpolatedNoise(x / 4f, z / 4f) * amplitude / 3f;
 		total += getInterpolatedNoise(x / 2f, z / 2f) * amplitude / 9f;	
-		System.out.println(amplitude);
 		return total;
 	}
 	

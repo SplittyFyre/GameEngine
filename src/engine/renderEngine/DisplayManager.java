@@ -33,7 +33,10 @@ public class DisplayManager {
 	
 	public static int currentCursor = NORMAL; 
 	
-	public static void createDisplay() {	
+	private static Runnable resizeCallBack;
+	
+	public static void createDisplay(Runnable resizeCallBack) {	
+		DisplayManager.resizeCallBack = resizeCallBack;
 		
 		ContextAttribs attributes = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
 		
@@ -65,12 +68,14 @@ public class DisplayManager {
 		}
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		lastFrameTime = getCurrentTime();
-	}
+	} 
 	
 	public static void updateDisplay() {
 		if (Display.wasResized()) {
 			System.out.println("resized");
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+			if (DisplayManager.resizeCallBack != null)
+				DisplayManager.resizeCallBack.run();
 		}
 		Display.sync(FPS_CAP);
 		Display.update();

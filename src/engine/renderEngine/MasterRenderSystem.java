@@ -110,11 +110,7 @@ public class MasterRenderSystem {
 		if (fbo != null)
 			fbo.unbindFrameBuffer();
 	}
-	
-	public void renderMiniMapPass(TRScene scene) {
 
-	}
-	
 	public void cleanUp() {
 		entityRenderer.getShader().cleanUp();
 		terrainRenderer.getShader().cleanUp();

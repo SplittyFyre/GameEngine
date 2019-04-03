@@ -18,13 +18,14 @@ public class DevMain {
 
 	public static void main(String[] args) {
 		
-		DisplayManager.createDisplay();
+		DisplayManager.createDisplay(null);
 		
-		TRRenderEngine engine = TRRenderEngine.init(
+		TRRenderEngine engine = new TRRenderEngine(
 				TRRenderEngine.RENDER_ENTITIES_BIT | 
 				TRRenderEngine.RENDER_TERRAIN_BIT | 
 				TRRenderEngine.RENDER_SKYBOX_BIT | 
-				TRRenderEngine.RENDER_DUDVWATER_BIT);
+				TRRenderEngine.RENDER_DUDVWATER_BIT,
+				1, 200000);
 		ParticleWatcher.init(engine.getProjectionMatrix());
 		
 		TRScene scene = new TRScene();
