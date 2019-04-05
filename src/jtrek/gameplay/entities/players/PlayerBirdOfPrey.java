@@ -13,7 +13,7 @@ import engine.audio.AudioEngine;
 import engine.audio.AudioSrc;
 import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
@@ -217,8 +217,8 @@ public class PlayerBirdOfPrey extends Player {
 
 	private void move() {
 		checkInputs();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);	
-		float distanceMoved = currentSpeed * DisplayManager.getFrameDeltaTime();
+		super.rotate(0, currentTurnSpeed * TRDisplayManager.getFrameDeltaTime(), 0);	
+		float distanceMoved = currentSpeed * TRDisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
@@ -335,7 +335,7 @@ public class PlayerBirdOfPrey extends Player {
 	
 	private void fireAllWeapons() {
 		
-		mainGunTimer += DisplayManager.getFrameDeltaTime();
+		mainGunTimer += TRDisplayManager.getFrameDeltaTime();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P) || (Mouse.isGrabbed() && Mouse.isButtonDown(0))) {
 			

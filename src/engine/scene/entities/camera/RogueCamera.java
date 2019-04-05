@@ -2,7 +2,7 @@ package engine.scene.entities.camera;
 
 import org.lwjgl.input.Keyboard;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 
 public class RogueCamera extends Camera {
 	
@@ -23,10 +23,10 @@ public class RogueCamera extends Camera {
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			yaw -= 90f * DisplayManager.getFrameDeltaTime();
+			yaw -= 90f * TRDisplayManager.getFrameDeltaTime();
 		}
 		else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			yaw += 90f * DisplayManager.getFrameDeltaTime();
+			yaw += 90f * TRDisplayManager.getFrameDeltaTime();
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -36,10 +36,10 @@ public class RogueCamera extends Camera {
 			up = -UPSPEED;
 		}
 		
-		float distanceMoved = mov * DisplayManager.getFrameDeltaTime();
+		float distanceMoved = mov * TRDisplayManager.getFrameDeltaTime();
 		
 		float dx = (float) (distanceMoved * Math.sin(Math.toRadians(180 - yaw)));
-		float dy = up * DisplayManager.getFrameDeltaTime();
+		float dy = up * TRDisplayManager.getFrameDeltaTime();
 		float dz = (float) (distanceMoved * Math.cos(Math.toRadians(180 - yaw)));
 		
 		position.x += dx;

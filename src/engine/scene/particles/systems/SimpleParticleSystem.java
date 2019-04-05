@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.scene.particles.TRParticleSystem;
@@ -22,7 +22,7 @@ public class SimpleParticleSystem extends TRParticleSystem {
 
 	@Override
 	public void generateParticles(Vector3f sysCenter) {
-        float delta = DisplayManager.getFrameDeltaTime();
+        float delta = TRDisplayManager.getFrameDeltaTime();
         float particlesToCreate = pps * delta;
         int count = (int) Math.floor(particlesToCreate);
         float partialParticle = particlesToCreate % 1;
@@ -35,7 +35,7 @@ public class SimpleParticleSystem extends TRParticleSystem {
     }
     
     public void generateParticles(Vector3f systemCenter, Vector3f trace) {
-        float delta = DisplayManager.getFrameDeltaTime();
+        float delta = TRDisplayManager.getFrameDeltaTime();
         float particlesToCreate = pps * delta;
         int count = (int) Math.floor(particlesToCreate);
         float partialParticle = particlesToCreate % 1;

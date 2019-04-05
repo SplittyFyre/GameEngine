@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.audio.AudioEngine;
 import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
@@ -302,8 +302,8 @@ public class PlayerTrubble extends Player {
 	
 	private void move() {
 		checkInputs();
-		super.rotate(0, currentTurnSpeed * DisplayManager.getFrameDeltaTime(), 0);	
-		float distanceMoved = currentSpeed * DisplayManager.getFrameDeltaTime();
+		super.rotate(0, currentTurnSpeed * TRDisplayManager.getFrameDeltaTime(), 0);	
+		float distanceMoved = currentSpeed * TRDisplayManager.getFrameDeltaTime();
 		
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
@@ -538,7 +538,7 @@ public class PlayerTrubble extends Player {
 		
 		if (flagr) {
 			
-			float toRot = TURN_SPEED * DisplayManager.getFrameDeltaTime();
+			float toRot = TURN_SPEED * TRDisplayManager.getFrameDeltaTime();
 			
 			if (register < Math.abs(alpha)) {
 				super.rotate(0, toRot * Math.signum(alpha), 0);
@@ -675,13 +675,13 @@ public class PlayerTrubble extends Player {
 			deck.useCustomRotationAxis = false;
 			stern.useCustomRotationAxis = false;
 			
-			timer += DisplayManager.getFrameDeltaTime();
+			timer += TRDisplayManager.getFrameDeltaTime();
 			
 			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
 			
 			//float dtmove = DisplayManager.getFrameTime() * (700 + this.currentSpeed);
 
-			float dtmove = (1 / ((SEP_TIME) / DisplayManager.getFrameDeltaTime())) * dists + this.currentSpeed * DisplayManager.getFrameDeltaTime();
+			float dtmove = (1 / ((SEP_TIME) / TRDisplayManager.getFrameDeltaTime())) * dists + this.currentSpeed * TRDisplayManager.getFrameDeltaTime();
 			
 			float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			float homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -732,11 +732,11 @@ public class PlayerTrubble extends Player {
 			deck.useCustomRotationAxis = false;
 			stern.useCustomRotationAxis = false;
 			
-			timer += DisplayManager.getFrameDeltaTime();
+			timer += TRDisplayManager.getFrameDeltaTime();
 			
 			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
 			
-			float dtmove = DisplayManager.getFrameDeltaTime() * (275 + this.currentSpeed);
+			float dtmove = TRDisplayManager.getFrameDeltaTime() * (275 + this.currentSpeed);
 			
 			float homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			float homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -768,7 +768,7 @@ public class PlayerTrubble extends Player {
 	public void fireAllWeapons(RaysCast caster) {
 		
 		if (phaserCannonTimer <= 0.1f) {
-			phaserCannonTimer += DisplayManager.getFrameDeltaTime();	
+			phaserCannonTimer += TRDisplayManager.getFrameDeltaTime();	
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
@@ -906,7 +906,7 @@ public class PlayerTrubble extends Player {
 	
 	private void fireGatlingPhaserCannons() {
 		
-		gatlingPCannonTimer += DisplayManager.getFrameDeltaTime();
+		gatlingPCannonTimer += TRDisplayManager.getFrameDeltaTime();
 		
 		if (gatlingPCannonTimer > 1) {
 		

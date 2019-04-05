@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.audio.AudioEngine;
 import engine.fontMeshCreator.FontType;
 import engine.objStuff.OBJParser;
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
@@ -80,12 +80,12 @@ public class TM {
 	
 	public static FontType font = new FontType(Loader.loadTexture("segoeUI"), "segoeUI");
 	
-	public static Vector2f sqr2 = new Vector2f(0.01f, 0.01f * DisplayManager.getAspectRatio());
-	public static Vector2f sqr4 = new Vector2f(0.025f, 0.025f * DisplayManager.getAspectRatio());
-	public static Vector2f sqr8 = new Vector2f(0.045f, 0.045f * DisplayManager.getAspectRatio());
+	public static Vector2f sqr2 = new Vector2f(0.01f, 0.01f * TRDisplayManager.getAspectRatio());
+	public static Vector2f sqr4 = new Vector2f(0.025f, 0.025f * TRDisplayManager.getAspectRatio());
+	public static Vector2f sqr8 = new Vector2f(0.045f, 0.045f * TRDisplayManager.getAspectRatio());
 	
 	public static Vector2f sqrgui(float scale) {
-		return new Vector2f(scale, scale * DisplayManager.getAspectRatio());
+		return new Vector2f(scale, scale * TRDisplayManager.getAspectRatio());
 	}
 	
 	public static Vector2f coordtext(Vector2f pos) {

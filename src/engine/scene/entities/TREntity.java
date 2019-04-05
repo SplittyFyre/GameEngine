@@ -1,9 +1,16 @@
 package engine.scene.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.collision.BoundingBox;
+import engine.renderEngine.TRAddtlGeom;
 import engine.renderEngine.models.TexturedModel;
+import engine.utils.SFMath;
 
 public abstract class TREntity {
 
@@ -21,6 +28,92 @@ public abstract class TREntity {
 	
 	public boolean useCustomRotationAxis = false;
 	public Vector3f customRotationAxis = null;
+	
+	
+	
+	public boolean canHaveChildren = false;
+	public boolean isRootNode = false;
+	
+	private TREntity parent = null;
+	private List<TREntity> children = null;
+	
+	private Vector3f worldPosition = new Vector3f(0, 0, 0);
+	
+	public Vector3f getWorldPosition() {
+		return worldPosition;
+	}
+
+	public void setWorldPosition(Vector3f worldPosition) {
+		this.worldPosition = worldPosition;
+	}
+	
+	
+	public TREntity getParent() {
+		return this.parent;
+	}
+	public void setParent(TREntity parent) {
+		this.parent = parent;
+	}
+	
+	public void attachChild(TREntity child) {
+		if (!this.canHaveChildren) {
+			throw new RuntimeException("this entity can not have children (it got kicked in the balls really hard and I am mature)");
+		}
+		children.add(child);
+		child.setParent(this);
+	}
+	
+	public void detachChild(TREntity child) {
+		if (!this.canHaveChildren) {
+			throw new RuntimeException("this entity has no children and therefore you cannot remove any");
+		}
+		children.remove(child);
+		child.setParent(null);
+	}
+	
+	public TREntity withChildren() {
+		this.canHaveChildren = true;
+		this.children = new ArrayList<TREntity>();
+		return this;
+	}
+	
+																				// mat is for internal use, renderer pass in null
+	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, Matrix4f parentTransformMat) {
+		
+		Matrix4f m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
+				
+		if (!this.isRootNode) {
+			
+			TRAddtlGeom additionalGeom = null;
+			
+			if (this.parent.isRootNode) {		
+				additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	
+			}
+			else { // if parent is not root and therefore 'valid'
+				// actually apply parent transform
+				Matrix4f.mul(parentTransformMat, m_transformationMatrix, m_transformationMatrix);
+			}
+			
+			TexturedModel model = this.model;
+			List<TRAddtlGeom> batch = mapPtr.get(model);
+			if (batch == null) {
+				List<TRAddtlGeom> newBatch = new ArrayList<TRAddtlGeom>();
+				newBatch.add(additionalGeom);
+				mapPtr.put(model, newBatch);
+			}
+			else {
+				batch.add(additionalGeom);
+			}
+			
+		}
+		
+		if (this.canHaveChildren) {
+			for (TREntity child : children) {
+				child.updateSceneGraph(mapPtr, m_transformationMatrix);
+			}
+		}
+	}
+	
 
 	private int textureIndex = 0;
 	

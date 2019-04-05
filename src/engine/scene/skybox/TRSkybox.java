@@ -1,6 +1,6 @@
 package engine.scene.skybox;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 
@@ -29,7 +29,7 @@ public class TRSkybox {
 
 	public float rotSpeed = 0, rotation = 0;
 	public void rotate() {
-		this.rotation += this.rotSpeed * DisplayManager.getFrameDeltaTime();
+		this.rotation += this.rotSpeed * TRDisplayManager.getFrameDeltaTime();
 	}
 
 	public SkyboxTexture getTexture1() {

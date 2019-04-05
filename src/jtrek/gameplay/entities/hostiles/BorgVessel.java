@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.objStuff.OBJParser;
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
@@ -61,7 +61,7 @@ public class BorgVessel extends Enemy {
 		//WARNING: EXPERIMENTAL
 		float dist = SFMath.distance(player.getPlayerPos(), super.getPosition());
 		
-		float coeff = (dist / (3200 * DisplayManager.getFrameDeltaTime())) * 1.8f;
+		float coeff = (dist / (3200 * TRDisplayManager.getFrameDeltaTime())) * 1.8f;
 		coeff = 0;
 		
 		Vector3f vec = SFMath.rotateToFaceVector(super.getPosition(), Vector3f.add(new Vector3f(player.getPlayerPos().x, player.getPlayerPos().y, player.getPlayerPos().z),
@@ -75,8 +75,8 @@ public class BorgVessel extends Enemy {
 		
 		//super.move(movX, movY, movZ);
 		super.rotate(0, 0.15f, 0);
-		this.counter += DisplayManager.getFrameDeltaTime();
-		this.counter1 += DisplayManager.getFrameDeltaTime();
+		this.counter += TRDisplayManager.getFrameDeltaTime();
+		this.counter1 += TRDisplayManager.getFrameDeltaTime();
 		
 		if (dist <= 10000) {
 			Vector3f torpmv = SFMath.moveToVector(player.getPlayerPos(), 
@@ -109,7 +109,7 @@ public class BorgVessel extends Enemy {
 			}
 			
 			if (beaming) {
-				beamcounter += DisplayManager.getFrameDeltaTime();
+				beamcounter += TRDisplayManager.getFrameDeltaTime();
 
 				if (beamcounter > 1) {
 					beaming = false;
@@ -121,7 +121,7 @@ public class BorgVessel extends Enemy {
 						1.5f, 1.5f, 15, 40, 0));
 			}
 			else {
-				beamcounter += DisplayManager.getFrameDeltaTime();
+				beamcounter += TRDisplayManager.getFrameDeltaTime();
 				if (beamcounter >= 3) {
 					beaming = true;
 					beamcounter = 0;

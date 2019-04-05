@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.scene.entities.camera.Camera;
 
 public class SFMath {
@@ -247,7 +247,7 @@ public class SFMath {
 	
 	public static Vector3f moveToVector(Vector3f a, Vector3f b, float speed) {
 		
-		float f = DisplayManager.getFrameDeltaTime() * speed;
+		float f = TRDisplayManager.getFrameDeltaTime() * speed;
 		Vector3f d = Vector3f.sub(a, b, null);
 		if (d.length() != 0)
 			d.normalise();
@@ -265,12 +265,12 @@ public class SFMath {
 	
 	
 		
-	public static Vector2f sqr2 = new Vector2f(0.01f, 0.01f * DisplayManager.getAspectRatio());
-	public static Vector2f sqr4 = new Vector2f(0.025f, 0.025f * DisplayManager.getAspectRatio());
-	public static Vector2f sqr8 = new Vector2f(0.045f, 0.045f * DisplayManager.getAspectRatio());
+	public static Vector2f sqr2 = new Vector2f(0.01f, 0.01f * TRDisplayManager.getAspectRatio());
+	public static Vector2f sqr4 = new Vector2f(0.025f, 0.025f * TRDisplayManager.getAspectRatio());
+	public static Vector2f sqr8 = new Vector2f(0.045f, 0.045f * TRDisplayManager.getAspectRatio());
 	
 	public static Vector2f sqrgui(float scale) {
-		return new Vector2f(scale, scale * DisplayManager.getAspectRatio());
+		return new Vector2f(scale, scale * TRDisplayManager.getAspectRatio());
 	}
 	
 	public static Vector2f coordtext(Vector2f pos) {

@@ -2,7 +2,7 @@ package engine.water.dudv;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 
 public class DUDVWaterTile {
 	
@@ -21,7 +21,7 @@ public class DUDVWaterTile {
 	private float movedFactor = 0;
 	
 	public float updateMovedFactor() {
-		movedFactor += waveSpeed * DisplayManager.getFrameDeltaTime();
+		movedFactor += waveSpeed * TRDisplayManager.getFrameDeltaTime();
 		movedFactor %= 1;
 		return movedFactor;
 	}

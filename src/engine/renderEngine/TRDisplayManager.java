@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.vector.Vector2f;
 
-public class DisplayManager {
+public class TRDisplayManager {
 	
 	private static String[] ICON_PATHS = {"sficon16", "sficon32", "sficon"};
 	
@@ -30,7 +30,7 @@ public class DisplayManager {
 		WIDTH = width;
 		HEIGHT = height;
 		FPS_CAP = fpsCap;
-		DisplayManager.resizeCallBack = resizeCallBack;
+		TRDisplayManager.resizeCallBack = resizeCallBack;
 		
 		ContextAttribs attributes = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
 		
@@ -70,8 +70,8 @@ public class DisplayManager {
 	public static void updateDisplay() {
 		if (Display.wasResized()) {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-			if (DisplayManager.resizeCallBack != null)
-				DisplayManager.resizeCallBack.run();
+			if (TRDisplayManager.resizeCallBack != null)
+				TRDisplayManager.resizeCallBack.run();
 		}
 		Display.sync(FPS_CAP);
 		Display.update();

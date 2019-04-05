@@ -2,7 +2,7 @@ package jtrek.gameplay.entities.projectiles;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
@@ -97,8 +97,8 @@ public class HomingTorpedo extends Projectile {
 		if (target == null) {
 			this.respondToCollision();
 		}
-		timer += DisplayManager.getFrameDeltaTime();
-		float dtmove = DisplayManager.getFrameDeltaTime() * this.speed;
+		timer += TRDisplayManager.getFrameDeltaTime();
+		float dtmove = TRDisplayManager.getFrameDeltaTime() * this.speed;
 		if (target != null) {
 			if (target instanceof Player)
 				tracing = SFMath.rotateToFaceVector(this.getPosition(), ((Player) target).getPlayerPos());	

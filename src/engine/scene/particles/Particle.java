@@ -3,7 +3,7 @@ package engine.scene.particles;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 
 public class Particle {
 
@@ -101,7 +101,7 @@ public class Particle {
 	
 	protected boolean update() {
 		Vector3f change = new Vector3f(velocity);
-		change.scale(DisplayManager.getFrameDeltaTime());
+		change.scale(TRDisplayManager.getFrameDeltaTime());
 		
 		if (this.trace != null) {
 			Vector3f.add(change, ttlChange, ttlChange);
@@ -112,7 +112,7 @@ public class Particle {
 		}
 		
 		updateTextureCoordsInfo();
-		elapsedTime += DisplayManager.getFrameDeltaTime();
+		elapsedTime += TRDisplayManager.getFrameDeltaTime();
 		
 		return elapsedTime < lifeLength;
 	}

@@ -2,7 +2,7 @@ package jtrek.gameplay.entities.projectiles;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.particles.systems.SimpleParticleSystem;
 import engine.utils.SFMath;
@@ -68,7 +68,7 @@ public class Bolt extends Projectile {
 	@Override
 	public void update() {
 		
-		float distanceMoved = (SPEED + this.moveCoff) * DisplayManager.getFrameDeltaTime();
+		float distanceMoved = (SPEED + this.moveCoff) * TRDisplayManager.getFrameDeltaTime();
 		float dy = (float) (distanceMoved * Math.sin(Math.toRadians(super.getRotX())));
 		
 		//distanceMoved -= Math.abs(dy);
@@ -82,7 +82,7 @@ public class Bolt extends Projectile {
 		dy += mcY;
 		dz += mcZ;
 		super.move(dx, -dy, dz);
-		elapsedTime += DisplayManager.getFrameDeltaTime();
+		elapsedTime += TRDisplayManager.getFrameDeltaTime();
 		if (elapsedTime > 5f)
 			super.isDead = true;
 		

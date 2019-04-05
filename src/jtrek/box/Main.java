@@ -19,7 +19,7 @@ import engine.fontRendering.TextMaster;
 import engine.objStuff.OBJParser;
 import engine.postProcessing.Fbo;
 import engine.postProcessing.PostProcessing;
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 import engine.renderEngine.TRRenderEngine;
 import engine.renderEngine.guis.GUITexture;
@@ -82,7 +82,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		
-		DisplayManager.createDisplay(3200, 1800, 120, "Testing", runnable);
+		TRDisplayManager.createDisplay(3200, 1800, 120, "Testing", runnable);
 		AudioEngine.init();
 		
 		TextMaster.init();
@@ -284,13 +284,13 @@ public class Main {
 		//WARM UP GUARD
 		for (int i = 0; i < 4; i++) {
 			GL11.glClearColor(0, 0, 0, 1);
-			DisplayManager.updateDisplay();
+			TRDisplayManager.updateDisplay();
 		}
 		
 		while ((src.isPlaying()) &! Display.isCloseRequested() &! Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 
 			//CAN CLAMP (Math.min(time, cap)) THIS INCASE WARM-UP GUARD FAILS
-			float time = DisplayManager.getFrameDeltaTime();
+			float time = TRDisplayManager.getFrameDeltaTime();
 			timer += time;
 			timer2 += time;
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -308,7 +308,7 @@ public class Main {
 				ellipsecover.getPosition().x -= (mov * 1.35f);
 			}
 
-			DisplayManager.updateDisplay();
+			TRDisplayManager.updateDisplay();
 			
 		}
 		
@@ -361,8 +361,8 @@ public class Main {
 		scene.skyCtx.fogDensity = 0;
 		
 		while (!Display.isCloseRequested()) { 
-			spinny.rotate(0, -6000 * DisplayManager.getFrameDeltaTime(), 0);
-			bal.rotate(600 * DisplayManager.getFrameDeltaTime(), 0, 0);
+			spinny.rotate(0, -6000 * TRDisplayManager.getFrameDeltaTime(), 0);
+			bal.rotate(600 * TRDisplayManager.getFrameDeltaTime(), 0, 0);
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);
@@ -490,7 +490,7 @@ public class Main {
 			guiRenderer.render(guis);
 			TextMaster.drawText();
 			AudioEngine.update();
-			DisplayManager.updateDisplay();//SFMath.xTranslation = new Vector3f(0, 0, 0);
+			TRDisplayManager.updateDisplay();//SFMath.xTranslation = new Vector3f(0, 0, 0);
 			//fout.flush();
 		}
 		
@@ -512,7 +512,7 @@ public class Main {
 		Loader.cleanUp();
 		ParticleWatcher.cleanUp();
 		AudioEngine.cleanUp();
-		DisplayManager.closeDisplay();
+		TRDisplayManager.closeDisplay();
 		
 		//END OF main (String[] args)
 		

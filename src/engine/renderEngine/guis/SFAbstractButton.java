@@ -5,7 +5,7 @@ import java.util.List;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
-import engine.renderEngine.DisplayManager;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
 
 public abstract class SFAbstractButton implements IButton, IGUI {
@@ -85,7 +85,7 @@ public abstract class SFAbstractButton implements IButton, IGUI {
 		if (!isHidden) {
 			Vector2f location = buttonTexture.getPosition();
 			Vector2f scale = buttonTexture.getScale();
-			Vector2f mouseCoordinates = DisplayManager.getNormalizedMouseCoords();
+			Vector2f mouseCoordinates = TRDisplayManager.getNormalizedMouseCoords();
 			if (mouseIntersect(location, mouseCoordinates, scale)) {
 				whileHovering(this);
 				if (!isHovering) {
