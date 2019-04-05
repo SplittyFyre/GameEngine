@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
@@ -18,24 +17,19 @@ public class DisplayManager {
 	
 	private static String[] ICON_PATHS = {"sficon16", "sficon32", "sficon"};
 	
-	private static final int WIDTH = 3200;
-	private static final int HEIGHT = 1800;
-	private static final int FPS_CAP = 120;
+	private static int WIDTH;
+	private static int HEIGHT;
+	private static int FPS_CAP;
 	
 	private static long lastFrameTime;
 	private static float delta;
 	
-	public static Cursor cursor;
-	public static Cursor target;
-	
-	public static final int NORMAL = 0;
-	public static final int TARGET = 1;
-	
-	public static int currentCursor = NORMAL; 
-	
 	private static Runnable resizeCallBack;
 	
-	public static void createDisplay(Runnable resizeCallBack) {	
+	public static void createDisplay(int width, int height, int fpsCap, String title, Runnable resizeCallBack) {
+		WIDTH = width;
+		HEIGHT = height;
+		FPS_CAP = fpsCap;
 		DisplayManager.resizeCallBack = resizeCallBack;
 		
 		ContextAttribs attributes = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
@@ -43,11 +37,10 @@ public class DisplayManager {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setInitialBackground(0.569f, 0.869f, 0.6969f);
-			//Display.setInitialBackground(0, 0, 0);
 			Display.setResizable(true);
 			Display.create(new PixelFormat().withDepthBits(24), attributes);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
-			Display.setTitle("Tesseract Engine  : Java");
+			Display.setTitle("Tesseract Engine (Java) " + title);
 			
 			ByteBuffer[] icons = new ByteBuffer[ICON_PATHS.length];
 			
@@ -57,11 +50,6 @@ public class DisplayManager {
 			}
 			
 			Display.setIcon(icons);
-
-			cursor = Loader.loadCursor("cursor");
-			target = Loader.loadCursor("bullseye");
-			
-			Mouse.setNativeCursor(cursor);
 			
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -70,9 +58,17 @@ public class DisplayManager {
 		lastFrameTime = getCurrentTime();
 	} 
 	
+	public static void setNativeCursor(org.lwjgl.input.Cursor cursor) {
+		try {
+			Mouse.setNativeCursor(cursor);
+		} catch (LWJGLException e) {
+			System.out.println("Failed to set native cursor");
+			e.printStackTrace();
+		}
+	}
+	
 	public static void updateDisplay() {
 		if (Display.wasResized()) {
-			System.out.println("resized");
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 			if (DisplayManager.resizeCallBack != null)
 				DisplayManager.resizeCallBack.run();
@@ -81,13 +77,7 @@ public class DisplayManager {
 		Display.update();
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime) / 1000f;
-		lastFrameTime = currentFrameTime;
-		//System.out.println("SPF: " + (delta));
-		
-		/*if (delta > 0.02f && getCurrentTime() > 5) {
-			System.err.println("Warning: Low Framerate");
-		}*/
-		
+		lastFrameTime = currentFrameTime;	
 	}
 	
 	public static float getFrameDeltaTime() {

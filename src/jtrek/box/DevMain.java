@@ -18,7 +18,7 @@ public class DevMain {
 
 	public static void main(String[] args) {
 		
-		DisplayManager.createDisplay(null);
+		//DisplayManager.createDisplay(null);
 		
 		TRRenderEngine engine = new TRRenderEngine(
 				TRRenderEngine.RENDER_ENTITIES_BIT | 

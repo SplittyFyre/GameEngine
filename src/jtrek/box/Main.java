@@ -82,7 +82,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		
-		DisplayManager.createDisplay(runnable);
+		DisplayManager.createDisplay(3200, 1800, 120, "Testing", runnable);
 		AudioEngine.init();
 		
 		TextMaster.init();

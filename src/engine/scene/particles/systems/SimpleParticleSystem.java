@@ -11,7 +11,7 @@ import engine.renderEngine.DisplayManager;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.scene.particles.TRParticleSystem;
-import jtrek.box.TM;
+import engine.utils.TRUtils;
  
 public class SimpleParticleSystem extends TRParticleSystem {
  
@@ -85,8 +85,8 @@ public class SimpleParticleSystem extends TRParticleSystem {
     }
      
     private Vector3f generateRandomUnitVector() {
-        float theta = (float) (TM.rng.nextFloat() * 2f * Math.PI);
-        float z = (TM.rng.nextFloat() * 2) - 1;
+        float theta = (float) (TRUtils.rng.nextFloat() * 2f * Math.PI);
+        float z = (TRUtils.rng.nextFloat() * 2) - 1;
         float rootOneMinusZSquared = (float) Math.sqrt(1 - z * z);
         float x = (float) (rootOneMinusZSquared * Math.cos(theta));
         float y = (float) (rootOneMinusZSquared * Math.sin(theta));

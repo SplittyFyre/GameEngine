@@ -8,8 +8,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.fontRendering.TextMaster;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
-import jtrek.box.TM;
-import jtrek.gameplay.entities.entityUtils.StatusText;
+import engine.utils.SFMath;
 
 /**
  * Represents a piece of text in the game.
@@ -172,11 +171,6 @@ public class GUIText implements IGUI {
 	public void plusAlpha(float p) {
 		colour.w += p;
 	}
-	
-	public void conformToStatusText(StatusText txt) {
-		setColour(txt.r, txt.g, txt.b);
-		setText(txt.msg);
-	}
 
 	/**
 	 * @return the colour of the text.
@@ -287,8 +281,8 @@ public class GUIText implements IGUI {
 
 	@Override
 	public void move(float dx, float dy) {
-		this.position.x += TM.coordtextx(dx);
-		this.position.y += TM.coordtexty(dy);
+		this.position.x += SFMath.coordtextx(dx);
+		this.position.y += SFMath.coordtexty(dy);
 	}
 
 }

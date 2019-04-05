@@ -260,5 +260,47 @@ public class SFMath {
 	public static Vector3f vecoffset(Vector3f vec, float x, float y, float z) {
 		return new Vector3f(vec.x + x, vec.y + y, vec.z + z);
 	}
+	
+	
+	
+	
+		
+	public static Vector2f sqr2 = new Vector2f(0.01f, 0.01f * DisplayManager.getAspectRatio());
+	public static Vector2f sqr4 = new Vector2f(0.025f, 0.025f * DisplayManager.getAspectRatio());
+	public static Vector2f sqr8 = new Vector2f(0.045f, 0.045f * DisplayManager.getAspectRatio());
+	
+	public static Vector2f sqrgui(float scale) {
+		return new Vector2f(scale, scale * DisplayManager.getAspectRatio());
+	}
+	
+	public static Vector2f coordtext(Vector2f pos) {
+		return coordtext(pos.x, pos.y);
+	}
+	
+	public static Vector2f coordtextcenter(Vector2f pos, float scaleX, float scaleY) {
+		Vector2f retval = coordtext(pos.x, pos.y);
+		retval.x -= (scaleX / 2f);
+		retval.y -= (scaleY / 2f);
+		return retval;
+	}
+	
+	public static Vector2f coordtextcenter(Vector2f pos, float scaleX, float scaleY, float yscalediv) {
+		Vector2f retval = coordtext(pos.x, pos.y);
+		retval.x -= (scaleX / 2f);
+		retval.y -= (scaleY / yscalediv);
+		return retval;
+	}
+	
+	public static Vector2f coordtext(float x, float y) {	
+		return new Vector2f(((x / 2) + 0.5f), -(y / 2) + 0.5f);
+	}
+	
+	public static float coordtextx(float x) {
+		return (x / 2) + 0.5f;
+	}
+	
+	public static float coordtexty(float y) {
+		return -(y / 2) + 0.5f;
+	}
 
 }

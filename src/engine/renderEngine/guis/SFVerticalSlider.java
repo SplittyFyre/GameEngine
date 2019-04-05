@@ -13,7 +13,8 @@ import engine.fontMeshCreator.FontType;
 import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.DisplayManager;
 import engine.renderEngine.Loader;
-import jtrek.box.TM;
+import engine.utils.SFMath;
+import engine.utils.TRUtils;
 
 public abstract class SFVerticalSlider implements ISlider, IGUI {
 
@@ -262,7 +263,7 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 		/*GUIText o = new GUIText(text, txtsize, TaskManager.font, 
 				new Vector2f((bgX + xoffset), bgY), 1, false);*/
 		
-		GUIText o = new GUIText(text, txtsize, TM.font, 
+		GUIText o = new GUIText(text, txtsize, TRUtils.trFont, 
 				new Vector2f(((bgX / 2) + 0.5f), -(bgY / 2) + 0.5f - (scale.y / 4)), 1, false);
 		
 		o.setColour(r, g, b);
@@ -366,13 +367,13 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 	}
 	
 	public void setCounter(float fontSize, FontType font, float yoffset,  float r, float g, float b) {
-		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
+		this.counter = new GUIText("", fontSize, font, SFMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.df = new DecimalFormat("#.###");
 	}
 	
 	public void setCounter(float fontSize, FontType font, float yoffset, float r, float g, float b, Callable<String> run) {
-		this.counter = new GUIText("", fontSize, font, TM.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
+		this.counter = new GUIText("", fontSize, font, SFMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.run = run;
 	}

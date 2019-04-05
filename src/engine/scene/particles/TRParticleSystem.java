@@ -2,7 +2,7 @@ package engine.scene.particles;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import jtrek.box.TM;
+import engine.utils.TRUtils;
 
 public abstract class TRParticleSystem {
 	
@@ -48,13 +48,13 @@ public abstract class TRParticleSystem {
     }
     
     protected float generateValue(float average, float errorMargin) {
-        float offset = (TM.rng.nextFloat() - 0.5f) * 2f * errorMargin;
+        float offset = (TRUtils.rng.nextFloat() - 0.5f) * 2f * errorMargin;
         return average + offset;
     }
  
     protected float generateRotation() {
         if (randomRotation) {
-            return TM.rng.nextFloat() * 360f;
+            return TRUtils.rng.nextFloat() * 360f;
         } else {
             return 0;
         }

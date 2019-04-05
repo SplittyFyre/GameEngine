@@ -64,7 +64,9 @@ public class MasterRenderSystem {
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		
-		skyboxRenderer.render(scene);
+		if (scene.getSkybox() != null)
+			skyboxRenderer.render(scene);
+		
 		entityRenderer.render(entities, scene);
 		terrainRenderer.render(scene.getTerrains(), scene);
 		//FINISH***********************************************************

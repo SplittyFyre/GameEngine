@@ -497,14 +497,14 @@ public class PlayerBirdOfPrey extends Player {
 		
 		if (virg) {
 			
-			if (DisplayManager.currentCursor != DisplayManager.NORMAL) {
+			/*if (DisplayManager.currentCursor != DisplayManager.NORMAL) {
 				try {
 					Mouse.setNativeCursor(DisplayManager.cursor);
 					DisplayManager.currentCursor = DisplayManager.NORMAL;
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
 			
 			while (Mouse.next()) {
 				if (Mouse.getEventButtonState()) {
@@ -517,14 +517,14 @@ public class PlayerBirdOfPrey extends Player {
 			
 		}
 		else {
-			if (DisplayManager.currentCursor != DisplayManager.TARGET) {System.out.println("Cursor taregt");
+			/*if (DisplayManager.currentCursor != DisplayManager.TARGET) {System.out.println("Cursor taregt");
 				try {
 					Mouse.setNativeCursor(DisplayManager.target);
 					DisplayManager.currentCursor = DisplayManager.TARGET;
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
 		}
 		
 	}

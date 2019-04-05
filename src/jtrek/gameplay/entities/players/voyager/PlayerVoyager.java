@@ -1053,7 +1053,6 @@ public class PlayerVoyager extends Player {
 			}
 		}
 		
-		trmText.conformToStatusText(current);
 		statusQueue.clear();
 		
 	}
@@ -1909,13 +1908,13 @@ public class PlayerVoyager extends Player {
 			if (this.target == null)
 				this.dropRetical();
 			
-			if (Mouse.getNativeCursor() != DisplayManager.cursor) {
+			/*if (Mouse.getNativeCursor() != DisplayManager.cursor) {
 				try {
 					Mouse.setNativeCursor(DisplayManager.cursor);
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
 			
 			while (Mouse.next()) {
 				if (Mouse.getEventButtonState()) {

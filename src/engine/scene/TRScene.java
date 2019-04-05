@@ -30,7 +30,7 @@ public class TRScene {
 	
 	public SkyContext skyCtx;
 	
-	private TRSkybox skybox;
+	private TRSkybox skybox = null;
 	
 	public TRSkybox getSkybox() {
 		return skybox;
