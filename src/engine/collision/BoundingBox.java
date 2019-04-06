@@ -6,25 +6,26 @@ public class BoundingBox {
 	
 	public float minX, minY, minZ;
 	public float maxX, maxY, maxZ;
+	public float sphereRadius;
 	
-	public BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
-		
+	public BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ, float sphereRadius) {
 		this.minX = minX;
 		this.minY = minY;
 		this.minZ = minZ;
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.maxZ = maxZ;
+		this.sphereRadius = sphereRadius;
 	}
 	
 	public BoundingBox(BoundingBox boundingBox) {
-		
 		this.minX = boundingBox.minX;
 		this.minY = boundingBox.minY;
 		this.minZ = boundingBox.minZ;
 		this.maxX = boundingBox.maxX;
 		this.maxY = boundingBox.maxY;
 		this.maxZ = boundingBox.maxZ;
+		this.sphereRadius = boundingBox.sphereRadius;
 	}
 	
 	public boolean intersects(BoundingBox other) {

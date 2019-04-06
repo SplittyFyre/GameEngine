@@ -18,12 +18,15 @@ public class TRScene {
 	
 	public static final int MAX_LIGHTS = 4;
 			
-	protected List<TREntity> entities = new ArrayList<TREntity>();
 	protected List<TRTerrain> terrains = new ArrayList<TRTerrain>();
 	protected List<Light> lights = new ArrayList<Light>();
 	protected List<DUDVWaterTile> waters = new ArrayList<DUDVWaterTile>();
 	
-	public TROrganizationNode rootEntity = new TROrganizationNode();
+	public TROrganizationNode rootNode = new TROrganizationNode();
+	
+	public void addEntityToRoot(TREntity entity) {
+		rootNode.attachChild(entity);
+	}
 	 
 	protected Camera camera;
 	
@@ -68,10 +71,6 @@ public class TRScene {
 		clipPlane = plane;
 	}
 	
-	public void setEntityList(List<TREntity> e) {
-		entities = (e);
-	}
-	
 	public void setTerrainList(List<TRTerrain> t) {
 		terrains = (t);
 	}
@@ -91,10 +90,6 @@ public class TRScene {
 	
 	public void setCamera(Camera c) {
 		this.camera = c;
-	}
-	
-	public List<TREntity> getEntities() {
-		return entities;
 	}
 	
 	public List<TRTerrain> getTerrains() {

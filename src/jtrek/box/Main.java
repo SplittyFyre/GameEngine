@@ -328,7 +328,6 @@ public class Main {
 			e1.printStackTrace();
 		}*/
 		
-		scene.setEntityList(allEntities);
 		
 		
 		int ft1 = Loader.loadTexture("lensFlare/tex1");
@@ -355,23 +354,21 @@ public class Main {
 		
 		scene.skyCtx.fogDensity = 0;
 		
-		scene.rootEntity.attachChild(player);
+		scene.rootNode.attachChild(player);
 		player.attachChild(spinny);
 		player.attachChild(bal);player.getModel().getRawModel().doubleSidedFaces = true;
 		
-		scene.rootEntity.attachChild(borj);
+		scene.rootNode.attachChild(borj);
 		
 		TROrganizationNode node = new TROrganizationNode();
-		scene.rootEntity.attachChild(node);
+		scene.rootNode.attachChild(node);
 		node.attachChild(new StaticEntity(borgShip, new Vector3f(0, 1000, 0), 0, 0, 0, 1000));
 				
 		while (!Display.isCloseRequested()) {
 			spinny.rotate(0, -1000 * TRDisplayManager.getFrameDeltaTime(), 0);
 			bal.rotate(1000 * TRDisplayManager.getFrameDeltaTime(), 0, 0);
 			
-			if (caster.penetrates(spinny.getBoundingBox())) {
-				System.out.println("ow!");
-			}
+
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);

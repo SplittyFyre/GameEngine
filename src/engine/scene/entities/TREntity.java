@@ -111,7 +111,8 @@ public abstract class TREntity {
 	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, Matrix4f parentTransformMat) {
 		
 		Matrix4f m_transformationMatrix = null;
-				
+		
+		// if this is not merely an organization node
 		if (!this.isOrganizationNode) {
 			
 			m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
@@ -145,7 +146,7 @@ public abstract class TREntity {
 				batch.add(additionalGeom);
 			}
 			
-			// after having calculated world pos, update bounding box
+			// after having calculated world pos and scale, update bounding box
 			this.updateBoundingBox();
 			
 		}
@@ -321,37 +322,39 @@ public abstract class TREntity {
 		Vector3f vec = this.getWorldScale();
 		
 		if (vec.x > 1) {
-			float modX = (vec.x - 1) * (bb.maxX - bb.minX) / 2;
+			float modX = (vec.x - 1) * (bb.maxX - bb.minX) / 2.f;
 			bb.minX -= modX;
 			bb.maxX += modX;
 		}
 		else if (vec.x < 1) {
-			float modX = (1 - vec.x) * (bb.maxX - bb.minX) / 2;
+			float modX = (1 - vec.x) * (bb.maxX - bb.minX) / 2.f;
 			bb.minX -= modX;
 			bb.maxX += modX;
 		}
 		
 		if (vec.y > 1) {
-			float modY = (vec.y - 1) * (bb.maxY - bb.minY) / 2;
+			float modY = (vec.y - 1) * (bb.maxY - bb.minY) / 2.f;
 			bb.minY -= modY;
 			bb.maxY += modY;
 		}
 		else if (vec.y < 1) {
-			float modY = (1 - vec.y) * (bb.maxY - bb.minY) / 2;
+			float modY = (1 - vec.y) * (bb.maxY - bb.minY) / 2.f;
 			bb.minY -= modY;
 			bb.maxY += modY;
 		}
 		
 		if (vec.z > 1) {
-			float modZ = (vec.z - 1) * (bb.maxZ - bb.minZ) / 2;
+			float modZ = (vec.z - 1) * (bb.maxZ - bb.minZ) / 2.f;
 			bb.minZ -= modZ;
 			bb.maxZ += modZ;
 		}
 		else if (vec.z < 1) {
-			float modZ = (1 - vec.z) * (bb.maxZ - bb.minZ) / 2;
+			float modZ = (1 - vec.z) * (bb.maxZ - bb.minZ) / 2.f;
 			bb.minZ -= modZ;
 			bb.maxZ += modZ;
 		}
+		
+		bb.sphereRadius = this.staticBoundingBox.sphereRadius * Math.max(Math.max(vec.x, vec.y), vec.z);
 		
 	}
 

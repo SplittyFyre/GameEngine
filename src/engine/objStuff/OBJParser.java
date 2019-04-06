@@ -89,18 +89,18 @@ public class OBJParser {
 		
 		int vertexPointer = 0;
 		
-		for (Vector3f vertex : vertices){
+		
+		BoundingBox aabb = new BoundingBox(0, 0, 0, 0, 0, 0, 0);
+		
+		for (Vector3f vertex : vertices) {
 			verticesArray[vertexPointer++] = vertex.x;
 			verticesArray[vertexPointer++] = vertex.y;
 			verticesArray[vertexPointer++] = vertex.z;
-		}
-		
-		for (int i = 0; i < indices.size(); i++)
-			indicesArray[i] = indices.get(i);
-		
-		BoundingBox aabb = new BoundingBox(0, 0, 0, 0, 0, 0);
-		
-		for (Vector3f vertex : vertices) {
+			
+			float radius = vertex.length();
+			if (radius > aabb.sphereRadius) {
+				aabb.sphereRadius = radius;
+			}
 			
 			if (vertex.x < aabb.minX)
 				aabb.minX = vertex.x;
@@ -116,8 +116,11 @@ public class OBJParser {
 				aabb.minZ = vertex.z;
 			else if (vertex.z > aabb.maxZ)                       
 				aabb.maxZ = vertex.z;
-			
 		}
+		
+		for (int i = 0; i < indices.size(); i++)
+			indicesArray[i] = indices.get(i);
+		
 		
 		return Loader.loadToVAO(verticesArray, textureArray, normalsArray, indicesArray, aabb);
 		
@@ -278,7 +281,7 @@ public class OBJParser {
             List<Vector3f> normals, float[] verticesArray, float[] texturesArray,
             float[] normalsArray) {
     	
-    	BoundingBox aabb = new BoundingBox(0, 0, 0, 0, 0, 0);
+    	BoundingBox aabb = new BoundingBox(0, 0, 0, 0, 0, 0, 0);
     	
         for (int i = 0; i < vertices.size(); i++) {
             Vertex currentVertex = vertices.get(i);
@@ -295,22 +298,27 @@ public class OBJParser {
             normalsArray[i * 3 + 2] = normalVector.z;
             
             
-            Vector3f vtxpos = currentVertex.getPosition();
+            float radius = position.length();
             
-            if (vtxpos.x < aabb.minX)
-				aabb.minX = vtxpos.x;
-			else if (vtxpos.x > aabb.maxX)
-				aabb.maxX = vtxpos.x;
+            if (radius > aabb.sphereRadius) {
+            	aabb.sphereRadius = radius;
+            }
+            
+            
+            if (position.x < aabb.minX)
+				aabb.minX = position.x;
+			else if (position.x > aabb.maxX)
+				aabb.maxX = position.x;
 			
-			if (vtxpos.y < aabb.minY)
-				aabb.minY = vtxpos.y;
-			else if (vtxpos.y > aabb.maxY)
-				aabb.maxY = vtxpos.y;
+			if (position.y < aabb.minY)
+				aabb.minY = position.y;
+			else if (position.y > aabb.maxY)
+				aabb.maxY = position.y;
 			
-			if (vtxpos.z < aabb.minZ)
-				aabb.minZ = vtxpos.z;
-			else if (vtxpos.z > aabb.maxZ)                       
-				aabb.maxZ = vtxpos.z;
+			if (position.z < aabb.minZ)
+				aabb.minZ = position.z;
+			else if (position.z > aabb.maxZ)                       
+				aabb.maxZ = position.z;
         }
         return aabb;
     }

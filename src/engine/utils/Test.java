@@ -3,6 +3,12 @@ package engine.utils;
 public class Test {
 	
 	public static void main(String[] args) {
+		
+		float f = 2.5f + 1;
+		
+		System.out.println(f);
+		
+		System.exit(0);
 
 		int bit = 2;
 		

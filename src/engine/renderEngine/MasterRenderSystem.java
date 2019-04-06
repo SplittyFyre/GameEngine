@@ -34,7 +34,7 @@ public class MasterRenderSystem {
 	private TerrainRenderSystem terrainRenderer;
 	private SkyboxRenderSystem skyboxRenderer;
 	private DUDVWaterRenderer waterRenderer;
-	private Map<TexturedModel, List<TRAddtlGeom>> entities = new HashMap<TexturedModel, List<TRAddtlGeom>>();
+	private Map<TexturedModel, List<TRAddtlGeom>> entitiesInfos = new HashMap<TexturedModel, List<TRAddtlGeom>>();
 	
 	private boolean isRFAvailable(int mask) {
 		return (renderSupportMask & mask) != 0;
@@ -54,7 +54,7 @@ public class MasterRenderSystem {
 	}
 	
 	private void renderWithoutWater(TRScene scene) {
-		scene.rootEntity.updateSceneGraph(entities, null);
+		scene.rootNode.updateSceneGraph(entitiesInfos, null);
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
@@ -63,10 +63,10 @@ public class MasterRenderSystem {
 		if (scene.getSkybox() != null)
 			skyboxRenderer.render(scene);
 		
-		entityRenderer.render(entities, scene);
+		entityRenderer.render(entitiesInfos, scene);
 		terrainRenderer.render(scene.getTerrains(), scene);
 		//FINISH***********************************************************
-		entities.clear();
+		entitiesInfos.clear();
 	}
 	
 	public void renderMainPass(TRScene scene, Fbo fbo) {

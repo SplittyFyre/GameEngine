@@ -37,7 +37,7 @@ public class DevMain {
 		TexturedModel model = new TexturedModel(OBJParser.loadObjModel("dragon"), tex);
 		
 		StaticEntity entity = new StaticEntity(model, new Vector3f(0, 0, -50), 0, 0, 0, 10);
-		scene.getEntities().add(entity);
+		scene.rootNode.attachChild(entity);
 				
 		scene.setCamera(new RogueCamera());
 		
