@@ -19,8 +19,8 @@ import engine.fontRendering.TextMaster;
 import engine.objStuff.OBJParser;
 import engine.postProcessing.Fbo;
 import engine.postProcessing.PostProcessing;
-import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.TRRenderEngine;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.render.GUIRenderer;
@@ -186,7 +186,7 @@ public class Main {
 		switch (p) {
 		
 		case 0:
-			player = new PlayerVoyager(done, new Vector3f(0, 0, 0), 0, 0, 0, 100, guis);
+			player = (Player) new PlayerVoyager(done, new Vector3f(0, 0, 0), 0, 0, 0, 100, guis).enableChildren();
 			entities.add(player);
 			break;
 			
@@ -347,11 +347,11 @@ public class Main {
                 new FlareTexture(ft9, 0.1f), new FlareTexture(ft3, 0.07f), new FlareTexture(ft5, 0.3f), new FlareTexture(ft4, 0.4f),
                 new FlareTexture(ft8, 0.6f));
 		
-		spinny.useParentTransform = true;
+		/*spinny.useParentTransform = true;
 		spinny.parentTransform = player;
 		
 		bal.useParentTransform = true;
-		bal.parentTransform = player;
+		bal.parentTransform = player;*/
 		
 		
 		TRSkybox skybox = new TRSkybox(100000);
@@ -360,7 +360,11 @@ public class Main {
 		
 		scene.skyCtx.fogDensity = 0;
 		
-		while (!Display.isCloseRequested()) { 
+		scene.rootEntity.attachChild(player);
+		player.attachChild(spinny);
+		player.attachChild(bal);
+		
+		while (!Display.isCloseRequested()) {
 			spinny.rotate(0, -6000 * TRDisplayManager.getFrameDeltaTime(), 0);
 			bal.rotate(600 * TRDisplayManager.getFrameDeltaTime(), 0, 0);
 			//long start = System.nanoTime();

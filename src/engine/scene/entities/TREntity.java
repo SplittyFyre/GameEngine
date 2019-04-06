@@ -32,7 +32,7 @@ public abstract class TREntity {
 	
 	
 	public boolean canHaveChildren = false;
-	public boolean isRootNode = false;
+	public final boolean isRootNode;
 	
 	private TREntity parent = null;
 	private List<TREntity> children = null;
@@ -71,7 +71,7 @@ public abstract class TREntity {
 		child.setParent(null);
 	}
 	
-	public TREntity withChildren() {
+	public TREntity enableChildren() {
 		this.canHaveChildren = true;
 		this.children = new ArrayList<TREntity>();
 		return this;
@@ -80,19 +80,25 @@ public abstract class TREntity {
 																				// mat is for internal use, renderer pass in null
 	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, Matrix4f parentTransformMat) {
 		
-		Matrix4f m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
+		Matrix4f m_transformationMatrix = null;
 				
 		if (!this.isRootNode) {
 			
+			m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
+			
 			TRAddtlGeom additionalGeom = null;
 			
-			if (this.parent.isRootNode) {		
-				additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	
+			if (this.parent.isRootNode) {
+				this.worldPosition.set(this.position);
 			}
 			else { // if parent is not root and therefore 'valid'
-				// actually apply parent transform
+				// actually apply parent transform, then calc world pos and stuff				
 				Matrix4f.mul(parentTransformMat, m_transformationMatrix, m_transformationMatrix);
+				
+				SFMath.transformAndSet_inplace(m_transformationMatrix, this.position, this.worldPosition);
 			}
+			
+			additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	
 			
 			TexturedModel model = this.model;
 			List<TRAddtlGeom> batch = mapPtr.get(model);
@@ -130,6 +136,8 @@ public abstract class TREntity {
 		this.scaleZ = scale;
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
+		
+		this.isRootNode = false;
 	}
 	
 	public TREntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) {
@@ -144,6 +152,8 @@ public abstract class TREntity {
 		this.scaleZ = scaleZ;
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
+		
+		this.isRootNode = false;
 	}
 	
 	public TREntity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
@@ -159,6 +169,14 @@ public abstract class TREntity {
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 		
+		this.isRootNode = false;
+	}
+	/**
+	 * protected constructor reserved for construction of scene graph root object
+	 */
+	protected TREntity() {
+		this.staticBoundingBox = null;
+		this.isRootNode = true;
 	}
 
 	public float getTextureXOffset() {

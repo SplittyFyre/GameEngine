@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.TREntity;
+import engine.scene.entities.TRRootEntity;
 import engine.scene.entities.camera.Camera;
 import engine.scene.skybox.TRSkybox;
 import engine.scene.terrain.TRTerrain;
@@ -21,6 +22,8 @@ public class TRScene {
 	protected List<TRTerrain> terrains = new ArrayList<TRTerrain>();
 	protected List<Light> lights = new ArrayList<Light>();
 	protected List<DUDVWaterTile> waters = new ArrayList<DUDVWaterTile>();
+	
+	public TRRootEntity rootEntity = (TRRootEntity) new TRRootEntity().enableChildren();
 	 
 	protected Camera camera;
 	protected Vector4f clipPlane = new Vector4f();

@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.MasterRenderSystem;
+import engine.renderEngine.TRAddtlGeom;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
@@ -35,18 +36,18 @@ public class EntityRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(Map<TexturedModel, List<TREntity>> entities, TRScene scene) { 
+	public void render(Map<TexturedModel, List<TRAddtlGeom>> entities, TRScene scene) { 
 		prepare(scene);
 		for (TexturedModel model : entities.keySet()) {
 			prepareTexturedModel(model);
-			List<TREntity> batch = entities.get(model);
+			List<TRAddtlGeom> batch = entities.get(model);
 			
 			/*
 			 * Here, we have all of the entities, each with the same model, why not render instanced here?
 			 * */
 			
-			for (TREntity entity : batch) {
-				prepareInstance(entity);
+			for (TRAddtlGeom geom : batch) {
+				prepareInstance(geom);
 
 				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(),
 						GL11.GL_UNSIGNED_INT, 0);
@@ -102,6 +103,11 @@ public class EntityRenderSystem {
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
+	}
+	
+	private void prepareInstance(TRAddtlGeom geom) {	
+		shader.loadTransformationMatrix(geom.transform);
+		shader.loadOffset(geom.xtexoff, geom.ytexoff);	
 	}
 
 	private void prepareInstance(TREntity entity) {

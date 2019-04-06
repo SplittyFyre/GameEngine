@@ -1,6 +1,5 @@
 package engine.renderEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +8,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.postProcessing.Fbo;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.TRScene;
-import engine.scene.entities.TREntity;
 import engine.scene.entities.camera.Camera;
 import engine.scene.entities.render.EntityRenderSystem;
 import engine.scene.particles.ParticleWatcher;
@@ -37,7 +34,7 @@ public class MasterRenderSystem {
 	private TerrainRenderSystem terrainRenderer;
 	private SkyboxRenderSystem skyboxRenderer;
 	private DUDVWaterRenderer waterRenderer;
-	private Map<TexturedModel, List<TREntity>> entities = new HashMap<TexturedModel, List<TREntity>>();
+	private Map<TexturedModel, List<TRAddtlGeom>> entities = new HashMap<TexturedModel, List<TRAddtlGeom>>();
 	
 	private boolean isRFAvailable(int mask) {
 		return (renderSupportMask & mask) != 0;
@@ -57,8 +54,7 @@ public class MasterRenderSystem {
 	}
 	
 	private void renderWithoutWater(TRScene scene) {
-		for (TREntity entity : scene.getEntities())
-			processEntity(entity);
+		scene.rootEntity.updateSceneGraph(entities, null);
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
@@ -127,7 +123,7 @@ public class MasterRenderSystem {
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 	}
 	
-	public void processEntity(TREntity entity) {
+	/*public void processEntity(TREntity entity) {
 		TexturedModel entityModel = entity.getModel();
 		List<TREntity> batch = entities.get(entityModel);
 		if (batch != null) {
@@ -181,7 +177,7 @@ public class MasterRenderSystem {
 			entity.getBoundingBox().maxZ += modZ;
 		}
 		
-	}
+	}*/
 	
 	public void setProjectionMatrix(Matrix4f matrix) {
 		entityRenderer.setProjectionMatrix(matrix);
