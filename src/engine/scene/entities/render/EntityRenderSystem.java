@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.MasterRenderSystem;
 import engine.renderEngine.TRAddtlGeom;
@@ -16,15 +15,11 @@ import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
 import engine.scene.TRScene;
-import engine.scene.entities.TREntity;
-import engine.utils.SFMath;
 
 public class EntityRenderSystem {
 	
 	private EntityShader shader;
-	
-	private int instanceVBO;
-	
+		
 	public EntityShader getShader() {
 		return shader;
 	}
@@ -67,7 +62,7 @@ public class EntityRenderSystem {
 		shader.loadAmbientLight(scene.getAmbientLight());
 		shader.loadLightsInUse(scene.getLights().size());
 		
-		shader.loadCellShadingStatus(scene.useCellShading, scene.numCellLevels);
+		shader.loadCellShadingStatus(scene.useCellShading, scene.numCellShadingLevels);
 		
 		shader.connectTextureUnits();
 	}
@@ -82,7 +77,7 @@ public class EntityRenderSystem {
 		ModelTexture texture = model.getTexture();
 		shader.loadNumberOfRows(texture.getNumRows());
 		
-		if (texture.isTransparent()) 
+		if (texture.isTransparent() || rawModel.doubleSidedFaces) 
 			MasterRenderSystem.disableFaceCulling();
 		
 		shader.loadFakeLight(texture.isUseFakeLighting());
@@ -110,7 +105,7 @@ public class EntityRenderSystem {
 		shader.loadOffset(geom.xtexoff, geom.ytexoff);	
 	}
 
-	private void prepareInstance(TREntity entity) {
+	/*private void prepareInstance(TREntity entity) {
 		
 		Matrix4f transformationMatrix;
 		
@@ -122,7 +117,7 @@ public class EntityRenderSystem {
 			else {
 				transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customRotationAxis,
 						entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());	
-			}*/
+			}
 			transformationMatrix = SFMath.createTransformationMatrix(new Vector3f(entity.getPosition()), entity.customRotationAxis,
 					entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		}
@@ -157,9 +152,9 @@ public class EntityRenderSystem {
 		
 		entity.getBoundingBox().maxX = maxs.x;
 		entity.getBoundingBox().maxY = maxs.y;
-		entity.getBoundingBox().maxZ = maxs.z;*/
+		entity.getBoundingBox().maxZ = maxs.z;
 		
-	}
+	}*/
 	
 	public void setProjectionMatrix(Matrix4f matrix) {
 		shader.start();

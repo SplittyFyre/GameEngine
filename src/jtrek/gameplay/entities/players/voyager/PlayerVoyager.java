@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
@@ -16,8 +15,8 @@ import engine.audio.AudioSrc;
 import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
 import engine.objStuff.OBJParser;
-import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IButton;
 import engine.renderEngine.guis.IGUI;
@@ -1846,11 +1845,11 @@ public class PlayerVoyager extends Player {
 				
 				virg = false;
 
-				try {
+				/*try {
 					Mouse.setNativeCursor(Loader.loadCursor("bullseye"));
 				} catch (LWJGLException e) {
 					e.printStackTrace();
-				}
+				}*/
 				
 				if (Mouse.isButtonDown(0)) {
 					while (Mouse.next()) {

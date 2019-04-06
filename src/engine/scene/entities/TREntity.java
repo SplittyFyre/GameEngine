@@ -18,21 +18,14 @@ public abstract class TREntity {
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float scaleX, scaleY, scaleZ;
+	private Vector3f worldScale = new Vector3f(0, 0, 0);
 	private BoundingBox boundingBox;
 	private final BoundingBox staticBoundingBox;
 	
 	public float bbyoffset = 0;
 	
-	public TREntity parentTransform = null;
-	public boolean useParentTransform = false;
-	
-	public boolean useCustomRotationAxis = false;
-	public Vector3f customRotationAxis = null;
-	
-	
-	
 	public boolean canHaveChildren = false;
-	public final boolean isRootNode;
+	public final boolean isOrganizationNode;
 	
 	private TREntity parent = null;
 	private List<TREntity> children = null;
@@ -47,6 +40,10 @@ public abstract class TREntity {
 		this.worldPosition = worldPosition;
 	}
 	
+	public Vector3f getWorldScale() {
+		return this.worldScale;
+	}
+	
 	
 	public TREntity getParent() {
 		return this.parent;
@@ -54,6 +51,9 @@ public abstract class TREntity {
 	public void setParent(TREntity parent) {
 		this.parent = parent;
 	}
+	
+	
+	
 	
 	public void attachChild(TREntity child) {
 		if (!this.canHaveChildren) {
@@ -65,11 +65,41 @@ public abstract class TREntity {
 	
 	public void detachChild(TREntity child) {
 		if (!this.canHaveChildren) {
-			throw new RuntimeException("this entity has no children and therefore you cannot remove any");
+			throw new RuntimeException("this entity can not have children and therefore you cannot remove any");
 		}
 		children.remove(child);
 		child.setParent(null);
 	}
+	
+	public void detachChildAt(int i) {
+		if (!this.canHaveChildren) {
+			throw new RuntimeException("this entity can not have children");
+		}
+		children.get(i).setParent(null);
+		children.remove(i);
+	}
+	
+	public TREntity childAt(int i) {
+		if (!this.canHaveChildren) {
+			throw new RuntimeException("this entity can not have children");
+		}
+		return children.get(i);
+	}
+	
+	public void setChildren(List<TREntity> childrens) {
+		this.children = childrens;
+	}
+	
+	public List<TREntity> getChildren() {
+		return this.children;
+	}
+	
+	public boolean hasChildren() {
+		return this.canHaveChildren && this.children.size() != 0; 
+	}
+	
+	
+	
 	
 	public TREntity enableChildren() {
 		this.canHaveChildren = true;
@@ -82,19 +112,23 @@ public abstract class TREntity {
 		
 		Matrix4f m_transformationMatrix = null;
 				
-		if (!this.isRootNode) {
+		if (!this.isOrganizationNode) {
 			
 			m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
 			
 			TRAddtlGeom additionalGeom = null;
 			
-			if (this.parent.isRootNode) {
+			if (this.parent.isOrganizationNode) {
 				this.worldPosition.set(this.position);
+				this.worldScale.set(this.scaleX, this.scaleY, this.scaleZ);
 			}
 			else { // if parent is not root and therefore 'valid'
-				// actually apply parent transform, then calc world pos and stuff				
+				// actually apply parent transform				
 				Matrix4f.mul(parentTransformMat, m_transformationMatrix, m_transformationMatrix);
 				
+				Vector3f parentScale = this.parent.getWorldScale();
+				this.worldScale.set(parentScale.x * this.scaleX, parentScale.y * this.scaleY, parentScale.z * this.scaleZ);
+				// calc world pos and stuff
 				SFMath.transformAndSet_inplace(m_transformationMatrix, this.position, this.worldPosition);
 			}
 			
@@ -110,6 +144,9 @@ public abstract class TREntity {
 			else {
 				batch.add(additionalGeom);
 			}
+			
+			// after having calculated world pos, update bounding box
+			this.updateBoundingBox();
 			
 		}
 		
@@ -137,7 +174,7 @@ public abstract class TREntity {
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 		
-		this.isRootNode = false;
+		this.isOrganizationNode = false;
 	}
 	
 	public TREntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) {
@@ -153,7 +190,7 @@ public abstract class TREntity {
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 		
-		this.isRootNode = false;
+		this.isOrganizationNode = false;
 	}
 	
 	public TREntity(TexturedModel model, int index, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
@@ -169,15 +206,17 @@ public abstract class TREntity {
 		this.boundingBox = new BoundingBox(this.getModel().getRawModel().getBoundingBox());
 		this.staticBoundingBox = new BoundingBox(boundingBox);
 		
-		this.isRootNode = false;
+		this.isOrganizationNode = false;
 	}
 	/**
-	 * protected constructor reserved for construction of scene graph root object
+	 * protected constructor reserved for construction of organization nodes (including root nodes)
 	 */
 	protected TREntity() {
 		this.staticBoundingBox = null;
-		this.isRootNode = true;
+		this.isOrganizationNode = true;
+		this.enableChildren();
 	}
+
 
 	public float getTextureXOffset() {
 		int column = textureIndex % model.getTexture().getNumRows();
@@ -265,6 +304,55 @@ public abstract class TREntity {
 	
 	public BoundingBox getStaticBoundingBox() {
 		return new BoundingBox(staticBoundingBox);
+	}
+	
+	
+	private void updateBoundingBox() {
+		
+		BoundingBox bb = this.boundingBox;
+		
+		bb.minX = this.worldPosition.x + this.staticBoundingBox.minX;
+		bb.minY = this.worldPosition.y + this.staticBoundingBox.minY + this.bbyoffset;
+		bb.minZ = this.worldPosition.z + this.staticBoundingBox.minZ;
+		bb.maxX = this.worldPosition.x + this.staticBoundingBox.maxX;
+		bb.maxY = this.worldPosition.y + this.staticBoundingBox.maxY + this.bbyoffset;
+		bb.maxZ = this.worldPosition.z + this.staticBoundingBox.maxZ;
+		
+		Vector3f vec = this.getWorldScale();
+		
+		if (vec.x > 1) {
+			float modX = (vec.x - 1) * (bb.maxX - bb.minX) / 2;
+			bb.minX -= modX;
+			bb.maxX += modX;
+		}
+		else if (vec.x < 1) {
+			float modX = (1 - vec.x) * (bb.maxX - bb.minX) / 2;
+			bb.minX -= modX;
+			bb.maxX += modX;
+		}
+		
+		if (vec.y > 1) {
+			float modY = (vec.y - 1) * (bb.maxY - bb.minY) / 2;
+			bb.minY -= modY;
+			bb.maxY += modY;
+		}
+		else if (vec.y < 1) {
+			float modY = (1 - vec.y) * (bb.maxY - bb.minY) / 2;
+			bb.minY -= modY;
+			bb.maxY += modY;
+		}
+		
+		if (vec.z > 1) {
+			float modZ = (vec.z - 1) * (bb.maxZ - bb.minZ) / 2;
+			bb.minZ -= modZ;
+			bb.maxZ += modZ;
+		}
+		else if (vec.z < 1) {
+			float modZ = (1 - vec.z) * (bb.maxZ - bb.minZ) / 2;
+			bb.minZ -= modZ;
+			bb.maxZ += modZ;
+		}
+		
 	}
 
 }

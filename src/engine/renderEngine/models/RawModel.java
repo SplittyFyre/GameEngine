@@ -7,6 +7,7 @@ public class RawModel {
 	private int vaoID;
 	private int vertexCount;
 	private BoundingBox boundingBox;
+	public boolean doubleSidedFaces = false;
 
 	public RawModel(int vaoID, int vertexCount, BoundingBox aabb){
 		this.vaoID = vaoID;

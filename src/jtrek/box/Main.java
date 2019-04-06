@@ -32,6 +32,7 @@ import engine.scene.TRScene;
 import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TREntity;
+import engine.scene.entities.TROrganizationNode;
 import engine.scene.entities.camera.Camera;
 import engine.scene.lensFlare.FlareManager;
 import engine.scene.lensFlare.FlareTexture;
@@ -347,12 +348,6 @@ public class Main {
                 new FlareTexture(ft9, 0.1f), new FlareTexture(ft3, 0.07f), new FlareTexture(ft5, 0.3f), new FlareTexture(ft4, 0.4f),
                 new FlareTexture(ft8, 0.6f));
 		
-		/*spinny.useParentTransform = true;
-		spinny.parentTransform = player;
-		
-		bal.useParentTransform = true;
-		bal.parentTransform = player;*/
-		
 		
 		TRSkybox skybox = new TRSkybox(100000);
 		skybox.setTexture1(TRSkybox.locateSkyboxTextures("s"));
@@ -362,11 +357,21 @@ public class Main {
 		
 		scene.rootEntity.attachChild(player);
 		player.attachChild(spinny);
-		player.attachChild(bal);
+		player.attachChild(bal);player.getModel().getRawModel().doubleSidedFaces = true;
 		
+		scene.rootEntity.attachChild(borj);
+		
+		TROrganizationNode node = new TROrganizationNode();
+		scene.rootEntity.attachChild(node);
+		node.attachChild(new StaticEntity(borgShip, new Vector3f(0, 1000, 0), 0, 0, 0, 1000));
+				
 		while (!Display.isCloseRequested()) {
-			spinny.rotate(0, -6000 * TRDisplayManager.getFrameDeltaTime(), 0);
-			bal.rotate(600 * TRDisplayManager.getFrameDeltaTime(), 0, 0);
+			spinny.rotate(0, -1000 * TRDisplayManager.getFrameDeltaTime(), 0);
+			bal.rotate(1000 * TRDisplayManager.getFrameDeltaTime(), 0, 0);
+			
+			if (caster.penetrates(spinny.getBoundingBox())) {
+				System.out.println("ow!");
+			}
 			//long start = System.nanoTime();
 			//sun.setPosition(new Vector3f(random.nextFloat() * 100000, 5000, random.nextFloat() * 100000));
 			//CollisionManager.checkCollisions(player.getProjectiles(), enemies, player, caster);

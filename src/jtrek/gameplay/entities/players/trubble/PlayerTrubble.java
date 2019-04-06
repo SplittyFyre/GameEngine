@@ -12,8 +12,8 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.audio.AudioEngine;
 import engine.collision.BoundingBox;
 import engine.fontMeshCreator.GUIText;
-import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
+import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
 import engine.scene.entities.TREntity;
@@ -672,8 +672,8 @@ public class PlayerTrubble extends Player {
 					
 					);
 			
-			deck.useCustomRotationAxis = false;
-			stern.useCustomRotationAxis = false;
+			//deck.useCustomRotationAxis = false;
+			//stern.useCustomRotationAxis = false;
 			
 			timer += TRDisplayManager.getFrameDeltaTime();
 			
@@ -702,8 +702,8 @@ public class PlayerTrubble extends Player {
 				timer = 0;
 				sepseq_flag = false;
 				isSeperated = true;
-				deck.useCustomRotationAxis = true;
-				stern.useCustomRotationAxis = true;
+				//deck.useCustomRotationAxis = true;
+				//stern.useCustomRotationAxis = true;
 				halfway = false;
 			}
 			else if (timer >= SEP_TIME / 2) {
@@ -729,8 +729,8 @@ public class PlayerTrubble extends Player {
 					
 					);
 			
-			deck.useCustomRotationAxis = false;
-			stern.useCustomRotationAxis = false;
+			//deck.useCustomRotationAxis = false;
+			//stern.useCustomRotationAxis = false;
 			
 			timer += TRDisplayManager.getFrameDeltaTime();
 			
@@ -757,8 +757,8 @@ public class PlayerTrubble extends Player {
 				timer = 0;
 				re_sepseq_flag = false;
 				isSeperated = false;
-				deck.useCustomRotationAxis = true;
-				stern.useCustomRotationAxis = true;
+				//deck.useCustomRotationAxis = true;
+				//stern.useCustomRotationAxis = true;
 			}
 			
 		}

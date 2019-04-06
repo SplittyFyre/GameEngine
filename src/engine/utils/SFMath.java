@@ -308,7 +308,6 @@ public class SFMath {
 		float x = left.m00 * right.x + left.m10 * right.y + left.m20 * right.z + left.m30 * 1.0f;
 		float y = left.m01 * right.x + left.m11 * right.y + left.m21 * right.z + left.m31 * 1.0f;
 		float z = left.m02 * right.x + left.m12 * right.y + left.m22 * right.z + left.m32 * 1.0f;
-		float w = left.m03 * right.x + left.m13 * right.y + left.m23 * right.z + left.m33 * 1.0f;
 
 		dest.x = x;
 		dest.y = y;
