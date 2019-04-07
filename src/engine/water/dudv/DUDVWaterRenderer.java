@@ -16,10 +16,6 @@ import engine.scene.entities.camera.Camera;
 import engine.utils.SFMath;
 
 public class DUDVWaterRenderer {
-	
-	private static final String DUDV_MAP = "waterDUDV";
-	//private static final String DUDV_MAP = "dudv";
-	private static final String NORMAL_MAP = "normal";
 
 	private RawModel quad;
 	private DUDVWaterShader shader;
@@ -33,14 +29,9 @@ public class DUDVWaterRenderer {
 		return fbos;
 	}
 		
-	private int dudvTexture;
-	private int normalMap;
-
 	public DUDVWaterRenderer(Matrix4f projectionMatrix) {
 		this.shader = new DUDVWaterShader();
 		this.fbos = new WaterFrameBuffers();
-		dudvTexture = Loader.loadTexture(DUDV_MAP);
-		normalMap = Loader.loadTexture(NORMAL_MAP);
 		shader.start();
 		shader.connectTextureUnits();
 		shader.loadProjectionMatrix(projectionMatrix);
@@ -51,6 +42,12 @@ public class DUDVWaterRenderer {
 	public void render(List<DUDVWaterTile> water, Camera camera, Light sun) {
 		prepareRender(camera, sun);	
 		for (DUDVWaterTile tile : water) {
+			
+			GL13.glActiveTexture(GL13.GL_TEXTURE2);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, tile.getDudvMapTexture());
+			GL13.glActiveTexture(GL13.GL_TEXTURE3);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, tile.getNormalMapTexture());
+			
 			tile.update();
 			shader.loadMovedFactor(tile.updateMovedFactor());
 			Matrix4f modelMatrix = SFMath.createTransformationMatrix(
@@ -79,10 +76,7 @@ public class DUDVWaterRenderer {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getReflectionTexture());
 		GL13.glActiveTexture(GL13.GL_TEXTURE1);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getRefractionTexture());
-		GL13.glActiveTexture(GL13.GL_TEXTURE2);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, dudvTexture);
-		GL13.glActiveTexture(GL13.GL_TEXTURE3);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, normalMap);
+		
 		GL13.glActiveTexture(GL13.GL_TEXTURE4);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbos.getRefractionDepthTexture());
 		GL11.glEnable(GL11.GL_BLEND);

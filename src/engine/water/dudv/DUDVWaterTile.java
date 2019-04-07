@@ -2,10 +2,22 @@ package engine.water.dudv;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import engine.renderEngine.Loader;
 import engine.renderEngine.TRDisplayManager;
 
 public class DUDVWaterTile {
 	
+	private int dudvMapTexture, normalMapTexture;
+	
+	public int getDudvMapTexture() {
+		return dudvMapTexture;
+	}
+
+	public int getNormalMapTexture() {
+		return normalMapTexture;
+	}
+	
+
 	public float size;
 	
 	private float height;
@@ -66,36 +78,48 @@ public class DUDVWaterTile {
 
 
 
-	public DUDVWaterTile(float centerX, float centerZ, float height, float size, float waveSpeed)   {
+	public DUDVWaterTile(String dudvTexture, String normalTexture, float centerX, float centerZ, float height, float size, float waveSpeed)   {
 		this.x = centerX;
 		this.z = centerZ;
 		this.height = height;
 		this.size = size;
 		this.waveSpeed = waveSpeed;
+		
+		this.dudvMapTexture = Loader.loadTexture(dudvTexture);
+		this.normalMapTexture = Loader.loadTexture(normalTexture);
 	}
 	
-	public DUDVWaterTile(float centerX, float centerZ, float height, float size, float waveSpeed, Vector3f colourOffset)   {
+	public DUDVWaterTile(String dudvTexture, String normalTexture, float centerX, float centerZ, float height, float size, float waveSpeed, Vector3f colourOffset)   {
 		this.x = centerX;
 		this.z = centerZ;
 		this.height = height;
 		this.size = size;
 		this.waveSpeed = waveSpeed;
 		this.colourOffset = colourOffset;
+		
+		this.dudvMapTexture = Loader.loadTexture(dudvTexture);
+		this.normalMapTexture = Loader.loadTexture(normalTexture);
 	}
 	
-	public DUDVWaterTile(float centerX, float centerZ, float height, float size)   {
+	public DUDVWaterTile(String dudvTexture, String normalTexture, float centerX, float centerZ, float height, float size)   {
 		this.x = centerX;
 		this.z = centerZ;
 		this.height = height;
 		this.size = size;
+		
+		this.dudvMapTexture = Loader.loadTexture(dudvTexture);
+		this.normalMapTexture = Loader.loadTexture(normalTexture);
 	}
 	
-	public DUDVWaterTile(float centerX, float centerZ, float height, float size, Vector3f colourOffset)   {
+	public DUDVWaterTile(String dudvTexture, String normalTexture, float centerX, float centerZ, float height, float size, Vector3f colourOffset)   {
 		this.x = centerX;
 		this.z = centerZ;
 		this.height = height;
 		this.size = size;
 		this.colourOffset = colourOffset;
+		
+		this.dudvMapTexture = Loader.loadTexture(dudvTexture);
+		this.normalMapTexture = Loader.loadTexture(normalTexture);
 	}
 	
 	public Vector3f getColourOffset() {
