@@ -2,9 +2,12 @@ package engine.scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.util.vector.Vector4f;
 
+import engine.renderEngine.TRAddtlGeom;
+import engine.renderEngine.models.TexturedModel;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.TREntity;
@@ -26,6 +29,10 @@ public class TRScene {
 	
 	public void addEntityToRoot(TREntity entity) {
 		rootNode.attachChild(entity);
+	}
+	
+	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr) {
+		this.rootNode.updateSceneGraph(mapPtr, null);
 	}
 	 
 	protected Camera camera;

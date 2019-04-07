@@ -32,7 +32,6 @@ import engine.scene.TRScene;
 import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TREntity;
-import engine.scene.entities.TROrganizationNode;
 import engine.scene.entities.camera.Camera;
 import engine.scene.lensFlare.FlareManager;
 import engine.scene.lensFlare.FlareTexture;
@@ -360,10 +359,8 @@ public class Main {
 		
 		scene.rootNode.attachChild(borj);
 		
-		TROrganizationNode node = new TROrganizationNode();
-		scene.rootNode.attachChild(node);
-		node.attachChild(new StaticEntity(borgShip, new Vector3f(0, 1000, 0), 0, 0, 0, 1000));
-				
+
+						
 		while (!Display.isCloseRequested()) {
 			spinny.rotate(0, -1000 * TRDisplayManager.getFrameDeltaTime(), 0);
 			bal.rotate(1000 * TRDisplayManager.getFrameDeltaTime(), 0, 0);

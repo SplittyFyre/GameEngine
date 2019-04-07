@@ -54,7 +54,7 @@ public class MasterRenderSystem {
 	}
 	
 	private void renderWithoutWater(TRScene scene) {
-		scene.rootNode.updateSceneGraph(entitiesInfos, null);
+		scene.updateSceneGraph(entitiesInfos);
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
