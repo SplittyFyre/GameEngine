@@ -1644,11 +1644,6 @@ public class PlayerVoyager extends Player {
 		
 	}
 	
-	@Override
-	@Deprecated
-	public void respondToCollision() {
-		
-	}
 	
 	public void setHealth(float argf) {
 		this.HEALTH = argf;
@@ -1889,7 +1884,7 @@ public class PlayerVoyager extends Player {
 				BoundingBox bb2 = projectile.getBoundingBox();
 				
 				if (bb1.intersects(bb2)) {
-					projectile.respondToCollision();
+					//projectile.respondToCollision();
 					enemy.respondToCollisioni(((Projectile) projectile).getDamage(), projectile.getPosition());
 				}
 				

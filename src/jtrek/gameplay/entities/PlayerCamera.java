@@ -3,10 +3,10 @@ package jtrek.gameplay.entities;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import jtrek.gameplay.entities.players.Player;
 
-public class PlayerCamera extends Camera {
+public class PlayerCamera extends TRCamera {
 	
 	private float distanceFrom = 50;
 	private float angleAround = 0;

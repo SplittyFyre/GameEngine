@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 
 public class ParticleWatcher {
 	
@@ -53,7 +53,7 @@ public class ParticleWatcher {
 		}
 	}
 
-	public static void renderParticles(Camera camera) {
+	public static void renderParticles(TRCamera camera) {
 		renderer.render(particles, camera);
 	}
 	

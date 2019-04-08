@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import engine.postProcessing.Fbo;
 import engine.scene.TRScene;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 
 public class TRRenderEngine {
 	
@@ -26,7 +26,7 @@ public class TRRenderEngine {
 	public TRRenderEngine(int renderAvailableMasks, float nearPlane, float farPlane) {
 		this.nearPlane = nearPlane;
 		this.farPlane = farPlane;
-		this.projectionMatrix = Camera.createProjectionMatrix(nearPlane, farPlane, Camera.STD_FOV);
+		this.projectionMatrix = TRCamera.createProjectionMatrix(nearPlane, farPlane, TRCamera.STD_FOV);
 		this.renderer = new MasterRenderSystem(renderAvailableMasks, projectionMatrix);
 	}
 	

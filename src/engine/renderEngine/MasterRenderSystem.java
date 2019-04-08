@@ -13,7 +13,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.postProcessing.Fbo;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.TRScene;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.scene.entities.render.EntityRenderSystem;
 import engine.scene.particles.ParticleWatcher;
 import engine.scene.skybox.SkyboxRenderSystem;
@@ -71,7 +71,7 @@ public class MasterRenderSystem {
 	
 	public void renderMainPass(TRScene scene, Fbo fbo) {
 		
-		Camera camera = scene.getCamera();
+		TRCamera camera = scene.getCamera();
 		
 		if (scene.getWaters().size() != 0) {
 			WaterFrameBuffers buffers = waterRenderer.getFBOs();

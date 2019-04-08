@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
-import engine.renderEngine.textures.TerrainTexturePack;
+import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.utils.SFMath;
 
 public class TRTerrain {
@@ -21,7 +21,7 @@ public class TRTerrain {
 	private float y;
 	private float z;
 	private RawModel model;
-	private TerrainTexturePack texturePack;
+	private TRTerrainTexturePack texturePack;
 	private int blendMap;
 	private float size;
 	
@@ -37,7 +37,7 @@ public class TRTerrain {
 	private float[][] heights;
 	private int vertexCnt;
 	
-	public TRTerrain(float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, String heightMap, float heightFactor) {
+	public TRTerrain(float x, float y, float z, float size, TRTerrainTexturePack texturePack, int blendMap, String heightMap, float heightFactor) {
 		this.size = size;
 		this.texturePack = texturePack;
 		this.blendMap = blendMap;
@@ -47,7 +47,7 @@ public class TRTerrain {
 		this.model = generateTerrain(heightMap, heightFactor);
 	}
 	
-	public TRTerrain(int vertexCnt, float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, float amplitude) {
+	public TRTerrain(int vertexCnt, float x, float y, float z, float size, TRTerrainTexturePack texturePack, int blendMap, float amplitude) {
 		this.vertexCnt = vertexCnt;
 		this.size = size;
 		this.texturePack = texturePack;
@@ -58,7 +58,7 @@ public class TRTerrain {
 		this.model = generateTerrain(vertexCnt, amplitude);
 	}
 	
-	public TRTerrain(int vertexCnt, float x, float y, float z, float size, TerrainTexturePack texturePack, int blendMap, int seed, float amplitude) {
+	public TRTerrain(int vertexCnt, float x, float y, float z, float size, TRTerrainTexturePack texturePack, int blendMap, int seed, float amplitude) {
 		this.vertexCnt = vertexCnt;
 		this.size = size;
 		this.texturePack = texturePack;
@@ -87,7 +87,7 @@ public class TRTerrain {
 		return model;
 	}
 
-	public TerrainTexturePack getTexturePack() {
+	public TRTerrainTexturePack getTexturePack() {
 		return texturePack;
 	}
 

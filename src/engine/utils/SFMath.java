@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.TRDisplayManager;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 
 public class SFMath {
 	
@@ -210,7 +210,7 @@ public class SFMath {
 		return matrix;
 	}
 	
-	public static Matrix4f createViewMatrix(Camera camera) {
+	public static Matrix4f createViewMatrix(TRCamera camera) {
 		Matrix4f viewMatrix = new Matrix4f();
 		viewMatrix.setIdentity();
 		Matrix4f.rotate((float) Math.toRadians(camera.getPitch()), new Vector3f(1, 0, 0), viewMatrix,

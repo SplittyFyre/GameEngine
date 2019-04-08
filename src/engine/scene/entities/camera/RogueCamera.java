@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import engine.renderEngine.TRDisplayManager;
 
-public class RogueCamera extends Camera {
+public class RogueCamera extends TRCamera {
 	
 	private static float SPEED = 100;
 	private static float UPSPEED = 50;

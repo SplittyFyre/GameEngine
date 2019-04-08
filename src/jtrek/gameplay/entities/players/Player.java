@@ -13,7 +13,7 @@ import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.entities.TREntity;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.utils.RaysCast;
 import engine.utils.SFMath;
 import jtrek.box.TM;
@@ -55,7 +55,7 @@ public abstract class Player extends TREntity implements ITakeDamage {
 	
 	public float tracingX, tracingY, tracingZ, distMoved;
 	
-	public Camera camera;
+	public TRCamera camera;
 	
 	protected Enemy target;
 	

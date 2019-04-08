@@ -161,7 +161,7 @@ public abstract class TREntity {
 
 	private int textureIndex = 0;
 	
-	public abstract void respondToCollision();
+	//public abstract void respondToCollision();
 	
 	public TREntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
 		this.model = model;

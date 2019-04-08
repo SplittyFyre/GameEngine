@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.scene.entities.Light;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.utils.SFMath;
 
 public class DUDVWaterRenderer {
@@ -39,7 +39,7 @@ public class DUDVWaterRenderer {
 		setUpVAO();
 	}
 
-	public void render(List<DUDVWaterTile> water, Camera camera, Light sun) {
+	public void render(List<DUDVWaterTile> water, TRCamera camera, Light sun) {
 		prepareRender(camera, sun);	
 		for (DUDVWaterTile tile : water) {
 			
@@ -66,7 +66,7 @@ public class DUDVWaterRenderer {
 		unbind();
 	}
 	
-	private void prepareRender(Camera camera, Light sun){
+	private void prepareRender(TRCamera camera, Light sun){
 		shader.start();
 		shader.loadViewMatrix(camera);
 		shader.loadLight(sun);

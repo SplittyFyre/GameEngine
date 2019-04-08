@@ -10,7 +10,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.renderEngine.textures.TerrainTexturePack;
+import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TREntity;
 import engine.scene.terrain.TRTerrain;
@@ -26,7 +26,7 @@ public class Island {
 	
 	private float size;
 	
-	public Island(TerrainTexturePack texturePack, int blendMap,
+	public Island(TRTerrainTexturePack texturePack, int blendMap,
 			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size) {
 		terrain = new TRTerrain(128, x, y, z, size, texturePack, blendMap, 575);
 		terrains.add(terrain);
@@ -74,7 +74,7 @@ public class Island {
 		
 	}
 	
-	public Island(TerrainTexturePack texturePack, int blendMap,
+	public Island(TRTerrainTexturePack texturePack, int blendMap,
 			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size, String heightMap, float maxHeight) {
 		terrain = new TRTerrain(x, y, z, size, texturePack, blendMap, heightMap, maxHeight);
 		terrains.add(terrain);
@@ -139,7 +139,7 @@ public class Island {
 	}
 
 	//CURR
-	public Island(TerrainTexturePack texturePack, int blendMap, 
+	public Island(TRTerrainTexturePack texturePack, int blendMap, 
 			List<TRTerrain> terrains, List<DUDVWaterTile> waters, List<TREntity> entities, float x, float y, float z, float size, int seed) {
 		
 		this.position = new Vector3f(x, y, z);
@@ -150,7 +150,7 @@ public class Island {
 		terrains.add(terrain);
 		water = new DUDVWaterTile("waterDUDV", "normal", x, z, y - 5000, size / 2);
 		waters.add(water);
-				 
+		
 		RawModel fernRaw = OBJParser.loadObjModel("fernModel");
 		ModelTexture fernTextureAtlas = new ModelTexture(Loader.loadTexture("fern"));
 		fernTextureAtlas.setNumRows(2);

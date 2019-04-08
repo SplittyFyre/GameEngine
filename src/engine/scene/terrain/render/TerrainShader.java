@@ -10,7 +10,7 @@ import engine.renderEngine.ShaderProgram;
 import engine.scene.TRScene;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.utils.SFMath;
 
 public class TerrainShader extends ShaderProgram {
@@ -148,7 +148,7 @@ public class TerrainShader extends ShaderProgram {
 		
 	}
 	
-	public void loadViewMatrix(Camera camera) {
+	public void loadViewMatrix(TRCamera camera) {
 		Matrix4f viewMatrix = SFMath.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix);
 	}

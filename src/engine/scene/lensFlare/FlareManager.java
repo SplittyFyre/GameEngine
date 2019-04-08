@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.renderEngine.guis.render.GUIRenderer;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.utils.SFMath;
 
 public class FlareManager {
@@ -27,7 +27,7 @@ public class FlareManager {
 	}
 
 	
-	public void render(Camera camera, Vector3f sunPos, Matrix4f projectionMatrix) {
+	public void render(TRCamera camera, Vector3f sunPos, Matrix4f projectionMatrix) {
 		Vector2f sunCoords = toScreenSpace(sunPos, SFMath.createViewMatrix(camera), projectionMatrix);
 		if (sunCoords == null) {
 			return;

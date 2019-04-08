@@ -6,9 +6,4 @@ public class TROrganizationNode /*<T extends TREntity>*/ extends TREntity {
 		super();
 	}
 
-	@Override
-	public void respondToCollision() {
-		
-	}
-
 }

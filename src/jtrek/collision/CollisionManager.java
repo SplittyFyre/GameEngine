@@ -17,7 +17,7 @@ public class CollisionManager {
 		
 		for (Projectile projectile : Main.foeprojectiles) {
 			if (projectile.getBoundingBox().intersects(player.getBoundingBox())) {
-				projectile.respondToCollision();
+				//projectile.respondToCollision();
 				((ITakeDamage) player).respondToCollisioni(projectile.getDamage(), null);
 			}
 		}

@@ -1,6 +1,6 @@
 package engine.renderEngine.textures;
 
-public class TerrainTexturePack {
+public class TRTerrainTexturePack {
 	
 	private int backgroundTexture;
 	private int rTexture;
@@ -19,7 +19,7 @@ public class TerrainTexturePack {
 	
 	public float cap1 = 0.25f, cap2 = 0.5f, cap3 = 0.75f;
 	
-	public TerrainTexturePack(int backtext, int rtext, int gtext, int btext, float tiling) {		
+	public TRTerrainTexturePack(int backtext, int rtext, int gtext, int btext, float tiling) {		
 		this.backgroundTexture = backtext;
 		this.rTexture = rtext;
 		this.gTexture = gtext;

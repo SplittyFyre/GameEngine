@@ -15,7 +15,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.utils.SFMath;
 
 public class ParticleRenderer {
@@ -52,7 +52,7 @@ public class ParticleRenderer {
 		shader.stop();
 	}
 	
-	protected void render(Map<ParticleTexture, List<Particle>> particles, Camera camera) {
+	protected void render(Map<ParticleTexture, List<Particle>> particles, TRCamera camera) {
 		Matrix4f viewMatrix = SFMath.createViewMatrix(camera);
 		prepare();
 		for (ParticleTexture texture : particles.keySet()) {

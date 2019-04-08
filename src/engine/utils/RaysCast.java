@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.collision.BoundingBox;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.scene.terrain.TRTerrain;
 
 public class RaysCast {
@@ -20,12 +20,12 @@ public class RaysCast {
 
 	private Matrix4f projectionMatrix;
 	private Matrix4f viewMatrix;
-	private Camera camera;
+	private TRCamera camera;
 	
 	private TRTerrain terrain;
 	private Vector3f currentTerrainPoint;
 
-	public RaysCast(Camera cam, Matrix4f projection, TRTerrain terrain) {
+	public RaysCast(TRCamera cam, Matrix4f projection, TRTerrain terrain) {
 		camera = cam;
 		projectionMatrix = projection;
 		viewMatrix = SFMath.createViewMatrix(camera);
@@ -143,7 +143,7 @@ public class RaysCast {
 		return terrain;
 	}
 	
-	public Camera getCamera() {
+	public TRCamera getCamera() {
 		return camera;
 	}
 	

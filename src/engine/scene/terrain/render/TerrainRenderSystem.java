@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.models.RawModel;
-import engine.renderEngine.textures.TerrainTexturePack;
+import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.scene.TRScene;
 import engine.scene.terrain.TRTerrain;
 import engine.utils.SFMath;
@@ -62,15 +62,15 @@ public class TerrainRenderSystem {
 		GL20.glEnableVertexAttribArray(2);
 		bindTextures(terrain);
 		shader.loadTiling(terrain.getTexturePack().getTiling());
-		TerrainTexturePack pack = terrain.getTexturePack();
+		TRTerrainTexturePack pack = terrain.getTexturePack();
 		shader.loadUseAltitudeVarying(pack.useAsAltitudeBasedTextures);
 		shader.loadHeightTextureCaps(pack.cap1, pack.cap2, pack.cap3);
-		shader.loadMaxHeight(terrain.getMaxHeight());
+		shader.loadMaxHeight(terrain.getMaxHeight() + terrain.getY());
 	}
 
 	private void bindTextures(TRTerrain terrain) {
 		
-		TerrainTexturePack texturePack = terrain.getTexturePack();	
+		TRTerrainTexturePack texturePack = terrain.getTexturePack();	
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getBackgroundTexture());
 		

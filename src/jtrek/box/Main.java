@@ -27,12 +27,12 @@ import engine.renderEngine.guis.render.GUIRenderer;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.renderEngine.textures.TerrainTexturePack;
+import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.scene.TRScene;
 import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.TREntity;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.scene.lensFlare.FlareManager;
 import engine.scene.lensFlare.FlareTexture;
 import engine.scene.particles.ParticleWatcher;
@@ -102,7 +102,7 @@ public class Main {
 		int gTexture = (Loader.loadTexture("pinkFlowers"));
 		int bTexture = (Loader.loadTexture("path"));
 		
-		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 450);
+		TRTerrainTexturePack texturePack = new TRTerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture, 450);
 		texturePack.useAsAltitudeBasedTextures = true;
 		
 		int blendMap = (Loader.loadTexture("black"));
@@ -203,7 +203,7 @@ public class Main {
 				
 		//OTHER UTILS************************************************************************
 		
-		Camera camera = new PlayerCamera(player);
+		TRCamera camera = new PlayerCamera(player);
 		scene.setCamera(camera);
 		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), null);
 		

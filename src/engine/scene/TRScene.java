@@ -12,7 +12,7 @@ import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.TREntity;
 import engine.scene.entities.TROrganizationNode;
-import engine.scene.entities.camera.Camera;
+import engine.scene.entities.camera.TRCamera;
 import engine.scene.skybox.TRSkybox;
 import engine.scene.terrain.TRTerrain;
 import engine.water.dudv.DUDVWaterTile;
@@ -35,7 +35,7 @@ public class TRScene {
 		this.rootNode.updateSceneGraph(mapPtr, null);
 	}
 	 
-	protected Camera camera;
+	protected TRCamera camera;
 	
 	protected Vector4f clipPlane = new Vector4f();
 	
@@ -95,7 +95,7 @@ public class TRScene {
 		}
 	}
 	
-	public void setCamera(Camera c) {
+	public void setCamera(TRCamera c) {
 		this.camera = c;
 	}
 	
@@ -111,7 +111,7 @@ public class TRScene {
 		return waters;
 	}
 	
-	public Camera getCamera() {
+	public TRCamera getCamera() {
 		return camera;
 	}
 

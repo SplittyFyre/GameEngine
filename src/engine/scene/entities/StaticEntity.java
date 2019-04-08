@@ -14,9 +14,5 @@ public class StaticEntity extends TREntity {
 		super(model, index, position, rotX, rotY, rotZ, scale);
 	}
 
-	@Override
-	public void respondToCollision() {
-		
-	}
 
 }

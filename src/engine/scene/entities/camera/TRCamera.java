@@ -4,7 +4,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-public abstract class Camera {
+public abstract class TRCamera {
 	
 	public static final float STD_FOV = 50;
 	
