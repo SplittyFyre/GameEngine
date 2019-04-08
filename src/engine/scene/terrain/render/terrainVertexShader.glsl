@@ -24,11 +24,13 @@ uniform float gradient;
 
 uniform int lightsInUse;
 
+uniform float yOffset;
+
 void main(void){
 
 	vec4 worldPosition = transformationMatrix * vec4(position,1.0);
 	
-	vtxheight = worldPosition.y;
+	vtxheight = worldPosition.y - yOffset;
 	
 	gl_ClipDistance[0] = dot(worldPosition, plane);
 	

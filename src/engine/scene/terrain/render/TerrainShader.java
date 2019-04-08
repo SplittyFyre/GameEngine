@@ -81,12 +81,18 @@ public class TerrainShader extends ShaderProgram {
 		
 		addUniformVariable("lightsInUse");
 		
+		addUniformVariable("yOffset");
+		
 		for (int i = 0; i < TRScene.MAX_LIGHTS; i++) {
 			location_lightPosition[i] = super.getUniformLocation("lightPosition[" + i + "]");
 			location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
 			location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
 		}
 		
+	}
+	
+	public void loadYOffset(float y) {
+		super.loadFloat(uniformLocationOf("yOffset"), y);
 	}
 	
 	public void loadLightsInUse(int lightsInUse) {

@@ -65,7 +65,8 @@ public class TerrainRenderSystem {
 		TRTerrainTexturePack pack = terrain.getTexturePack();
 		shader.loadUseAltitudeVarying(pack.useAsAltitudeBasedTextures);
 		shader.loadHeightTextureCaps(pack.cap1, pack.cap2, pack.cap3);
-		shader.loadMaxHeight(terrain.getMaxHeight() + terrain.getY());
+		shader.loadMaxHeight(terrain.getMaxHeight()); // local max height
+		shader.loadYOffset(terrain.getY());
 	}
 
 	private void bindTextures(TRTerrain terrain) {
