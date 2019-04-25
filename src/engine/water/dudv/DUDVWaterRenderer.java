@@ -60,6 +60,7 @@ public class DUDVWaterRenderer {
 			shader.loadShineVariables(tile);
 			//shader.loadFrustumPlanes(TRRenderEngine.nearPlaneInUse, TRRenderEngine.farPlaneInUse);
 			shader.loadFrustumPlanes(2.5f, 5000f);
+			shader.loadTiling(tile.getTiling());
 			
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, quad.getVertexCount());
 		}

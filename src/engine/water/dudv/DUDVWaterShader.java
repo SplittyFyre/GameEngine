@@ -57,6 +57,12 @@ public class DUDVWaterShader extends ShaderProgram {
 		
 		addUniformVariable("nearPlane");
 		addUniformVariable("farPlane");
+		
+		addUniformVariable("tiling");
+	}
+	
+	public void loadTiling(float tiling) {
+		super.loadFloat(uniformLocationOf("tiling"), tiling);
 	}
 	
 	public void loadWaveIntensity(float wi) {

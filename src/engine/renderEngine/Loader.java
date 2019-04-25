@@ -213,14 +213,16 @@ public class Loader {
 		int height = 0;
 		ByteBuffer buffer = null;
 		
+		final int numChannels = 4;
+		
 		try {
 			@SuppressWarnings("resource")
 			InputStream in = Class.class.getResourceAsStream("/res/" + fileName + ".png");
 			PNGDecoder decoder = new PNGDecoder(in);
 			width = decoder.getWidth();
 			height = decoder.getHeight();
-			buffer = ByteBuffer.allocateDirect(4 * width * height);
-			decoder.decode(buffer, width * 4, Format.RGBA);
+			buffer = ByteBuffer.allocateDirect(numChannels * width * height);
+			decoder.decode(buffer, width * numChannels, Format.RGBA);
 			buffer.flip();
 			in.close();
 		} catch (Exception e) {
@@ -306,5 +308,13 @@ public class Loader {
 	    return cursor;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

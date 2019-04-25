@@ -18,7 +18,7 @@ public class DUDVWaterTile {
 	}
 	
 
-	public float size;
+	public float size;   
 	
 	private float height;
 	private float counter = 0;
@@ -27,6 +27,8 @@ public class DUDVWaterTile {
 	private float waveSpeed = 0.03f;
 	private float waveIntensity = 0.01f;
 	private float shineDamper = 15.f, reflectivity = 0.5f;
+	
+	private float tiling = 50;
 	
 	private Vector3f colourOffset = new Vector3f(0, 0, 0);
 	
@@ -38,6 +40,15 @@ public class DUDVWaterTile {
 		return movedFactor;
 	}
 	
+	
+	public float getTiling() {
+		return tiling;
+	}
+
+	public DUDVWaterTile setTiling(float tiling) {
+		this.tiling = tiling;
+		return this;
+	}
 	
 	
 	public float getWaveIntensity() {
