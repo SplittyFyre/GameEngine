@@ -13,7 +13,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class DUDVWaterRenderer {
 
@@ -50,7 +50,7 @@ public class DUDVWaterRenderer {
 			
 			tile.update();
 			shader.loadMovedFactor(tile.updateMovedFactor());
-			Matrix4f modelMatrix = SFMath.createTransformationMatrix(
+			Matrix4f modelMatrix = TRMath.createTransformationMatrix(
 					new Vector3f(tile.getX(), tile.getHeight(), tile.getZ()), 0, 0, 0,
 					tile.size);
 			shader.loadModelMatrix(modelMatrix);

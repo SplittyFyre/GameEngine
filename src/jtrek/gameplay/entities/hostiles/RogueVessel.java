@@ -9,7 +9,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import jtrek.box.Main;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.players.Player;
@@ -51,12 +51,12 @@ public class RogueVessel extends Enemy {
 		
 		float f = 28.125f;
 		
-		float ex = SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
-		float zed = SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
+		float ex = TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
+		float zed = TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), f);
 		
 		// shouldn't these be reversed? like the negatives...
-		Vector3f rots = SFMath.rotateToFaceVector(super.getPosition(), SFMath.vecoffset(player.getPlayerPos(), -ex, 0, -zed));
-		float rot2 = SFMath.Y_rotateToFaceVector(super.getPosition(), SFMath.vecoffset(player.getPlayerPos(), ex, 0, zed));
+		Vector3f rots = TRMath.rotateToFaceVector(super.getPosition(), TRMath.vecoffset(player.getPlayerPos(), -ex, 0, -zed));
+		float rot2 = TRMath.Y_rotateToFaceVector(super.getPosition(), TRMath.vecoffset(player.getPlayerPos(), ex, 0, zed));
 		
 		Main.foeprojectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 				
@@ -83,8 +83,8 @@ public class RogueVessel extends Enemy {
 	@Override
 	public void update() {
 		move();
-		float dist = SFMath.distance(super.getPosition(), player.getPosition());
-		Vector3f rot = SFMath.rotateToFaceVector(super.getPosition(), player.getPosition());
+		float dist = TRMath.distance(super.getPosition(), player.getPosition());
+		Vector3f rot = TRMath.rotateToFaceVector(super.getPosition(), player.getPosition());
 			
 		if (dist < 15000) {
 			if (ATTACK_STAGE == NEUTRAL) {

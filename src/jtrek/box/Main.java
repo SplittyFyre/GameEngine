@@ -39,7 +39,7 @@ import engine.scene.particles.ParticleWatcher;
 import engine.scene.skybox.TRSkybox;
 import engine.scene.terrain.TRTerrain;
 import engine.utils.FloatingOrigin;
-import engine.utils.RaysCast;
+import engine.utils.TRRayCaster;
 import engine.water.dudv.DUDVWaterTile;
 import jtrek.collision.CollisionManager;
 import jtrek.gameplay.Island;
@@ -205,7 +205,7 @@ public class Main {
 		
 		TRCamera camera = new PlayerCamera(player);
 		scene.setCamera(camera);
-		RaysCast caster = new RaysCast(camera, engine.getProjectionMatrix(), null);
+		TRRayCaster caster = new TRRayCaster(camera, engine.getProjectionMatrix(), null);
 		
 		AudioEngine.setListenerData(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 		

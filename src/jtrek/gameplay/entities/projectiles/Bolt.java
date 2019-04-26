@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.particles.systems.SimpleParticleSystem;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 
 public class Bolt extends Projectile {
@@ -111,14 +111,14 @@ public class Bolt extends Projectile {
 				new Vector3f(
 						
 						position.x 
-						+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						,
 						position.y + magHeight
 						,
 						position.z
-						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
 						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
@@ -129,14 +129,14 @@ public class Bolt extends Projectile {
 				new Vector3f(
 						
 						position.x 
-						+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						,
 						position.y + magHeight
 						,
 						position.z
-						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
 						), rotX, rotY, rotZ, WSCALE * scaleMul, WSCALE * scaleMul, ZSCALE, damage, movCoff);
 	}
@@ -146,14 +146,14 @@ public class Bolt extends Projectile {
 				new Vector3f(
 						
 						position.x 
-						+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						,
 						position.y + magHeight
 						,
 						position.z
-						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
 						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}
@@ -163,14 +163,14 @@ public class Bolt extends Projectile {
 				new Vector3f(
 						
 						position.x 
-						+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						,
 						position.y + magHeight
 						,
 						position.z
-						+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+						+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 						
 						), rotX, rotY, rotZ, WSCALE, WSCALE, ZSCALE, damage, movCoff);
 	}

@@ -19,8 +19,8 @@ import engine.renderEngine.guis.IGUI;
 import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
-import engine.utils.RaysCast;
-import engine.utils.SFMath;
+import engine.utils.TRRayCaster;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.hostiles.BorgVessel;
 import jtrek.gameplay.entities.hostiles.Enemy;
@@ -140,8 +140,8 @@ public class PlayerTrubble extends Player {
 	
 	//BOOKMARK TACTICAL VARS
 	
-	private PlayerTrubbleDeck deck = new PlayerTrubbleDeck(SFMath.vecoffset(getPosition(), 50, 0, 0), this);
-	private PlayerTrubbleStern stern = new PlayerTrubbleStern(SFMath.vecoffset(getPosition(), -50, 0, 0), this);
+	private PlayerTrubbleDeck deck = new PlayerTrubbleDeck(TRMath.vecoffset(getPosition(), 50, 0, 0), this);
+	private PlayerTrubbleStern stern = new PlayerTrubbleStern(TRMath.vecoffset(getPosition(), -50, 0, 0), this);
 	
 	public boolean isSeperated = false;
 	
@@ -284,7 +284,7 @@ public class PlayerTrubble extends Player {
 	}
 
 	@Override
-	public void update(RaysCast caster) {
+	public void update(TRRayCaster caster) {
 		
 		if (this.target != null) {
 			if (this.target.isDead()) {
@@ -334,17 +334,17 @@ public class PlayerTrubble extends Player {
 					
 					deck.setPosition(new Vector3f(
 								
-								super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
+								super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
 								super.getPosition().y,
-								super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
+								super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
 								
 							));
 					
 					stern.setPosition(new Vector3f(
 							
-							super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250), 
+							super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250), 
 							super.getPosition().y,
-							super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250)
+							super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250)
 							
 							));
 					
@@ -357,7 +357,7 @@ public class PlayerTrubble extends Player {
 					
 					deck.setPosition(new Vector3f(
 							
-							super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, 90, 200), 
+							super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, 90, 200), 
 							super.getPosition().y,
 							super.getPosition().z
 							
@@ -365,7 +365,7 @@ public class PlayerTrubble extends Player {
 					
 					stern.setPosition(new Vector3f(
 							
-							super.getPosition().x - SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, 90, 200), 
+							super.getPosition().x - TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, 90, 200), 
 							super.getPosition().y,
 							super.getPosition().z
 							
@@ -529,7 +529,7 @@ public class PlayerTrubble extends Player {
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_Z) && !flagr) {
 			flagr = true;
-			vec = SFMath.rotateToFaceVector(super.getPosition(), this.target != null ? this.target.getPosition() : new Vector3f(0, 0, 0));
+			vec = TRMath.rotateToFaceVector(super.getPosition(), this.target != null ? this.target.getPosition() : new Vector3f(0, 0, 0));
 			alpha = vec.y - super.getRotY();
 			
 			alpha %= 360;
@@ -558,9 +558,9 @@ public class PlayerTrubble extends Player {
 					hold = true;
 					var1 = new Vector3f(
 							
-							super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
+							super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
 							super.getPosition().y - 23.5f,
-							super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
+							super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
 							
 							);
 					
@@ -601,33 +601,33 @@ public class PlayerTrubble extends Player {
 		
 		if (sepseq_flag) {
 			
-			float dists = SFMath.distance(new Vector3f(
+			float dists = TRMath.distance(new Vector3f(
 					
-					super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
+					super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
 					super.getPosition().y - 23.5f,
-					super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
+					super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
 					
 				), new Vector3f(
 
-						super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
+						super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
 						super.getPosition().y,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
 							
 					))
 					
 					+
 					
-					SFMath.distance(new Vector3f(
+					TRMath.distance(new Vector3f(
 
-						super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
+						super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
 						super.getPosition().y,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
 							
 					), new Vector3f(
 							
-							super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
+							super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
 							super.getPosition().y,
-							super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
+							super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
 							
 						))
 					;
@@ -636,9 +636,9 @@ public class PlayerTrubble extends Player {
 					
 					new Vector3f(
 
-						super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
+						super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400), 
 						super.getPosition().y,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 400)
 							
 					)
 					 
@@ -646,9 +646,9 @@ public class PlayerTrubble extends Player {
 					
 					new Vector3f(
 					
-					super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
+					super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250), 
 					super.getPosition().y,
-					super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
+					super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 250)
 					
 				);
 			
@@ -656,9 +656,9 @@ public class PlayerTrubble extends Player {
 					
 					new Vector3f(
 							
-						super.getPosition().x - SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 250), 
+						super.getPosition().x - TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 250), 
 						super.getPosition().y,
-						super.getPosition().z - SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 250)
+						super.getPosition().z - TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 250)
 							
 					)
 					
@@ -666,9 +666,9 @@ public class PlayerTrubble extends Player {
 					
 					new Vector3f(
 					
-					super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250), 
+					super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250), 
 					super.getPosition().y,
-					super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250)
+					super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 250)
 					
 					);
 			
@@ -677,7 +677,7 @@ public class PlayerTrubble extends Player {
 			
 			timer += TRDisplayManager.getFrameDeltaTime();
 			
-			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
+			Vector3f tracing = TRMath.rotateToFaceVector(var1, deck_target);
 			
 			//float dtmove = DisplayManager.getFrameTime() * (700 + this.currentSpeed);
 
@@ -689,7 +689,7 @@ public class PlayerTrubble extends Player {
 			
 			deck.move(homingX, homingY, homingZ);
 			
-			tracing = SFMath.rotateToFaceVector(var2, stern_target);
+			tracing = TRMath.rotateToFaceVector(var2, stern_target);
 		
 			homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -715,9 +715,9 @@ public class PlayerTrubble extends Player {
 			System.out.println("repseping");
 			Vector3f deck_target = new Vector3f(
 					
-					super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
+					super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116), 
 					super.getPosition().y - 23.5f,
-					super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
+					super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 116)
 					
 					);
 			
@@ -734,7 +734,7 @@ public class PlayerTrubble extends Player {
 			
 			timer += TRDisplayManager.getFrameDeltaTime();
 			
-			Vector3f tracing = SFMath.rotateToFaceVector(var1, deck_target);
+			Vector3f tracing = TRMath.rotateToFaceVector(var1, deck_target);
 			
 			float dtmove = TRDisplayManager.getFrameDeltaTime() * (275 + this.currentSpeed);
 			
@@ -744,7 +744,7 @@ public class PlayerTrubble extends Player {
 			
 			deck.move(homingX, homingY, homingZ);
 			
-			tracing = SFMath.rotateToFaceVector(var2, stern_target);
+			tracing = TRMath.rotateToFaceVector(var2, stern_target);
 			
 			homingX = (float) (dtmove * Math.sin(Math.toRadians(tracing.y)));
 			homingY = (float) (dtmove * Math.sin(Math.toRadians(tracing.x)));
@@ -765,7 +765,7 @@ public class PlayerTrubble extends Player {
 		
 	}
 	
-	public void fireAllWeapons(RaysCast caster) {
+	public void fireAllWeapons(TRRayCaster caster) {
 		
 		if (phaserCannonTimer <= 0.1f) {
 			phaserCannonTimer += TRDisplayManager.getFrameDeltaTime();	
@@ -862,7 +862,7 @@ public class PlayerTrubble extends Player {
 	private void fireTipPhaser() {
 		
 		projectiles.add(new Bolt(TM.phaserBolt, 
-				SFMath.fullPos(getRotY(), getRotX(), rlDeckPos(), 0, 17.75f, 175, 175 + 116)
+				TRMath.fullPos(getRotY(), getRotX(), rlDeckPos(), 0, 17.75f, 175, 175 + 116)
 				, getRotX(), getRotY(), 0, 1.5f * 3, 1.5f * 3, 10, 125, this.currentSpeed));
 	}
 	
@@ -874,9 +874,9 @@ public class PlayerTrubble extends Player {
 			Vector3f pos = rlDeckPos();
 			projectiles.add(new Bolt(TM.phaserCannon, new Vector3f(
 					
-					pos.x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40),
+					pos.x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40),
 					pos.y + 45,
-					pos.z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40)
+					pos.z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40)
 					
 					), 
 					deck.getRotX(), deck.getRotY(), 0, 3, 3, 50, 1000, this.currentSpeed, 10000,
@@ -884,9 +884,9 @@ public class PlayerTrubble extends Player {
 			
 			projectiles.add(new Bolt(TM.phaserCannon, new Vector3f(
 					
-					pos.x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40),
+					pos.x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40),
 					pos.y + 45,
-					pos.z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40)
+					pos.z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40)
 					
 					), 
 					deck.getRotX(), deck.getRotY(), 0, 3, 3, 50, 1000, this.currentSpeed, 10000,
@@ -916,9 +916,9 @@ public class PlayerTrubble extends Player {
 			Vector3f pos = rlDeckPos();
 			projectiles.add(new Bolt(TM.phaserCannon, new Vector3f(
 					
-					pos.x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40),
+					pos.x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40),
 					pos.y + 45,
-					pos.z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40)
+					pos.z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, deck.getRotY(), 40)
 					
 					), 
 					deck.getRotX(), deck.getRotY(), 0, 3, 3, 50, 1000, this.currentSpeed, 10000,
@@ -926,9 +926,9 @@ public class PlayerTrubble extends Player {
 			
 			projectiles.add(new Bolt(TM.phaserCannon, new Vector3f(
 					
-					pos.x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40),
+					pos.x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40),
 					pos.y + 45,
-					pos.z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40)
+					pos.z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, deck.getRotY(), 40)
 					
 					), 
 					deck.getRotX(), deck.getRotY(), 0, 3, 3, 50, 00, this.currentSpeed, 10000,
@@ -991,15 +991,15 @@ public class PlayerTrubble extends Player {
 		switch (mode) {
 		
 		case 1:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), -11, 30, 70);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), -11, 30, 70);
 			break;
 		
 		case 2:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), -22.5f, 40, 5);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), -22.5f, 40, 5);
 			break;
 			
 		case 3:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), -30.5f, 50, -60);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), -30.5f, 50, -60);
 			break;
 			
 		default:
@@ -1011,7 +1011,7 @@ public class PlayerTrubble extends Player {
 			rots = new Vector3f(-deck.getRotX(), deck.getRotY(), 0);
 		}
 		else {
-			rots = SFMath.rotateToFaceVector(firing, this.target.getPosition());
+			rots = TRMath.rotateToFaceVector(firing, this.target.getPosition());
 		}
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
@@ -1028,15 +1028,15 @@ public class PlayerTrubble extends Player {
 		switch (mode) {
 		
 		case 1:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), 11, 30, 70);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), 11, 30, 70);
 			break;
 		
 		case 2:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), 22.5f, 40, 5);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), 22.5f, 40, 5);
 			break;
 			
 		case 3:
-			firing = SFMath.vecShifts(deck.getRotY(), rlDeckPos(), 30.5f, 50, -60);
+			firing = TRMath.vecShifts(deck.getRotY(), rlDeckPos(), 30.5f, 50, -60);
 			break;
 			
 		default:
@@ -1048,7 +1048,7 @@ public class PlayerTrubble extends Player {
 			rots = new Vector3f(-deck.getRotX(), deck.getRotY(), 0);
 		}
 		else {
-			rots = SFMath.rotateToFaceVector(firing, this.target.getPosition());
+			rots = TRMath.rotateToFaceVector(firing, this.target.getPosition());
 		}
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
@@ -1058,7 +1058,7 @@ public class PlayerTrubble extends Player {
 	}
 
 	@Override
-	public void choreCollisions(List<Enemy> enemies, RaysCast caster) {
+	public void choreCollisions(List<Enemy> enemies, TRRayCaster caster) {
 		
 		boolean virg = true;
 		
@@ -1165,9 +1165,9 @@ public class PlayerTrubble extends Player {
 		else {
 			return new Vector3f(
 					
-					super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, deck.getRotY(), 116), 
+					super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, deck.getRotY(), 116), 
 					super.getPosition().y - 23.5f,
-					super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, deck.getRotY(), 116)
+					super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, deck.getRotY(), 116)
 					
 					);	
 		}

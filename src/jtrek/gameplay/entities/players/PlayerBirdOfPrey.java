@@ -21,8 +21,8 @@ import engine.renderEngine.models.TexturedModel;
 import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
-import engine.utils.RaysCast;
-import engine.utils.SFMath;
+import engine.utils.TRRayCaster;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.hostiles.BorgVessel;
 import jtrek.gameplay.entities.hostiles.Enemy;
@@ -199,7 +199,7 @@ public class PlayerBirdOfPrey extends Player {
 	}
 
 	@Override
-	public void update(RaysCast caster) {
+	public void update(TRRayCaster caster) {
 		
 		lclsrc.setPosition(super.getPosition().x, 
 							super.getPosition().y, 
@@ -344,7 +344,7 @@ public class PlayerBirdOfPrey extends Player {
 				Vector3f rots;
 				//System.out.println(Math.abs(this.getRotY() - SFMath.rotateToFaceVector(getPosition(), target.getPosition()).y));
 				if (this.target != null) {
-					rots = SFMath.rotateToFaceVector(super.getPosition(), target.getPosition());
+					rots = TRMath.rotateToFaceVector(super.getPosition(), target.getPosition());
 				}
 				else {
 					rots = new Vector3f(-super.getRotX(), super.getRotY(), super.getRotZ());
@@ -352,9 +352,9 @@ public class PlayerBirdOfPrey extends Player {
 				
 				projectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 						
-						super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 28.125f),
+						super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 28.125f),
 						super.getPosition().y + 3.75f,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 28.125f)
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 28.125f)
 						
 						), 
 						-rots.x, rots.y, rots.z, 1.5f, 1.5f, 25, 500, this.currentSpeed, 10000,
@@ -362,9 +362,9 @@ public class PlayerBirdOfPrey extends Player {
 				
 				projectiles.add(new Bolt(TM.disruptorBolt, new Vector3f(
 						
-						super.getPosition().x + SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 28.125f),
+						super.getPosition().x + TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 28.125f),
 						super.getPosition().y + 3.75f,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 28.125f)
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 28.125f)
 						
 						), 
 						-rots.x, rots.y, rots.z, 1.5f, 1.5f, 25, 500, this.currentSpeed, 10000,
@@ -386,7 +386,7 @@ public class PlayerBirdOfPrey extends Player {
 				Vector3f vec;
 				
 				if (this.target != null) {
-					vec = SFMath.rotateToFaceVector(getPosition(), target.getPosition());
+					vec = TRMath.rotateToFaceVector(getPosition(), target.getPosition());
 					vec.x = -vec.x;
 				}
 				else {
@@ -434,7 +434,7 @@ public class PlayerBirdOfPrey extends Player {
 	}
 	
 	@Override
-	public void choreCollisions(List<Enemy> enemies, RaysCast caster) {
+	public void choreCollisions(List<Enemy> enemies, TRRayCaster caster) {
 		
 		boolean virg = true;
 		

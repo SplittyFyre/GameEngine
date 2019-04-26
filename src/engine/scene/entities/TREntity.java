@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.collision.BoundingBox;
 import engine.renderEngine.TRAddtlGeom;
 import engine.renderEngine.models.TexturedModel;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public abstract class TREntity {
 
@@ -115,7 +115,7 @@ public abstract class TREntity {
 		// if this is not merely an organization node
 		if (!this.isOrganizationNode) {
 			
-			m_transformationMatrix = SFMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
+			m_transformationMatrix = TRMath.createTransformationMatrix(this.position, this.getRotX(), this.getRotY(), this.getRotZ(), this.getScale());
 			
 			TRAddtlGeom additionalGeom = null;
 			
@@ -130,7 +130,7 @@ public abstract class TREntity {
 				Vector3f parentScale = this.parent.getWorldScale();
 				this.worldScale.set(parentScale.x * this.scaleX, parentScale.y * this.scaleY, parentScale.z * this.scaleZ);
 				// calc world pos and stuff
-				SFMath.transformAndSet_inplace(m_transformationMatrix, this.position, this.worldPosition);
+				TRMath.transformAndSet_inplace(m_transformationMatrix, this.position, this.worldPosition);
 			}
 			
 			additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	

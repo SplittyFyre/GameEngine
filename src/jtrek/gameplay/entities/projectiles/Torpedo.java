@@ -6,7 +6,7 @@ import engine.audio.AudioEngine;
 import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.particles.systems.SimpleParticleSystem;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 
 public class Torpedo extends Projectile {
@@ -101,14 +101,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.photonTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, dx, dy, dz);
@@ -120,14 +120,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.quantumTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, dx, dy, dz);
@@ -143,14 +143,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.photonTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, 
@@ -207,14 +207,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.photonTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, damage, 
@@ -237,14 +237,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.klingonTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, PT, 
@@ -267,14 +267,14 @@ public class Torpedo extends Projectile {
 		return new Torpedo(TM.quantumTorpedo, new Vector3f(
 				
 				position.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				position.y + magHeight
 				,
 				position.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				),
 				0, 0, 0, WSCALE, WSCALE, ZSCALE, QT, 

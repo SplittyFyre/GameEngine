@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.utils.RaysCast;
+import engine.utils.TRRayCaster;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.hostiles.Enemy;
 import jtrek.gameplay.entities.players.Player;
@@ -21,12 +21,12 @@ public class PlayerTrubbleStern extends Player {
 	}
 
 	@Override
-	public void update(RaysCast caster) {
+	public void update(TRRayCaster caster) {
 		
 	}
 
 	@Override
-	public void choreCollisions(List<Enemy> enemies, RaysCast caster) {
+	public void choreCollisions(List<Enemy> enemies, TRRayCaster caster) {
 		
 	}
 

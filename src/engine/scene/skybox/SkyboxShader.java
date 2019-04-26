@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.ShaderProgram;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class SkyboxShader extends ShaderProgram {
 
@@ -28,7 +28,7 @@ public class SkyboxShader extends ShaderProgram {
 	}
 
 	public void loadViewMatrix(TRCamera camera, float rotation) {
-		Matrix4f matrix = SFMath.createViewMatrix(camera);
+		Matrix4f matrix = TRMath.createViewMatrix(camera);
 		matrix.m30 = 0;
 		matrix.m31 = 0;
 		matrix.m32 = 0;

@@ -13,7 +13,7 @@ import engine.renderEngine.models.RawModel;
 import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.scene.TRScene;
 import engine.scene.terrain.TRTerrain;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class TerrainRenderSystem {
 	
@@ -97,7 +97,7 @@ public class TerrainRenderSystem {
 	}
 
 	private void loadModelMatrix(TRTerrain terrain) {
-		Matrix4f transformationMatrix = SFMath.createTransformationMatrix(
+		Matrix4f transformationMatrix = TRMath.createTransformationMatrix(
 				new Vector3f(terrain.getX(), terrain.getY(), terrain.getZ()), 0, 0, 0, 1);
 		shader.loadTransformationMatrix(transformationMatrix);
 	}

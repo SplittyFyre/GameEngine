@@ -15,6 +15,22 @@ public class TRTerrainGrid {
 	private final int terrainsPerSide;
 	private Vector3f position;
 	
+	// center position
+	public Vector3f getPosition() {
+		return position;
+	}
+	
+	public int getTerrainsPerSide() {
+		return terrainsPerSide;
+	}
+	
+	public TRTerrain getTerrainAt(int i, int j) {
+		if (i >= terrainsPerSide || j >= terrainsPerSide) {
+			throw new IndexOutOfBoundsException("index is greater than number of terrains on each side");
+		}
+		return terrains[i][j];
+	}
+	
 	public TRTerrainGrid(List<TRTerrain> terrainList, int blendMap, TRTerrainTexturePack texPack, Vector3f centerPos, float terrainSize, float heightFactor, int verticesPerGridSide, String formatFile) {
 		this.position = centerPos;
 		@SuppressWarnings("resource")

@@ -13,7 +13,7 @@ import engine.fontMeshCreator.FontType;
 import engine.fontMeshCreator.GUIText;
 import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.Loader;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import engine.utils.TRUtils;
 
 public abstract class SFVerticalSlider implements ISlider, IGUI {
@@ -367,13 +367,13 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 	}
 	
 	public void setCounter(float fontSize, FontType font, float yoffset,  float r, float g, float b) {
-		this.counter = new GUIText("", fontSize, font, SFMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
+		this.counter = new GUIText("", fontSize, font, TRMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.df = new DecimalFormat("#.###");
 	}
 	
 	public void setCounter(float fontSize, FontType font, float yoffset, float r, float g, float b, Callable<String> run) {
-		this.counter = new GUIText("", fontSize, font, SFMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
+		this.counter = new GUIText("", fontSize, font, TRMath.coordtext(this.getPosX() - 0.01f, this.getTopY() + yoffset), 0.25f, false);
 		this.counter.setColour(r, g, b);
 		this.run = run;
 	}

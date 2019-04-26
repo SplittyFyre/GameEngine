@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.TRDisplayManager;
 import engine.scene.entities.camera.TRCamera;
 
-public class SFMath {
+public class TRMath {
 	
 	public static final int SF_DIRECTION_AZIMUTH_RIGHT = -90;
 	public static final int SF_DIRECTION_AZIMUTH_LEFT = 90;
@@ -35,14 +35,14 @@ public class SFMath {
 		return new Vector3f(
 				
 				in.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				,
 				in.y + magHeight
 				,
 				in.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -magFront)
 				
 				);
 	}
@@ -55,14 +55,14 @@ public class SFMath {
 		return new Vector3f(
 				
 				in.x 
-				+ SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -forward)
+				+ TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -forward)
 				,
 				(float) (in.y + magHeight - Math.sin(Math.toRadians(rotX)) * distToRotOrigin)
 				,
 				in.z
-				+ SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
-				- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -forward)
+				+ TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, rotY, magSide)
+				- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, rotY, -forward)
 				
 				);
 	}

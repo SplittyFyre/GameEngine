@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.fontRendering.TextMaster;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.guis.IGUI;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 /**
  * Represents a piece of text in the game.
@@ -281,8 +281,8 @@ public class GUIText implements IGUI {
 
 	@Override
 	public void move(float dx, float dy) {
-		this.position.x += SFMath.coordtextx(dx);
-		this.position.y += SFMath.coordtexty(dy);
+		this.position.x += TRMath.coordtextx(dx);
+		this.position.y += TRMath.coordtexty(dy);
 	}
 
 }

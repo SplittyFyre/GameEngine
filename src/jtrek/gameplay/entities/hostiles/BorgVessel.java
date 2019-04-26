@@ -11,7 +11,7 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import jtrek.box.Main;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.players.Player;
@@ -59,12 +59,12 @@ public class BorgVessel extends Enemy {
 	@Override
 	public void update() {
 		//WARNING: EXPERIMENTAL
-		float dist = SFMath.distance(player.getPlayerPos(), super.getPosition());
+		float dist = TRMath.distance(player.getPlayerPos(), super.getPosition());
 		
 		float coeff = (dist / (3200 * TRDisplayManager.getFrameDeltaTime())) * 1.8f;
 		coeff = 0;
 		
-		Vector3f vec = SFMath.rotateToFaceVector(super.getPosition(), Vector3f.add(new Vector3f(player.getPlayerPos().x, player.getPlayerPos().y, player.getPlayerPos().z),
+		Vector3f vec = TRMath.rotateToFaceVector(super.getPosition(), Vector3f.add(new Vector3f(player.getPlayerPos().x, player.getPlayerPos().y, player.getPlayerPos().z),
 				new Vector3f(player.tracingX * coeff, player.tracingY * coeff, player.tracingZ * coeff), null));
 		
 		//System.out.printf("%f, %f, %f\n", player.tracingX, player.tracingY, player.tracingZ);
@@ -79,7 +79,7 @@ public class BorgVessel extends Enemy {
 		this.counter1 += TRDisplayManager.getFrameDeltaTime();
 		
 		if (dist <= 10000) {
-			Vector3f torpmv = SFMath.moveToVector(player.getPlayerPos(), 
+			Vector3f torpmv = TRMath.moveToVector(player.getPlayerPos(), 
 					super.getPosition(), 10000);
 			if (counter > 1 && !flag) {
 				Main.foeprojectiles.add(new Torpedo(privateTorpedoTexture, 
@@ -128,7 +128,7 @@ public class BorgVessel extends Enemy {
 				}
 			}
 			
-			vec = SFMath.rotateToFaceVector(new Vector3f(super.getPosition().x, super.getPosition().y + 400, super.getPosition().z),
+			vec = TRMath.rotateToFaceVector(new Vector3f(super.getPosition().x, super.getPosition().y + 400, super.getPosition().z),
 					player.getPlayerPos());
 			
 			/*if (TaskManager.rng.nextInt(225) < 2) {

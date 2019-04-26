@@ -8,7 +8,7 @@ import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.scene.particles.systems.SimpleParticleSystem;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.players.Player;
 
@@ -101,9 +101,9 @@ public class HomingTorpedo extends Projectile {
 		float dtmove = TRDisplayManager.getFrameDeltaTime() * this.speed;
 		if (target != null) {
 			if (target instanceof Player)
-				tracing = SFMath.rotateToFaceVector(this.getPosition(), ((Player) target).getPlayerPos());	
+				tracing = TRMath.rotateToFaceVector(this.getPosition(), ((Player) target).getPlayerPos());	
 			else
-				tracing = SFMath.rotateToFaceVector(this.getPosition(), target.getPosition());
+				tracing = TRMath.rotateToFaceVector(this.getPosition(), target.getPosition());
 		}
 		else
 			tracing = new Vector3f(0, 0, 0);

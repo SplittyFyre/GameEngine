@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.ShaderProgram;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class DUDVWaterShader extends ShaderProgram {
 
@@ -105,7 +105,7 @@ public class DUDVWaterShader extends ShaderProgram {
 	}
 	
 	public void loadViewMatrix(TRCamera camera){
-		Matrix4f viewMatrix = SFMath.createViewMatrix(camera);
+		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
 		loadMatrix(location_viewMatrix, viewMatrix);
 		super.loadVector(location_cameraPosition, camera.getPosition());
 	}

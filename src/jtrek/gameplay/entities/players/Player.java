@@ -14,8 +14,8 @@ import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.entities.TREntity;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.RaysCast;
-import engine.utils.SFMath;
+import engine.utils.TRRayCaster;
+import engine.utils.TRMath;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.entityUtils.ITakeDamage;
 import jtrek.gameplay.entities.entityUtils.StatusText;
@@ -24,8 +24,8 @@ import jtrek.gameplay.entities.projectiles.Projectile;
 
 public abstract class Player extends TREntity implements ITakeDamage {
 	
-	public abstract void update(RaysCast caster);
-	public abstract void choreCollisions(List<Enemy> enemies, RaysCast caster);
+	public abstract void update(TRRayCaster caster);
+	public abstract void choreCollisions(List<Enemy> enemies, TRRayCaster caster);
 	public abstract Vector3f getPlayerPos();
 	protected abstract void initWeapons();
 	
@@ -98,7 +98,7 @@ public abstract class Player extends TREntity implements ITakeDamage {
 	}
 	
 	protected void prerequisite() {
-		tmat = SFMath.createTransformationMatrix(super.getPosition(),
+		tmat = TRMath.createTransformationMatrix(super.getPosition(),
 			super.getRotX(), super.getRotY(), super.getRotZ(), 1);
 	}
 	

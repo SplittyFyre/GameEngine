@@ -14,7 +14,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.textures.TRTerrainTexturePack;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class TRTerrain {
 	
@@ -137,12 +137,12 @@ public class TRTerrain {
 		float answer;
 		
 		if (xCoord <= (1 - zCoord)) {
-			answer = SFMath.barryCentric(new Vector3f(0, heights[gridX][gridZ], 0), new Vector3f(1,
+			answer = TRMath.barryCentric(new Vector3f(0, heights[gridX][gridZ], 0), new Vector3f(1,
 							heights[gridX + 1][gridZ], 0), new Vector3f(0,
 							heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
 		} 
 		else {
-			answer = SFMath.barryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(1,
+			answer = TRMath.barryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(1,
 							heights[gridX + 1][gridZ + 1], 1), new Vector3f(0,
 							heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
 		}

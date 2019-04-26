@@ -12,7 +12,7 @@ import engine.scene.TRScene;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.TRCamera;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class EntityShader extends ShaderProgram{
 		
@@ -146,7 +146,7 @@ public class EntityShader extends ShaderProgram{
 	}
 	
 	public void loadViewMatrix(TRCamera camera) {
-		Matrix4f viewMatrix = SFMath.createViewMatrix(camera);
+		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix);
 	}
 	

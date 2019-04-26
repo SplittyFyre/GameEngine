@@ -10,8 +10,9 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.collision.BoundingBox;
 import engine.scene.entities.camera.TRCamera;
 import engine.scene.terrain.TRTerrain;
+import engine.scene.terrain.TRTerrainGrid;
 
-public class RaysCast {
+public class TRRayCaster {
 
 	private static final int RECURSION_COUNT = 200;
 	private static final float RAY_RANGE = 2400;
@@ -22,18 +23,11 @@ public class RaysCast {
 	private Matrix4f viewMatrix;
 	private TRCamera camera;
 	
-	private TRTerrain terrain;
-	private Vector3f currentTerrainPoint;
 
-	public RaysCast(TRCamera cam, Matrix4f projection, TRTerrain terrain) {
+	public TRRayCaster(TRCamera cam, Matrix4f projection) {
 		camera = cam;
 		projectionMatrix = projection;
-		viewMatrix = SFMath.createViewMatrix(camera);
-		this.terrain = terrain;
-	}
-	
-	public Vector3f getCurrentTerrainPoint() {
-		return currentTerrainPoint;
+		viewMatrix = TRMath.createViewMatrix(camera);
 	}
 
 	public Vector3f getCurrentRay() {
@@ -41,12 +35,38 @@ public class RaysCast {
 	}
 
 	public void update() {
-		viewMatrix = SFMath.createViewMatrix(camera);
+		viewMatrix = TRMath.createViewMatrix(camera);
 		currentRay = calculateMouseRay();
-		if (intersectionInRange(0, RAY_RANGE, currentRay)) {
-			currentTerrainPoint = binarySearch(0, 0, RAY_RANGE, currentRay);
-		} else {
-			currentTerrainPoint = null;
+	}
+	
+	public Vector3f getTerrainPoint(TRTerrain terrain) {
+		if (intersectionInRange(0, RAY_RANGE, currentRay, terrain)) {
+			return binarySearch(0, 0, RAY_RANGE, currentRay, terrain);
+		} 
+		else {
+			return null;
+		}
+	}
+	
+	public int[] getIndicesOfPenetratedTerrain(TRTerrainGrid grid) {
+		for (int i = 0; i < grid.getTerrainsPerSide(); i++) {
+			for (int j = 0; j < grid.getTerrainsPerSide(); j++) {
+				TRTerrain terrain = grid.getTerrainAt(i, j);
+				if (intersectionInRange(0, RAY_RANGE, currentRay, terrain)) {
+					return new int[] {i, j};
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Vector3f getTerrainPoint(TRTerrainGrid grid) {
+		int[] indices = this.getIndicesOfPenetratedTerrain(grid);
+		if (indices == null) {
+			return null;
+		}
+		else {
+			return binarySearch(0, 0, RAY_RANGE, currentRay, grid.getTerrainAt(indices[0], indices[1]));
 		}
 	}
 	
@@ -106,41 +126,37 @@ public class RaysCast {
 		return Vector3f.add(start, scaledRay, null);
 	}
 	
-	private Vector3f binarySearch(int count, float start, float finish, Vector3f ray) {
+	private Vector3f binarySearch(int count, float start, float finish, Vector3f ray, TRTerrain terrain) {
 		float half = start + ((finish - start) / 2f);
 		if (count >= RECURSION_COUNT) {
 			Vector3f endPoint = getPointOnRay(ray, half);
-			TRTerrain terrain = getTerrain(endPoint.getX(), endPoint.getZ());
 			if (terrain != null) {
 				return endPoint;
-			} else {
+			} 
+			else {
 				return null;
 			}
 		}
-		if (intersectionInRange(start, half, ray)) {
-			return binarySearch(count + 1, start, half, ray);
-		} else {
-			return binarySearch(count + 1, half, finish, ray);
+		if (intersectionInRange(start, half, ray, terrain)) {
+			return binarySearch(count + 1, start, half, ray, terrain);
+		} 
+		else {
+			return binarySearch(count + 1, half, finish, ray, terrain);
 		}
 	}
 
-	private boolean intersectionInRange(float start, float finish, Vector3f ray) {
+	private boolean intersectionInRange(float start, float finish, Vector3f ray, TRTerrain terrain) {
 		Vector3f startPoint = getPointOnRay(ray, start);
 		Vector3f endPoint = getPointOnRay(ray, finish);
-		return (!isUnderGround(startPoint) && isUnderGround(endPoint));
+		return (!isUnderGround(startPoint, terrain) && isUnderGround(endPoint, terrain));
 	}
 
-	private boolean isUnderGround(Vector3f testPoint) {
-		TRTerrain terrain = getTerrain(testPoint.getX(), testPoint.getZ());
+	private boolean isUnderGround(Vector3f testPoint, TRTerrain terrain) {
 		float height = 0;
 		if (terrain != null) {
 			height = terrain.getTerrainHeight(testPoint.getX(), testPoint.getZ());
 		}
 		return testPoint.y < height;
-	}
-
-	private TRTerrain getTerrain(float worldX, float worldZ) {
-		return terrain;
 	}
 	
 	public TRCamera getCamera() {

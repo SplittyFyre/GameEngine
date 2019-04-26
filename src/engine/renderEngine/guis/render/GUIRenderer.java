@@ -18,7 +18,7 @@ import engine.renderEngine.MasterRenderSystem;
 import engine.renderEngine.guis.GUITexture;
 import engine.renderEngine.models.RawModel;
 import engine.scene.lensFlare.FlareTexture;
-import engine.utils.SFMath;
+import engine.utils.TRMath;
 
 public class GUIRenderer {
 	
@@ -54,7 +54,7 @@ public class GUIRenderer {
 			
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
-			Matrix4f matrix = SFMath.createTransformationMatrix(texture.getPosition(), texture.getScale(), texture.getRotation(), texture.isFlipped());
+			Matrix4f matrix = TRMath.createTransformationMatrix(texture.getPosition(), texture.getScale(), texture.getRotation(), texture.isFlipped());
 			shader.loadTransformation(matrix);
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, quad.getVertexCount());
 		}

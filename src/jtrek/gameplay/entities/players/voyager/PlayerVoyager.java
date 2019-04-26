@@ -28,8 +28,8 @@ import engine.scene.entities.TREntity;
 import engine.scene.particles.Particle;
 import engine.scene.particles.ParticleTexture;
 import engine.utils.FloatingOrigin;
-import engine.utils.RaysCast;
-import engine.utils.SFMath;
+import engine.utils.TRRayCaster;
+import engine.utils.TRMath;
 import jtrek.box.Main;
 import jtrek.box.TM;
 import jtrek.gameplay.entities.PlayerCamera;
@@ -928,7 +928,7 @@ public class PlayerVoyager extends Player {
 			Vector2f tobe = TRDisplayManager.getNormalizedMouseCoords();
 			tobe.y = -tobe.y;
 			
-			if (!(SFMath.distance(tobe, colPos) > 0.35f)) {
+			if (!(TRMath.distance(tobe, colPos) > 0.35f)) {
 				joystick.getTexture().setPosition(tobe);
 				//joystick.getTexture().setRotation(-joystick.getTexture().getPosition().x * 100);
 				joystick.getTexture().setRotation(-super.getRotZ());
@@ -964,7 +964,7 @@ public class PlayerVoyager extends Player {
 	//UI STUFF*****************************************
 	
 	@Override
-	public void update(RaysCast caster) {
+	public void update(TRRayCaster caster) {
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
 			pacman.struct.setPosition(0, 0);
@@ -1088,7 +1088,7 @@ public class PlayerVoyager extends Player {
 		if (this.target != null && Keyboard.isKeyDown(Keyboard.KEY_X)) {
 			
 			super.getPosition().y += 10.5;
-			Vector3f vec = SFMath.rotateToFaceVector(getPosition(), this.target.getPosition());
+			Vector3f vec = TRMath.rotateToFaceVector(getPosition(), this.target.getPosition());
 			super.getPosition().y -= 10.5;
 						
 			float rot = super.getRotY() - vec.y;
@@ -1443,7 +1443,7 @@ public class PlayerVoyager extends Player {
 			rots = new Vector3f(-super.getRotX(), super.getRotY(), 0);
 		}
 		else {
-			rots = SFMath.rotateToFaceVector(firing, this.target.getPosition());
+			rots = TRMath.rotateToFaceVector(firing, this.target.getPosition());
 		}
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
@@ -1468,7 +1468,7 @@ public class PlayerVoyager extends Player {
 			rots = new Vector3f(-super.getRotX(), super.getRotY(), 0);
 		}
 		else {
-			rots = SFMath.rotateToFaceVector(firing, this.target.getPosition());
+			rots = TRMath.rotateToFaceVector(firing, this.target.getPosition());
 		}
 		
 		projectiles.add(new Bolt(TM.phaserBolt, firing,
@@ -1481,11 +1481,11 @@ public class PlayerVoyager extends Player {
 		
 		projectiles.add(new Bolt(privatePhaserTexture, 
 				new Vector3f(super.getPosition().x + 
-						SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 9.1f)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)
+						TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 9.1f)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)
 						, super.getPosition().y + 33,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 9.1f)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_LEFT, super.getRotY(), 9.1f)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
 				-super.getRotX() - angle, super.getRotY() + 180, 0
 				, Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 10, tracingX, tracingY, tracingZ, true));
 		
@@ -1497,11 +1497,11 @@ public class PlayerVoyager extends Player {
 		
 		projectiles.add(new Bolt(privatePhaserTexture, 
 				new Vector3f(super.getPosition().x + 
-						SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 9.1f)
-				- SFMath.relativePosShiftX(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)
+						TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 9.1f)
+				- TRMath.relativePosShiftX(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)
 						, super.getPosition().y + 33,
-						super.getPosition().z + SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 9.1f)
-						- SFMath.relativePosShiftZ(SFMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
+						super.getPosition().z + TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_RIGHT, super.getRotY(), 9.1f)
+						- TRMath.relativePosShiftZ(TRMath.SF_DIRECTION_AZIMUTH_NEUTRAL, super.getRotY(), 12)),
 				-super.getRotX() - angle, super.getRotY() + 180, 0
 				, Bolt.WSCALE, Bolt.WSCALE, Bolt.ZSCALE, 10, tracingX, -tracingY, tracingZ, true));
 		
@@ -1545,7 +1545,7 @@ public class PlayerVoyager extends Player {
 		
 	}
 	
-	private void fireAllWeapons(RaysCast caster) {
+	private void fireAllWeapons(TRRayCaster caster) {
 					
 		if (Keyboard.isKeyDown(Keyboard.KEY_P))
 			fireFrontPhasers();
@@ -1570,7 +1570,7 @@ public class PlayerVoyager extends Player {
 				fireFrontPhotons();
 			}
 			
-			if (SFMath.nIsWithin(counterS, 0, 1)) {
+			if (TRMath.nIsWithin(counterS, 0, 1)) {
 				fireFrontPhasers();
 			}
 			
@@ -1593,7 +1593,7 @@ public class PlayerVoyager extends Player {
 			
 			float size = FloatingOrigin.gridLen;
 			
-			Vector3f vec = SFMath.rotateToFaceVector(getPosition(), new Vector3f(0 - FloatingOrigin.getGridX() * size,
+			Vector3f vec = TRMath.rotateToFaceVector(getPosition(), new Vector3f(0 - FloatingOrigin.getGridX() * size,
 					0, 0 - FloatingOrigin.getGridZ() * size));
 			
 			float rot = super.getRotY() - vec.y;
@@ -1743,7 +1743,7 @@ public class PlayerVoyager extends Player {
 	
 	public void fireTurret(Vector3f target) {
 		
-		Vector3f vec = SFMath.moveToVector(target, super.getPosition(), 3500);
+		Vector3f vec = TRMath.moveToVector(target, super.getPosition(), 3500);
 		
 		turretTimer += TRDisplayManager.getFrameDeltaTime();
 		
@@ -1776,7 +1776,7 @@ public class PlayerVoyager extends Player {
 			break;
 			
 		case PHASER_QUANTUM: 
-			Vector3f rotations = SFMath.rotateToFaceVector(super.getPosition(), target);
+			Vector3f rotations = TRMath.rotateToFaceVector(super.getPosition(), target);
 			projectiles.add(new Bolt(privatePhaserTexture, new Vector3f(super.getPosition().x, super.getPosition().y + 10, super.getPosition().z)
 					, -rotations.x, rotations.y, rotations.z, 1.5f, 1.5f, 10, 15, 0));
 			ENERGY--;
@@ -1824,7 +1824,7 @@ public class PlayerVoyager extends Player {
 	}
 	
 	@Override
-	public void choreCollisions(List<Enemy> enemies, RaysCast caster) {
+	public void choreCollisions(List<Enemy> enemies, TRRayCaster caster) {
 		 
 		boolean virg = true;
 		
