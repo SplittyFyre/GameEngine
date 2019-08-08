@@ -16,6 +16,9 @@ https://github.com/LWJGL/lwjgl
 ### Skyboxes
 
 ### Heightmapped terrain with LOD
+<p float="left">
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/terrainlod.png"/>
+</p>
 
 ### Procedural terrain generation
 
