@@ -16,6 +16,6 @@ void main(void){
 	
 	out_Color = mix(colour1, colour2, blend);
 	
-	out_BrightColor = out_Color / 2;
+	out_BrightColor = vec4(0);
 
 }

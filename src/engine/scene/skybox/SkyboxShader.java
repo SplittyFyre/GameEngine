@@ -28,7 +28,7 @@ public class SkyboxShader extends ShaderProgram {
 	}
 
 	public void loadViewMatrix(TRCamera camera, float rotation) {
-		Matrix4f matrix = TRMath.createViewMatrix(camera);
+		Matrix4f matrix = new Matrix4f(camera.getViewMatrix());
 		matrix.m30 = 0;
 		matrix.m31 = 0;
 		matrix.m32 = 0;

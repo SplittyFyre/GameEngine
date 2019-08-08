@@ -15,7 +15,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class TRDisplayManager {
 	
-	private static String[] ICON_PATHS = {"sficon16", "sficon32", "sficon"};
+	private static String[] ICON_PATHS = {/*"sficon16", "sficon32",*/ "sficon"};
 	
 	private static int WIDTH;
 	private static int HEIGHT;
@@ -32,7 +32,7 @@ public class TRDisplayManager {
 		FPS_CAP = fpsCap;
 		TRDisplayManager.resizeCallBack = resizeCallBack;
 		
-		ContextAttribs attributes = new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
+		ContextAttribs attributes = new ContextAttribs(4, 3).withForwardCompatible(true).withProfileCore(true);
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
@@ -48,15 +48,15 @@ public class TRDisplayManager {
 				icons[i] = ByteBuffer.allocateDirect(1);
 				icons[i] = Loader.loadIcon(ICON_PATHS[i]);
 			}
-			
-			Display.setIcon(icons);
+
+			//Display.setIcon(icons);
 			
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		lastFrameTime = getCurrentTime();
-	} 
+	}
 	
 	public static void setNativeCursor(org.lwjgl.input.Cursor cursor) {
 		try {
@@ -70,6 +70,7 @@ public class TRDisplayManager {
 	public static void updateDisplay() {
 		if (Display.wasResized()) {
 			GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+			System.out.println(Display.getWidth() + " " + Display.getHeight());
 			if (TRDisplayManager.resizeCallBack != null)
 				TRDisplayManager.resizeCallBack.run();
 		}
@@ -98,7 +99,7 @@ public class TRDisplayManager {
 	}
 	
 	public static float getAspectRatio() {
-		System.out.println((float) Display.getWidth() / (float) Display.getHeight());
+		//System.out.println((float) Display.getWidth() / (float) Display.getHeight());
 		return (float) Display.getWidth()/ (float) Display.getHeight();
 		//return (float) Display.getWidth() / (float) Display.getHeight();
 	}

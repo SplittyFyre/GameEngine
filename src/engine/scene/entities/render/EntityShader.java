@@ -146,8 +146,7 @@ public class EntityShader extends ShaderProgram{
 	}
 	
 	public void loadViewMatrix(TRCamera camera) {
-		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
-		super.loadMatrix(location_viewMatrix, viewMatrix);
+		super.loadMatrix(location_viewMatrix, camera.getViewMatrix());
 	}
 	
 	public void loadProjectionMatrix(Matrix4f projection){

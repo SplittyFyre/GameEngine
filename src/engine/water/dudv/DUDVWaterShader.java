@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.ShaderProgram;
+import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.TRCamera;
 import engine.utils.TRMath;
@@ -59,6 +60,16 @@ public class DUDVWaterShader extends ShaderProgram {
 		addUniformVariable("farPlane");
 		
 		addUniformVariable("tiling");
+		
+		addUniformVariable("skyColour");
+		addUniformVariable("density");
+		addUniformVariable("gradient");
+	}
+	
+	public void loadSkyContext(SkyContext ctx) {
+		super.loadFloat(uniformLocationOf("density"), ctx.fogDensity);
+		super.loadFloat(uniformLocationOf("gradient"), ctx.fogGradient);
+		super.loadVector(uniformLocationOf("skyColour"), ctx.skyR, ctx.skyG, ctx.skyB);
 	}
 	
 	public void loadTiling(float tiling) {
@@ -105,7 +116,7 @@ public class DUDVWaterShader extends ShaderProgram {
 	}
 	
 	public void loadViewMatrix(TRCamera camera){
-		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
+		Matrix4f viewMatrix = camera.getViewMatrix();
 		loadMatrix(location_viewMatrix, viewMatrix);
 		super.loadVector(location_cameraPosition, camera.getPosition());
 	}

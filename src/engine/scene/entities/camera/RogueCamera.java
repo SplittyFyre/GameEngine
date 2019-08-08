@@ -1,13 +1,15 @@
 package engine.scene.entities.camera;
 
+import java.awt.RenderingHints.Key;
+
 import org.lwjgl.input.Keyboard;
 
 import engine.renderEngine.TRDisplayManager;
 
 public class RogueCamera extends TRCamera {
 	
-	private static float SPEED = 100;
-	private static float UPSPEED = 50;
+	private static float SPEED = 1000;
+	private static float UPSPEED = 500;
 
 	@Override
 	public void move() {
@@ -36,6 +38,13 @@ public class RogueCamera extends TRCamera {
 			up = -UPSPEED;
 		}
 		
+		if (Keyboard.isKeyDown(Keyboard.KEY_K)) {
+			pitch -= 45f * TRDisplayManager.getFrameDeltaTime();
+		}
+		else if (Keyboard.isKeyDown(Keyboard.KEY_J)) {
+			pitch += 45f * TRDisplayManager.getFrameDeltaTime();
+		}
+		
 		float distanceMoved = mov * TRDisplayManager.getFrameDeltaTime();
 		
 		float dx = (float) (distanceMoved * Math.sin(Math.toRadians(180 - yaw)));
@@ -45,6 +54,8 @@ public class RogueCamera extends TRCamera {
 		position.x += dx;
 		position.y += dy;
 		position.z += dz;
+		
+		
 		
 	}
 

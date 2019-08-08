@@ -7,6 +7,7 @@ import java.util.Map;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL44;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -53,8 +54,8 @@ public class MasterRenderSystem {
 			this.waterRenderer = new DUDVWaterRenderer(projectionMatrix);
 	}
 	
-	private void renderWithoutWater(TRScene scene) {
-		scene.updateSceneGraph(entitiesInfos);
+	private void renderWithoutWater(TRScene scene, TRFrustumCuller frustumCuller) {
+		scene.updateSceneGraph(entitiesInfos, frustumCuller, true);
 		prepare();
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3))
@@ -64,12 +65,12 @@ public class MasterRenderSystem {
 			skyboxRenderer.render(scene);
 		
 		entityRenderer.render(entitiesInfos, scene);
-		terrainRenderer.render(scene.getTerrains(), scene);
+		terrainRenderer.render(scene.getTerrains(), frustumCuller, scene);
 		//FINISH***********************************************************
 		entitiesInfos.clear();
 	}
 	
-	public void renderMainPass(TRScene scene, Fbo fbo) {
+	public void renderMainPass(TRScene scene, Fbo fbo, TRFrustumCuller frustumCuller) {
 		
 		TRCamera camera = scene.getCamera();
 		
@@ -83,13 +84,15 @@ public class MasterRenderSystem {
 			float distance = 2 * (camera.getPosition().y - water.getHeight());
 			camera.getPosition().y -= distance;
 			camera.invertPitch();
-			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight() + 0.07f));
-			renderWithoutWater(scene);
+			scene.setClipPlanePointer(new Vector4f(0, 1, 0, -water.getHeight()));
+			camera.updateViewMatrix();
+			renderWithoutWater(scene, frustumCuller);
 			camera.getPosition().y += distance;
 			camera.invertPitch();
 			buffers.bindRefractionFrameBuffer();
 			scene.setClipPlanePointer(new Vector4f(0, -1, 0, water.getHeight() + 0.07f));
-			renderWithoutWater(scene);
+			camera.updateViewMatrix(); // view matrix returns to normal
+			renderWithoutWater(scene, frustumCuller);
 			buffers.unbindCurrentFrameBuffer();
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 		}	
@@ -97,10 +100,10 @@ public class MasterRenderSystem {
 		if (fbo != null)
 			fbo.bindFrameBuffer();
 		
-		renderWithoutWater(scene);
+		renderWithoutWater(scene, frustumCuller);
 		
 		if (scene.getWaters().size() != 0) {
-			waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0));
+			waterRenderer.render(scene.getWaters(), camera, scene.getLights().get(0), scene.skyCtx);
 		}
 		
 		ParticleWatcher.renderParticles(camera);
@@ -182,6 +185,7 @@ public class MasterRenderSystem {
 	public void setProjectionMatrix(Matrix4f matrix) {
 		entityRenderer.setProjectionMatrix(matrix);
 		terrainRenderer.setProjectionMatrix(matrix);
+		waterRenderer.setProjectionMatrix(matrix);
 	}
 	
 	public static void enableFaceCulling() {

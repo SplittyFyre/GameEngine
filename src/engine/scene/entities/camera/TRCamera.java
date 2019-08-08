@@ -4,9 +4,16 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engine.utils.TRMath;
+
 public abstract class TRCamera {
-	
+
 	public static final float STD_FOV = 50;
+	
+	private Matrix4f viewMatrix, projectionMatrix;
+	public final Matrix4f getViewMatrix() {
+		return this.viewMatrix;
+	}
 	
 	protected float pitch = 20;
 	protected float yaw;
@@ -18,7 +25,17 @@ public abstract class TRCamera {
 		this.pitch = -pitch;
 	}
 	
-	public abstract void move();
+	public void update() {
+		move();
+		this.updateViewMatrix();
+	}
+	
+	public void updateViewMatrix() {
+		this.viewMatrix = TRMath.createViewMatrix(this);
+	}
+	
+	
+	protected abstract void move();
 
 	public Vector3f getPosition() {
 		return position;

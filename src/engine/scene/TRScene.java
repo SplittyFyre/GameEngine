@@ -7,6 +7,7 @@ import java.util.Map;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.renderEngine.TRAddtlGeom;
+import engine.renderEngine.TRFrustumCuller;
 import engine.renderEngine.models.TexturedModel;
 import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
@@ -31,8 +32,8 @@ public class TRScene {
 		rootNode.attachChild(entity);
 	}
 	
-	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr) {
-		this.rootNode.updateSceneGraph(mapPtr, null);
+	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, TRFrustumCuller frustumCuller, boolean frustumCull) {
+		this.rootNode.updateSceneGraph(mapPtr, null, frustumCuller, frustumCull);
 	}
 	 
 	protected TRCamera camera;

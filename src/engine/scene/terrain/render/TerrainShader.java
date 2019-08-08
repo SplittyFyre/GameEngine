@@ -155,8 +155,7 @@ public class TerrainShader extends ShaderProgram {
 	}
 	
 	public void loadViewMatrix(TRCamera camera) {
-		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
-		super.loadMatrix(location_viewMatrix, viewMatrix);
+		super.loadMatrix(location_viewMatrix, camera.getViewMatrix());
 	}
 	
 	public void loadProjectionMatrix(Matrix4f projection){
@@ -166,7 +165,7 @@ public class TerrainShader extends ShaderProgram {
 	public void loadSkyContext(SkyContext ctx) {
 		super.loadFloat(uniformLocationOf("density"), ctx.fogDensity);
 		super.loadFloat(uniformLocationOf("gradient"), ctx.fogGradient);
-		super.loadVector(location_skyColour, new Vector3f(ctx.skyR, ctx.skyG, ctx.skyB));
+		super.loadVector(location_skyColour, ctx.skyR, ctx.skyG, ctx.skyB);
 	}
 	
 	public void loadClipPlane(Vector4f plane) {

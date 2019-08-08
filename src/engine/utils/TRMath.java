@@ -313,5 +313,13 @@ public class TRMath {
 		dest.y = y;
 		dest.z = z;
 	}
+	
+	public static float maxInVector(Vector3f vec) {
+		return Math.max(vec.x, Math.max(vec.y, vec.z));
+	}
+	
+	public static void mulVecByScalar(Vector3f vec, float scalar) {
+		vec.x *= scalar; vec.y *= scalar; vec.z *= scalar;
+	}
 
 }

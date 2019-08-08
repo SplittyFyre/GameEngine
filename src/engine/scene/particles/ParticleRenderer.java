@@ -33,6 +33,14 @@ public class ParticleRenderer {
 	private int vbo;
 	private int ptr = 0;
 	
+	private boolean matrixChanged = false;
+	private Matrix4f newMatrix = null;
+	
+	public void setProjectionMatrix(Matrix4f pmat) {
+		matrixChanged = true;
+		newMatrix = pmat;
+	}
+	
 	protected ParticleRenderer(Matrix4f projectionMatrix) {
 		this.vbo = Loader.createEmptyVBO(INSTANCE_DATA_LEN * MAX_INSTANCES); 
 		quad = Loader.loadToVAO(VERTICES, 2);
@@ -53,7 +61,7 @@ public class ParticleRenderer {
 	}
 	
 	protected void render(Map<ParticleTexture, List<Particle>> particles, TRCamera camera) {
-		Matrix4f viewMatrix = TRMath.createViewMatrix(camera);
+		final Matrix4f viewMatrix = camera.getViewMatrix();
 		prepare();
 		for (ParticleTexture texture : particles.keySet()) {
 			
@@ -96,7 +104,7 @@ public class ParticleRenderer {
 		data[ptr++] = p.getBlend();
 	}
 	
-	private void updateModelViewMatrix(Vector3f pos, float rot, float scale, Matrix4f viewMatrix, float[] vboData) {
+	private void updateModelViewMatrix(Vector3f pos, float rot, float scale, final Matrix4f viewMatrix, float[] vboData) {
 		Matrix4f modelMatrix = new Matrix4f();
 		Matrix4f.translate(pos, modelMatrix, modelMatrix);
 		modelMatrix.m00 = viewMatrix.m00;
@@ -143,6 +151,10 @@ public class ParticleRenderer {
 	
 	private void prepare() {
 		shader.start();
+		if (matrixChanged) {
+			this.matrixChanged = false;
+			shader.loadProjectionMatrix(this.newMatrix);
+		}
 		GL30.glBindVertexArray(quad.getVaoID());
 		for (int i = 0; i <= 6; i++) {
 			GL20.glEnableVertexAttribArray(i);

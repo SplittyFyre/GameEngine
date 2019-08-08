@@ -33,8 +33,9 @@ public class SkyboxRenderSystem {
 		
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_SRC_ALPHA);
-		GL11.glDepthMask(false);
 		shader.start();
+		//GL11.glDepthMask(false);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		
 		skybox.rotate();
 		shader.loadViewMatrix(scene.getCamera(), skybox.rotation);
@@ -50,7 +51,8 @@ public class SkyboxRenderSystem {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
-		GL11.glDepthMask(true);
+		//GL11.glDepthMask(true);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	

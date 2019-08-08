@@ -1,12 +1,14 @@
 package engine.renderEngine;
 
-import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
 import engine.postProcessing.Fbo;
 import engine.scene.TRScene;
-import engine.scene.entities.camera.TRCamera;
+import engine.scene.particles.ParticleWatcher;
 
 public class TRRenderEngine {
+	
+	public static TRRenderEngine activeInstance = null;
 	
 	public static final int RENDER_ENTITIES_BIT = 1;
 	public static final int RENDER_TERRAIN_BIT = 2;
@@ -14,34 +16,49 @@ public class TRRenderEngine {
 	public static final int RENDER_DUDVWATER_BIT = 8;
 	
 	private MasterRenderSystem renderer;
-	
-	private final float nearPlane, farPlane;
-	
-	//private static final Matrix4f permenantNormalMatrix = Camera.createProjectionMatrix(1, 200000, Camera.STD_FOV);
-	private final Matrix4f projectionMatrix;
 		
-	public static float nearPlaneInUse;
-	public static float farPlaneInUse;
+	private final TRFrustumCuller frustumCuller;
 	
-	public TRRenderEngine(int renderAvailableMasks, float nearPlane, float farPlane) {
-		this.nearPlane = nearPlane;
-		this.farPlane = farPlane;
-		this.projectionMatrix = TRCamera.createProjectionMatrix(nearPlane, farPlane, TRCamera.STD_FOV);
-		this.renderer = new MasterRenderSystem(renderAvailableMasks, projectionMatrix);
+	private TRProjectionCtx defaultProjection, activeProjection;
+	
+	public TRRenderEngine(int renderAvailableMasks, TRProjectionCtx projection) {
+		this.defaultProjection = projection;
+		this.activeProjection = defaultProjection;
+		this.renderer = new MasterRenderSystem(renderAvailableMasks, defaultProjection.getMatrix());
+		this.frustumCuller = new TRFrustumCuller(projection);
+		TRRenderEngine.activeInstance = this;
+		ParticleWatcher.init(this.activeProjection.getMatrix());
 	}
 	
 	public void renderScene(TRScene scene, Fbo fbo) {
-		nearPlaneInUse = nearPlane;
-		farPlaneInUse = farPlane;
-		renderer.renderMainPass(scene, fbo);
+		this.frustumCuller.updateViewMatrix(scene.getCamera().getViewMatrix());
+		renderer.renderMainPass(scene, fbo, this.frustumCuller);
 	}
 	
 	public void cleanUp() {
 		renderer.cleanUp();
+		ParticleWatcher.cleanUp();
 	}
 	
-	public Matrix4f getProjectionMatrix() {
-		return projectionMatrix;
+	
+	public void setProjection(TRProjectionCtx pctx) {
+		this.activeProjection = pctx;
+		updateSubProjections();
+	}
+	
+	public void restoreDefaultProjection() {
+		this.activeProjection = this.defaultProjection;
+		updateSubProjections();
+	}
+	
+	public void updateSubProjections() {
+		this.frustumCuller.setProjection(this.activeProjection);
+		this.renderer.setProjectionMatrix(this.activeProjection.getMatrix());
+		ParticleWatcher.setProjectionMatrix(this.activeProjection.getMatrix());
+	}
+	
+	public TRProjectionCtx getActiveProjection() {
+		return this.activeProjection;
 	}
 
 }

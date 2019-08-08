@@ -9,6 +9,8 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
+import internal.ResourceStreamClass;
+
 public class AudioEngine {
 	
 	private static List<Integer> buffers = new ArrayList<Integer>();
@@ -41,7 +43,7 @@ public class AudioEngine {
 		//ClassLoader load = Class.class.getClassLoader();
 		//URL url = load.getResource("/res/" + file + ".wav");
 		//WaveData wave = WaveData.create(Class.class.getResourceAsStream("/res/" + file + ".wav"));
-		WaveData wave = WaveData.create(new BufferedInputStream(Class.class.getResourceAsStream("/res/" + file + ".wav")));
+		WaveData wave = WaveData.create(new BufferedInputStream(ResourceStreamClass.class.getResourceAsStream("/res/" + file + ".wav")));
 		//WaveData wave = WaveData.create(url);
 		if (wave == null) {
 			System.err.println("Not again, the WaveData create during sound loading is null");

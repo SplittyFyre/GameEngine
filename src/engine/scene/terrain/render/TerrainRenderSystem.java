@@ -7,11 +7,14 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.renderEngine.models.RawModel;
+import engine.renderEngine.TRFrustumCuller;
+import engine.renderEngine.models.TerrainLODModel;
 import engine.renderEngine.textures.TRTerrainTexturePack;
 import engine.scene.TRScene;
+import engine.scene.entities.camera.TRCamera;
 import engine.scene.terrain.TRTerrain;
 import engine.utils.TRMath;
 
@@ -31,14 +34,21 @@ public class TerrainRenderSystem {
 		shader.stop();
 	}
 	
-	public void render(List<TRTerrain> terrains, TRScene scene) {
+	public void render(List<TRTerrain> terrains, TRFrustumCuller frustumCuller, TRScene scene) {
 		prepare(scene);
+		int culled = 0;
 		for (TRTerrain terrain : terrains) {
-			prepareTerrain(terrain);
-			loadModelMatrix(terrain);
-			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(),
-					GL11.GL_UNSIGNED_INT, 0);
-			unbindTexturedModel();
+			
+			if (!frustumCuller.isSphereOutside(terrain.getX() + (terrain.size / 2f), terrain.getY(), terrain.getZ() + (terrain.size / 2f), Math.max(terrain.getMaxHeight(), terrain.size_times_sqrt2_div_2))) {
+				prepareTerrain(terrain, scene.getCamera());
+				loadModelMatrix(terrain);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(),
+						GL11.GL_UNSIGNED_INT, 0);
+				unbindTexturedModel();
+			}
+			else {
+				culled++;
+			}
 		}
 		shader.stop();
 	}
@@ -54,8 +64,24 @@ public class TerrainRenderSystem {
 		shader.loadLightsInUse(scene.getLights().size());
 	}
 
-	private void prepareTerrain(TRTerrain terrain) {
-		RawModel rawModel = terrain.getModel();
+	private void prepareTerrain(TRTerrain terrain, TRCamera camera) {
+		TerrainLODModel rawModel = terrain.getModel();
+		
+		float distance = TRMath.distance(new Vector2f(terrain.getX(), terrain.getZ()), new Vector2f(camera.getPosition().x, camera.getPosition().z));
+		
+		if (distance > 20000) {
+			rawModel.ensureLODLevel(3);
+		}
+		else if (distance > 12500) {
+			rawModel.ensureLODLevel(2);
+		}
+		else if (distance > 7500) {
+			rawModel.ensureLODLevel(1);
+		}
+		else {
+			rawModel.ensureLODLevel(0);
+		}
+		
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);

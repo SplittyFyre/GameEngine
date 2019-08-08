@@ -26,6 +26,14 @@ uniform float farPlane;
 
 uniform vec3 colourOffset;
 
+uniform vec3 skyColour;
+
+in vec4 passCamPos;
+
+
+uniform float density;
+uniform float gradient;
+
 void main(void) {
 
 	vec2 ndc = (clipSpace.xy / clipSpace.w) / 2.0 + 0.5;
@@ -53,7 +61,7 @@ void main(void) {
 	vec4 reflectColour = texture(reflectionTexture, reflectTexCoords);
 	vec4 refractColour = texture(refractionTexture, refractTexCoords);
 	
-	refractColour = mix(refractColour, vec4(0.001, 0.001, 0, 0.01), clamp(waterDepth / 80.0, 0.0, 0.5));
+	refractColour = mix(refractColour, vec4(0.01, 0.01, 0, 0.01), clamp(waterDepth / 640.0, 0.0, 1.0));
 	
 	vec4 normalMapColour = texture(normalMap, distortedTexCoords);
 	vec3 normal = vec3(normalMapColour.r * 2.0 - 1.0, normalMapColour.b * 3.0, normalMapColour.g * 2.0 - 1.0);
@@ -62,8 +70,7 @@ void main(void) {
 	vec3 viewVector = normalize(toCameraVector);
 	float refractiveFactor = dot(viewVector, normal);
 	refractiveFactor = pow(refractiveFactor, 0.5);
-	refractiveFactor = clamp(refractiveFactor, 0.0, 1.0);
-	
+		
 	refractiveFactor = clamp(refractiveFactor, 0.0, 1.0);
 	 
 	vec3 reflectedLight = reflect(normalize(fromLightVector), normal);
@@ -77,5 +84,11 @@ void main(void) {
 		
 	outColour.xyz += colourOffset.xyz;
 	
+	float distance = length(passCamPos.xyz);
+	float visibility = exp(-pow((distance * density), gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
+	
+	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
+			
 	outBrightColour = vec4(0.0);
 }

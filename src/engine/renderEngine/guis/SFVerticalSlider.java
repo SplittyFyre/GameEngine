@@ -94,7 +94,9 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f, scale.y * sliderLength * TRDisplayManager.getAspectRatio()));
 	}
 	
-	public SFVerticalSlider(List<IGUI> list, float sliderLength, float xoff, float yoff, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {
+	
+	
+	public SFVerticalSlider(float sliderLength, float xoff, float yoff, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {
 		
 		marks = new ArrayList<IGUI>();
 		markTexts = new ArrayList<GUIText>();
@@ -103,14 +105,13 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 			
 			@Override
 			public void whileHovering(IButton button) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void whileHolding(IButton button) {
-				//this.move(0, (float) (Mouse.getDY() * 0.00125));
-				this.getTexture().getPosition().y = Mouse.getY();
+				//this.move(0, (float) (Mouse.getDY() * 0.001));
+				this.getTexture().getPosition().y = -1.0f + 2.0f * Mouse.getY() / Display.getHeight();
 			}
 			
 			@Override
@@ -130,7 +131,48 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 				
 			}
 		};
-		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.02f, sliderLength));
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f, scale.y * sliderLength * TRDisplayManager.getAspectRatio()));
+	}
+	
+	
+	
+	public SFVerticalSlider(List<IGUI> list, float sliderLength, float xoff, float yoff, Vector2f position, Vector2f scale, String slidetex, String backgroundtex) {
+		
+		marks = new ArrayList<IGUI>();
+		markTexts = new ArrayList<GUIText>();
+		
+		slide = new SFAbstractButton(slidetex, position, scale, xoff, yoff) {
+			
+			@Override
+			public void whileHovering(IButton button) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void whileHolding(IButton button) {
+				//this.move(0, (float) (Mouse.getDY() * 0.00125));
+				this.getTexture().getPosition().y = -1.0f + 2.0f * Mouse.getY() / Display.getHeight();
+			}
+			
+			@Override
+			public void onStopHover(IButton button) {
+				sliderStopHover(that);
+				
+			}
+			
+			@Override
+			public void onStartHover(IButton button) {
+				sliderStartHover(that);
+				
+			}
+			
+			@Override
+			public void onClick(IButton button) {
+				
+			}
+		};
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f, sliderLength));
 		list.add(this);
 	}
 	
@@ -170,7 +212,7 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 				
 			}
 		};
-		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.02f, sliderLength));
+		background = new GUITexture(Loader.loadTexture(backgroundtex), new Vector2f(position), new Vector2f(0.04f, sliderLength));
 		struct.addChild(this);
 	}
 	
@@ -275,6 +317,11 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 				
 	}
 	
+	public SFVerticalSlider setBackgroundWidth(float width) {
+		this.background.getScale().x = width;
+		return this;
+	}
+	
 	@Override
 	public void show(List<GUITexture> textures) {
 		if (isHidden) {
@@ -294,6 +341,10 @@ public abstract class SFVerticalSlider implements ISlider, IGUI {
 
 	@Override
 	public void update() {
+		if (isHidden) {
+			return;
+		}
+		
 		slide.update();
 		
 		for (IGUI el : marks) {

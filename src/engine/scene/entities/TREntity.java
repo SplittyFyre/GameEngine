@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.collision.BoundingBox;
 import engine.renderEngine.TRAddtlGeom;
+import engine.renderEngine.TRFrustumCuller;
 import engine.renderEngine.models.TexturedModel;
 import engine.utils.TRMath;
 
@@ -108,8 +109,8 @@ public abstract class TREntity {
 	}
 	
 																				// mat is for internal use, renderer pass in null
-	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, Matrix4f parentTransformMat) {
-		
+	public void updateSceneGraph(Map<TexturedModel, List<TRAddtlGeom>> mapPtr, Matrix4f parentTransformMat, TRFrustumCuller frustumCuller, boolean frustumCull) {
+				
 		Matrix4f m_transformationMatrix = null;
 		
 		// if this is not merely an organization node
@@ -133,17 +134,29 @@ public abstract class TREntity {
 				TRMath.transformAndSet_inplace(m_transformationMatrix, this.position, this.worldPosition);
 			}
 			
-			additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	
-			
-			TexturedModel model = this.model;
-			List<TRAddtlGeom> batch = mapPtr.get(model);
-			if (batch == null) {
-				List<TRAddtlGeom> newBatch = new ArrayList<TRAddtlGeom>();
-				newBatch.add(additionalGeom);
-				mapPtr.put(model, newBatch);
+			boolean cullThisOut = false;
+			if (frustumCull) {
+				// sphereRadius automatically updates
+				if (frustumCuller.isSphereOutside(this.worldPosition, this.boundingBox.sphereRadius)) {
+					cullThisOut = true;
+					// point outside action
+				}
 			}
-			else {
-				batch.add(additionalGeom);
+			
+			
+			if (!cullThisOut) {
+				additionalGeom = new TRAddtlGeom(m_transformationMatrix, this.getTextureXOffset(), this.getTextureYOffset());	
+					
+				List<TRAddtlGeom> batch = mapPtr.get(model);
+				if (batch == null) {
+					List<TRAddtlGeom> newBatch = new ArrayList<TRAddtlGeom>();
+					newBatch.add(additionalGeom);
+					mapPtr.put(model, newBatch);
+				}
+				else {
+					batch.add(additionalGeom);
+				}
+
 			}
 			
 			// after having calculated world pos and scale, update bounding box
@@ -153,7 +166,7 @@ public abstract class TREntity {
 		
 		if (this.canHaveChildren) {
 			for (TREntity child : children) {
-				child.updateSceneGraph(mapPtr, m_transformationMatrix);
+				child.updateSceneGraph(mapPtr, m_transformationMatrix, frustumCuller, frustumCull);
 			}
 		}
 	}

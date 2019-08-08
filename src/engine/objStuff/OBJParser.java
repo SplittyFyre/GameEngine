@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.collision.BoundingBox;
 import engine.renderEngine.Loader;
 import engine.renderEngine.models.RawModel;
+import internal.ResourceStreamClass;
 
 public class OBJParser {
 
@@ -189,7 +190,7 @@ public class OBJParser {
 	
 	public static RawModel loadObjModelWProperTexSeams(String fileName) {
 		
-		InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/res/" + fileName + ".obj"));
+		InputStreamReader isr = new InputStreamReader(ResourceStreamClass.class.getResourceAsStream("/res/" + fileName + ".obj"));
 		
         BufferedReader reader = new BufferedReader(isr);
         String line;

@@ -4,8 +4,8 @@ import engine.collision.BoundingBox;
 
 public class RawModel {
 	
-	private int vaoID;
-	private int vertexCount;
+	protected int vaoID;
+	protected int vertexCount;
 	private BoundingBox boundingBox;
 	public boolean doubleSidedFaces = false;
 

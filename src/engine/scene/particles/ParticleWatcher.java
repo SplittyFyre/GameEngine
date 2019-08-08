@@ -21,6 +21,10 @@ public class ParticleWatcher {
 		renderer = new ParticleRenderer(projectionMatrix);
 	}
 	
+	public static void setProjectionMatrix(Matrix4f pmat) {
+		renderer.setProjectionMatrix(pmat);
+	}
+	
 	public static void update() {
 		
 		Iterator<Entry<ParticleTexture, List<Particle>>> mapIterator = particles.entrySet().iterator();

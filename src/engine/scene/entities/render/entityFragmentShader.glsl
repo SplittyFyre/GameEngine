@@ -91,6 +91,7 @@ void main(void) {
 	outColour = vec4(totalDiffuse, 1.0) * textureColour + vec4(totalSpecular, 1.0);
 	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
 	
+	
 	//be sure to change name
 	outBrightColour *= brightDamper;
 }

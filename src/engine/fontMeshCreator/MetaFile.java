@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.lwjgl.opengl.Display;
 
+import internal.ResourceStreamClass;
+
 /**
  * Provides functionality for getting the values from a font file.
  * 
@@ -135,7 +137,7 @@ public class MetaFile {
 	 */
 	private void openFile(String file) {
 		try {
-			InputStreamReader isr = new InputStreamReader(Class.class.getResourceAsStream("/res/" + file + ".fnt"));
+			InputStreamReader isr = new InputStreamReader(ResourceStreamClass.class.getResourceAsStream("/res/" + file + ".fnt"));
 			reader = new BufferedReader(isr);
 		} catch (Exception e) {
 			e.printStackTrace();

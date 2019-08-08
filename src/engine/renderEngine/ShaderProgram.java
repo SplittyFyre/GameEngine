@@ -11,16 +11,21 @@ import java.util.Map;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL43;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+
+import engine.InternalStreamClass;
 
 public abstract class ShaderProgram {
 	
 	private int programID;
 	private int vertexShaderID;
 	private int fragmentShaderID;
+	
+	private boolean isCompute = false;
 	
 	protected Map<String, Integer> uniformLocationsHashMap = new HashMap<String, Integer>();
 	
@@ -49,6 +54,19 @@ public abstract class ShaderProgram {
 		getAllUniformLocations();
 	}
 	
+	public ShaderProgram(String computeFile) {
+		this.isCompute = true;
+		int computeID = loadShader(computeFile, GL43.GL_COMPUTE_SHADER);
+		this.programID = GL20.glCreateProgram();
+		GL20.glAttachShader(programID, computeID);
+		bindAttributes(); // not really for a compute shader
+		GL20.glLinkProgram(programID);
+		GL20.glDetachShader(programID, computeID);
+		GL20.glDeleteShader(computeID);
+		GL20.glValidateProgram(programID);
+		getAllUniformLocations();
+	}
+	
 	protected abstract void getAllUniformLocations();
 	
 	protected int getUniformLocation(String uniformName) {
@@ -61,6 +79,11 @@ public abstract class ShaderProgram {
 	
 	public void stop(){
 		GL20.glUseProgram(0);
+	}
+	
+	// first run glUseProgram, then dispatch compute
+	public void dispatchCompute(int groupsX, int groupsY, int groupsZ) {
+		GL43.glDispatchCompute(groupsX, groupsY, groupsZ);
 	}
 	
 	public void cleanUp(){
@@ -84,6 +107,10 @@ public abstract class ShaderProgram {
 	
 	protected void load4dVector(int location, Vector4f vector) {
 		GL20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+	}
+	
+	protected void load4dVector(int location, float x, float y, float z, float w) {
+		GL20.glUniform4f(location, x, y, z, w);
 	}
 	
 	protected void loadVector(int location, Vector3f vector) {
@@ -113,7 +140,7 @@ public abstract class ShaderProgram {
 		file = file.replaceFirst("src", "");
 		StringBuilder shaderSource = new StringBuilder();
 		try{
-			InputStream in = Class.class.getResourceAsStream(file);
+			InputStream in = InternalStreamClass.class.getResourceAsStream(file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while((line = reader.readLine()) != null) {

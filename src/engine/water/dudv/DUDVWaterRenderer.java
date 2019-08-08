@@ -10,7 +10,9 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.renderEngine.Loader;
+import engine.renderEngine.TRRenderEngine;
 import engine.renderEngine.models.RawModel;
+import engine.scene.contexts.SkyContext;
 import engine.scene.entities.Light;
 import engine.scene.entities.camera.TRCamera;
 import engine.utils.TRMath;
@@ -21,12 +23,20 @@ public class DUDVWaterRenderer {
 	private DUDVWaterShader shader;
 	private WaterFrameBuffers fbos;
 	
+	private boolean matrixChanged = false;
+	private Matrix4f newMatrix = null;
+	
 	public DUDVWaterShader getShader() {
 		return shader;
 	}
 	
 	public WaterFrameBuffers getFBOs() {
 		return fbos;
+	}
+	
+	public void setProjectionMatrix(Matrix4f pmat) {
+		this.newMatrix = pmat;
+		matrixChanged = true;
 	}
 		
 	public DUDVWaterRenderer(Matrix4f projectionMatrix) {
@@ -39,8 +49,8 @@ public class DUDVWaterRenderer {
 		setUpVAO();
 	}
 
-	public void render(List<DUDVWaterTile> water, TRCamera camera, Light sun) {
-		prepareRender(camera, sun);	
+	public void render(List<DUDVWaterTile> water, TRCamera camera, Light sun, SkyContext skyCtx) {
+		prepareRender(camera, sun, skyCtx);	
 		for (DUDVWaterTile tile : water) {
 			
 			GL13.glActiveTexture(GL13.GL_TEXTURE2);
@@ -56,10 +66,11 @@ public class DUDVWaterRenderer {
 			shader.loadModelMatrix(modelMatrix);
 			shader.loadColourOffset(tile.getColourOffset());
 			
+			
 			shader.loadWaveIntensity(tile.getWaveIntensity());
 			shader.loadShineVariables(tile);
-			//shader.loadFrustumPlanes(TRRenderEngine.nearPlaneInUse, TRRenderEngine.farPlaneInUse);
-			shader.loadFrustumPlanes(2.5f, 5000f);
+			shader.loadFrustumPlanes(7.41f, 3000);
+			//shader.loadFrustumPlanes(1000f, 30000f);
 			shader.loadTiling(tile.getTiling());
 			
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, quad.getVertexCount());
@@ -67,10 +78,17 @@ public class DUDVWaterRenderer {
 		unbind();
 	}
 	
-	private void prepareRender(TRCamera camera, Light sun){
+	private void prepareRender(TRCamera camera, Light sun, SkyContext skyCtx){
 		shader.start();
+		
+		if (matrixChanged) {
+			matrixChanged = false;
+			shader.loadProjectionMatrix(newMatrix);
+		}
+		
 		shader.loadViewMatrix(camera);
 		shader.loadLight(sun);
+		shader.loadSkyContext(skyCtx);
 		GL30.glBindVertexArray(quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);

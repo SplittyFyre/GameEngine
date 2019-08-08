@@ -16,13 +16,21 @@ uniform vec3 cameraPosition;
 
 uniform float tiling;
 
+out vec4 passCamPos;
+uniform float density;
+uniform float gradient;
+
+
+
 void main(void) {
 	
 	vec4 worldPosition = modelMatrix * vec4(position.x, 0.0, position.y, 1.0);
+	passCamPos = viewMatrix * worldPosition;
 	clipSpace = projectionMatrix * viewMatrix * worldPosition;
 	gl_Position = clipSpace;
  	textureCoords = vec2(position.x/2.0 + 0.5, position.y/2.0 + 0.5) * tiling;
  	toCameraVector = cameraPosition - worldPosition.xyz;
  	fromLightVector = worldPosition.xyz - lightPosition;
+ 	
  	
 }

@@ -15,7 +15,9 @@ import engine.scene.terrain.TRTerrainGrid;
 public class TRRayCaster {
 
 	private static final int RECURSION_COUNT = 200;
-	private static final float RAY_RANGE = 2400;
+	private static final float RAY_RANGE = 200000;
+	
+	private static final Vector4f ccCenter = new Vector4f(0, 0, -1.0f, 1.0f);
 
 	private Vector3f currentRay = new Vector3f();
 
@@ -23,11 +25,20 @@ public class TRRayCaster {
 	private Matrix4f viewMatrix;
 	private TRCamera camera;
 	
+	public void setProjectionMatrix(Matrix4f pmat) {
+		this.projectionMatrix = pmat;
+	}
+	
+	public void setCamera(TRCamera cam) {
+		this.camera = cam;
+	}
+	
+	public boolean castFromMiddleOfScreen = false;
 
 	public TRRayCaster(TRCamera cam, Matrix4f projection) {
 		camera = cam;
 		projectionMatrix = projection;
-		viewMatrix = TRMath.createViewMatrix(camera);
+		viewMatrix = camera.getViewMatrix();
 	}
 
 	public Vector3f getCurrentRay() {
@@ -35,8 +46,8 @@ public class TRRayCaster {
 	}
 
 	public void update() {
-		viewMatrix = TRMath.createViewMatrix(camera);
-		currentRay = calculateMouseRay();
+		viewMatrix = camera.getViewMatrix();
+		currentRay = castFromMiddleOfScreen ? calculateMouseRayFromScreenCenter() : calculateMouseRay();
 	}
 	
 	public Vector3f getTerrainPoint(TRTerrain terrain) {
@@ -79,6 +90,13 @@ public class TRRayCaster {
 		Vector2f normalizedCoords = getNormalisedDeviceCoordinates(mouseX, mouseY);
 		Vector4f clipCoords = new Vector4f(normalizedCoords.x, normalizedCoords.y, -1.0f, 1.0f);
 		Vector4f eyeCoords = toEyeCoords(clipCoords);
+		Vector3f worldRay = toWorldCoords(eyeCoords);
+		
+		return worldRay;
+	}
+	
+	private Vector3f calculateMouseRayFromScreenCenter() {
+		Vector4f eyeCoords = toEyeCoords(ccCenter);
 		Vector3f worldRay = toWorldCoords(eyeCoords);
 		
 		return worldRay;

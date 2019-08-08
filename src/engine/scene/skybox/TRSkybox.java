@@ -10,7 +10,7 @@ public class TRSkybox {
 	private final float size;
 	
 	private SkyboxTexture texture1, texture2;
-	private float blend;
+	public float blend;
 	
 	public float lowerFadeBound = -1000000, upperFadeBound = -1000000;
 	public void setFadeBounds(float lower, float upper) {
@@ -120,6 +120,11 @@ public class TRSkybox {
 	 */
 	public static String[] locateSkyboxTextures(String name) {
 		return new String[] {name + "RT", name + "LF", name + "DN", name + "UP", name + "BK", name + "FT"};
+	}
+	
+	public static String[] skyboxTexturesInFolder(String foldername) {
+		String pathpart = foldername + '/';
+		return new String[] {pathpart + "RT", pathpart + "LF", pathpart + "DN", pathpart + "UP", pathpart + "BK", pathpart + "FT"};
 	}
 
 }

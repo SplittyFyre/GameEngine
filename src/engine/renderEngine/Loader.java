@@ -23,6 +23,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL33;
+import org.lwjgl.opengl.GL42;
 import org.lwjgl.opengl.GLContext;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -31,7 +32,9 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 import engine.collision.BoundingBox;
 import engine.renderEngine.models.RawModel;
+import engine.renderEngine.models.TerrainLODModel;
 import engine.renderEngine.textures.TextureData;
+import internal.ResourceStreamClass;
 
 public class Loader {
 	
@@ -81,6 +84,18 @@ public class Loader {
 		unbindVAO();
 		
 		return new RawModel(vaoID,indices.length, null);
+	}
+	
+	public static TerrainLODModel loadToLODTerrainVAO(float[] positions,float[] textureCoords,float[] normals, int[] vbolod, int[] vbolodsize) {
+		
+		int vaoID = createVAO();
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vbolod[0]); // default is lod0
+		storeDataInAttributeList(0,3,positions);
+		storeDataInAttributeList(1,2,textureCoords);
+		storeDataInAttributeList(2,3,normals);
+		unbindVAO();
+				
+		return new TerrainLODModel(vaoID, vbolod, vbolodsize);
 	}
 	
 	public static RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices, BoundingBox aabb){
@@ -147,7 +162,7 @@ public class Loader {
 		Texture texture = null;
 		
 		try {
-			texture = TextureLoader.getTexture("PNG", Class.class.getResourceAsStream("/res/" + fileName + ".png"));
+			texture = TextureLoader.getTexture("PNG", ResourceStreamClass.class.getResourceAsStream("/res/" + fileName + ".png"));
 			
 			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
@@ -217,7 +232,7 @@ public class Loader {
 		
 		try {
 			@SuppressWarnings("resource")
-			InputStream in = Class.class.getResourceAsStream("/res/" + fileName + ".png");
+			InputStream in = ResourceStreamClass.class.getResourceAsStream("/res/" + fileName + ".png");
 			PNGDecoder decoder = new PNGDecoder(in);
 			width = decoder.getWidth();
 			height = decoder.getHeight();
@@ -233,15 +248,32 @@ public class Loader {
 		return new TextureData(buffer, width, height);
 	}
 	
-	private static void bindIndicesBuffer(int[] indices){
+	private static int bindIndicesBuffer(int[] indices){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
 		IntBuffer buffer = storeDataInIntBuffer(indices);
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+		return vboID;
 	}
 	
-	private static IntBuffer storeDataInIntBuffer(int[] data){
+	private static int bindIndicesBuffer(IntBuffer indices){
+		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
+		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indices, GL15.GL_STATIC_DRAW);
+		return vboID;
+	}
+	
+	public static int makeIndicesBuffer(IntBuffer indices){
+		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
+		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indices, GL15.GL_STATIC_DRAW);
+		return vboID;
+	}
+	
+	public static IntBuffer storeDataInIntBuffer(int[] data){
 		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();
@@ -260,7 +292,7 @@ public class Loader {
 		ByteBuffer buf = null;
 		
 		try {
-			InputStream is = Class.class.getResourceAsStream("/res/" + path + ".png");
+			InputStream is = ResourceStreamClass.class.getResourceAsStream("/res/" + path + ".png");
 			PNGDecoder dec = new PNGDecoder(is);
 			buf = ByteBuffer.allocateDirect(dec.getWidth() * dec.getHeight() * 4);
 			dec.decode(buf, dec.getWidth() * 4, PNGDecoder.Format.RGBA);
@@ -302,7 +334,7 @@ public class Loader {
 		try {
 			cursor = new Cursor(w, h, 2, h - 2, 1, buffer, null);
 		} catch (LWJGLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 
 	    return cursor;
@@ -311,8 +343,15 @@ public class Loader {
 	
 	
 	
-	
-	
+	// GL30.GL_RGBA32F for fft crap
+	public static int genEmptyTexture2D(int width, int height, int glformat) {
+		int texID = GL11.glGenTextures();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texID);
+		GL42.glTexStorage2D(GL11.GL_TEXTURE_2D, 1, glformat, width, height);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		textures.add(texID);
+		return texID;
+	}
 	
 	
 	
