@@ -9,8 +9,8 @@ https://github.com/LWJGL/lwjgl
 
 ###  Render models loaded from wavefront *.obj files
 <p float="left">
-  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/dragon.png" />
-  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/wiredragon.png" />
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/dragon.png" width=500/>
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/wiredragon.png" width=500/>
 </p>
 
 ### Skyboxes
