@@ -8,6 +8,9 @@ https://github.com/LWJGL/lwjgl
 ### Functional GUI systems
 
 ###  Render models loaded from wavefront *.obj files
+<p float="left">
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/dragon.png" />
+</p>
 
 ### Skyboxes
 
