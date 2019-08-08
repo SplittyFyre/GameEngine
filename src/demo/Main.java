@@ -1,7 +1,9 @@
 package demo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -12,6 +14,8 @@ import engine.renderEngine.Loader;
 import engine.renderEngine.TRDisplayManager;
 import engine.renderEngine.TRProjectionCtx;
 import engine.renderEngine.TRRenderEngine;
+import engine.renderEngine.guis.GUITexture;
+import engine.renderEngine.guis.render.GUIRenderer;
 import engine.renderEngine.models.RawModel;
 import engine.renderEngine.models.TexturedModel;
 import engine.renderEngine.textures.ModelTexture;
@@ -25,7 +29,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		TRDisplayManager.createDisplay(1600, 900, 60, "Testing", null);				
+		TRDisplayManager.createDisplay(1024, 1024, 60, "Testing", null);				
 		
 		TRRenderEngine engine = new TRRenderEngine(
 				TRRenderEngine.RENDER_ENTITIES_BIT | 
@@ -48,6 +52,8 @@ public class Main {
 		TRCamera cam = new RogueCamera();
 		scene.setCamera(cam);
 
+		GUIRenderer guiR = new GUIRenderer();
+		List<GUITexture> guis = new ArrayList<GUITexture>();
 		
 		
 		RawModel hRaw = OBJParser.loadObjModelWProperTexSeams("helibody");
@@ -85,11 +91,13 @@ public class Main {
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT0, output);
 			fbo.resolveToFbo(GL30.GL_COLOR_ATTACHMENT1, output2);
 			PostProcessing.doPostProcessing(output.getColourTexture(), output2.getColourTexture());
+			guiR.render(guis);
 			
 			TRDisplayManager.updateDisplay();
 		}
 		
 		engine.cleanUp();
+		guiR.cleanUp();
 		PostProcessing.cleanUp();
 		TRDisplayManager.closeDisplay();
 	}
