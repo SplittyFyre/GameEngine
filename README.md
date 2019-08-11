@@ -26,11 +26,7 @@ https://github.com/LWJGL/lwjgl
   <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/terrainlod.png"/>
 </p>
 
-### Procedural terrain generation
-
-### Frustum Culling
-
-### Fog
+### Frustum Culling (no image available)
 
 ### DUDV Water
 
