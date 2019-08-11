@@ -24,19 +24,21 @@ import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.camera.RogueCamera;
 import engine.scene.entities.camera.TRCamera;
+import engine.scene.skybox.SkyboxTexture;
+import engine.scene.skybox.TRSkybox;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		TRDisplayManager.createDisplay(1024, 1024, 60, "Testing", null);				
+		TRDisplayManager.createDisplay(3200 - 1600, 1800 - 900, 60, "Testing", null);				
 		
 		TRRenderEngine engine = new TRRenderEngine(
 				TRRenderEngine.RENDER_ENTITIES_BIT | 
 				TRRenderEngine.RENDER_TERRAIN_BIT |
 				TRRenderEngine.RENDER_SKYBOX_BIT | 
 				TRRenderEngine.RENDER_DUDVWATER_BIT,
-				new TRProjectionCtx(1, 10000, TRCamera.STD_FOV));
+				new TRProjectionCtx(1, 20000, TRCamera.STD_FOV));
 		
 		PostProcessing.init();
 	
@@ -77,7 +79,9 @@ public class Main {
 		StaticEntity dEntity = new StaticEntity(dModel, new Vector3f(500, 0, 0), 0, 0, 0, 25);
 		scene.addEntityToRoot(dEntity);
 		
-		
+		TRSkybox skybox = new TRSkybox(10000);
+		skybox.setTexture1(new SkyboxTexture(TRSkybox.locateSkyboxTextures("high")));
+		scene.setSkybox(skybox);
 		
 		while (!Display.isCloseRequested()) {
 			
