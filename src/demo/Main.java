@@ -24,6 +24,8 @@ import engine.scene.entities.Light;
 import engine.scene.entities.StaticEntity;
 import engine.scene.entities.camera.RogueCamera;
 import engine.scene.entities.camera.TRCamera;
+import engine.scene.particles.Particle;
+import engine.scene.particles.ParticleTexture;
 import engine.scene.skybox.SkyboxTexture;
 import engine.scene.skybox.TRSkybox;
 
@@ -79,9 +81,12 @@ public class Main {
 		StaticEntity dEntity = new StaticEntity(dModel, new Vector3f(500, 0, 0), 0, 0, 0, 25);
 		scene.addEntityToRoot(dEntity);
 		
-		TRSkybox skybox = new TRSkybox(10000);
+		/*TRSkybox skybox = new TRSkybox(10000);
 		skybox.setTexture1(new SkyboxTexture(TRSkybox.locateSkyboxTextures("high")));
-		scene.setSkybox(skybox);
+		scene.setSkybox(skybox);*/
+		
+		ParticleTexture tex = new ParticleTexture(Loader.loadTexture("sficon"), 1);
+		new Particle(tex, new Vector3f(0, 1000, 0), new Vector3f(), 0, 1000, 0, 50);
 		
 		while (!Display.isCloseRequested()) {
 			
