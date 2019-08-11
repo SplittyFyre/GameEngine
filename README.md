@@ -16,9 +16,9 @@ https://github.com/LWJGL/lwjgl
 ### Skyboxes
 
 <p float="left">
-  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox1.png width=600"/>
-  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox2.png width=600"/>
-  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox3.png width=600"/>
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox1.png" width=600/>
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox2.png" width=600/>
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/skybox3.png" width=600/>
 </p>
 
 ### Heightmapped terrain with LOD
