@@ -29,9 +29,14 @@ https://github.com/LWJGL/lwjgl
 ### Frustum Culling (no image available)
 
 ### DUDV Water
+<p float="left">
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/water.png"/>
+</p>
 
 ### Billboard particles
-
+<p float="left">
+  <img src="https://github.com/SplittyFyre/GameEngine/blob/master/readmeimg/particle.png"/>
+</p>
 
 
 ## Coming Soon
